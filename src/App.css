@@ -7,14 +7,17 @@
   box-sizing: 0;
 }
 
+
 /* * {border: solid green 2px; margin: 3px;}
 *>*:nth-child(1) {border: solid 2px blue;}
 *>*:nth-child(2) {border: solid 2px white;}
 *>*:nth-child(3) {border: solid 2px orange;} */
-
-body {
+body
+{
+  height:100%;
   background-color: black;
 }
+
 
 nav {
   display: flex;
@@ -149,12 +152,6 @@ nav {
   display: flex;
   text-align: center;
   justify-content: center;
-}
-
-input{
-  padding: 1em 4em;
-  margin: 1em;
-
 }
 
 @keyframes shake {
