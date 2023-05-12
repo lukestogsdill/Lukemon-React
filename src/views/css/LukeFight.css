@@ -1,0 +1,84 @@
+.fightTree{
+   color:white;
+    display:flex;
+    flex-direction: column;
+    background-image: url(https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.LG7_ujyE1VBRGrFwuOMjjgHaEc%26pid%3DApi&f=1&ipt=e3552fad75ae4b5bdb195ee22664e9c8d95115776991435a1f7e03ab03198cce&ipo=images);
+    background-size:cover;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    border-radius: 10px;
+    margin: 1em;
+    text-align: center;
+}
+
+.aliveBar,
+.trashBar,
+.fightContainer{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+ .bankerContainer img,
+ .playerContainer img{
+    max-width: 100%;
+    width:24rem;
+    height: auto;
+    max-height: 300px;
+ }
+
+ .aliveBar div,
+ .trashBar div{
+    max-width: 40%;
+ }
+
+ .aliveBar img,
+ .trashBar img{
+    max-width: 100%;
+    width:3.4rem;
+    height: auto;
+ }
+
+ .playerContainer img,
+ .playerAlive img,
+ .playerTrash img{
+    transform: scaleX(-1);
+ }
+
+ .trashBar img{
+    opacity: 0.4;
+ }
+ .fightContainer{
+    justify-content: space-around;
+ }
+
+ #fightBtn{
+   border-radius: 10px 10px 0 0;
+   padding: 1em;
+   background-color: #ff000080;
+   border: solid rgb(255, 0, 0) 2px;
+   font-size: 1.4em;
+   color:white;
+ }
+
+ .playerAtt {
+   animation-name: playerAtt;
+   animation-duration: 0.3s;
+   animation-timing-function: ease-in-out;
+ }
+ .bankerAtt {
+   animation-name: bankerAtt;
+   animation-duration: 0.3s;
+   animation-timing-function: ease-in-out;
+ }
+
+ @keyframes playerAtt {
+   0% { transform: translate(0, 0) rotate(0); }
+   50% { transform: translateX(50px);}
+   100% { transform: translate(0, 0) rotate(0); }
+ }
+ @keyframes bankerAtt {
+   0% { transform: translate(0, 0) rotate(0); }
+   50% { transform: translateX(-50px);}
+   100% { transform: translate(0, 0) rotate(0); }
+ }

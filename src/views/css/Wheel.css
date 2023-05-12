@@ -22,7 +22,7 @@
 .container div{
 	height: 50%;
 	width: 200px;
-	clip-path: polygon(104% 0,50% 100%, 0 0);
+	clip-path: polygon(100% 0,50% 100%, 0 0);
 	transform: translateX(-50%);
 	transform-origin: bottom;
 	position: absolute;
@@ -35,29 +35,60 @@
 	color:#000000; 
 	 writing-mode: vertical-rl;
 }
+
 .container .one{
-	background: #f00;
+	background: #c300ff;
 	left: 50%;
 }
+
+.container .two,
+.container .four{
+	clip-path: polygon(35% 0,50% 100%, 0 0);
+}
+
 .container .two{
-	background: #fff;
+	background: #00fff2;
 	transform: rotate(60deg);
 }
 .container .three{
-	background: #f00;
-	transform: rotate(120deg);
+	background: #ffbb00;
+	transform: rotate(80deg);
+	clip-path: polygon(10% 0, 50% 100%, 0 0);
+	 
 }
 .container .four{
-	background: #fff;
-	transform: rotate(180deg);
+	background: #00fff2;
+	transform: rotate(85deg);
 }
 .container .five{
-	background: #f00;
-	transform: rotate(240deg);
+	background: #c300ff;
+	transform: rotate(105deg);
+	clip-path: polygon(102% 0,50% 100%, 0 0);
 }
 .container .six{
-	background: #fff;
-	transform: rotate(300deg);
+	background: #ffbb00;
+	transform: rotate(165deg);
+	clip-path: polygon(10% 0,50% 100%, 0 0);
+}
+.container .seven{
+	background: #ffffff;
+	transform: rotate(170deg);
+	clip-path: polygon(100% 0,50% 100%, 0 0);
+}
+.container .eight{
+	background: #c300ff;
+	transform: rotate(230deg);
+	clip-path: polygon(102% 0,50% 100%, 0 0);
+}
+.container .nine{
+	background: #ffffff;
+	transform: rotate(290deg);
+	clip-path: polygon(100% 0,50% 100%, 0 0);
+}
+.container .ten{
+	background: #00ff37;
+	transform: rotate(350deg);
+	clip-path: polygon(20% 0,50% 100%, 0 0);
 }
 .mid{
 	height: 25px;
@@ -82,7 +113,7 @@
 .stoper{
 	height: 50px;
 	width: 40px;
-	background: #858585;
+	background: #414141;
 	position: absolute;
 	clip-path: polygon(100% 0,50% 100%, 0 0);
 	margin-top: -350px;

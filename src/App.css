@@ -7,11 +7,15 @@
   box-sizing: 0;
 }
 
+body .showresults{
+  color:white;
+}
 
-/* * {border: solid green 2px; margin: 3px;}
+/* * {border: solid green 2px; margin: 4px;}
 *>*:nth-child(1) {border: solid 2px blue;}
 *>*:nth-child(2) {border: solid 2px white;}
 *>*:nth-child(3) {border: solid 2px orange;} */
+
 body
 {
   height:100%;
@@ -35,9 +39,10 @@ nav {
 .pokeball {
   width: 4em;
   height: 4em;
-  background-image: url(https://purepng.com/public/uploads/large/purepng.com-pokeballpokeballdevicepokemon-ballpokemon-capture-ball-1701527825789urzm0.png);
+  background-image: url(https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.BRKdMuuIo04zMLiFF3RiKQHaFw%26pid%3DApi&f=1&ipt=d6b6ca656035dc5d950068211b8dffa1b943bfdac225e4c2a6e209fb69728bef&ipo=images);
   background-size: cover;
   background-position: center;
+  border-radius: 50%;
   margin: .2em;
   padding: 1em;
 }
@@ -46,7 +51,7 @@ nav {
   cursor: pointer;
   animation-name: shake;
   animation-duration: 1s;
-  animation-iteration-count: 2;
+  animation-iteration-count: 7;
 }
 
 .home_title {
@@ -82,9 +87,26 @@ nav {
 .nav_link{
   display:flex;
   width: 75px;
-  height: 100%;
+  height: 95%;
   justify-content: center;
-  border: solid black 2px;
+  border: solid black 1px;
+  border-top: 0px;
+  border-bottom: 0px;
+  border-radius: 10px;
+  color:white;
+  font-size: large;
+}
+
+.nav_link:hover{
+  box-shadow: 3px 3px 0px 0px black;
+  transform: translateX(-2px);
+}
+
+.linkDiv{
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width:100%;
 }
 
 .nav_link li{
@@ -153,6 +175,7 @@ nav {
   text-align: center;
   justify-content: center;
 }
+
 
 @keyframes shake {
   20% {

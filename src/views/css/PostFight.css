@@ -1,0 +1,16 @@
+.postTree{
+    display:flex;
+    flex-direction: column;
+    color: white;
+    justify-content: center;
+    gap:1em;
+
+}
+
+.postedFight{
+    display:flex;
+    flex-direction: column;
+    background-color: #ff000056;
+    border:red solid 2px;
+    gap: 1em;
+}
