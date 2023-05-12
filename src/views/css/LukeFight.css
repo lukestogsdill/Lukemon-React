@@ -38,11 +38,10 @@
     width:3.4rem;
     height: auto;
  }
-
- .playerContainer img,
+ 
  .playerAlive img,
  .playerTrash img{
-    transform: scaleX(-1);
+   transform: scaleX(-1);
  }
 
  .trashBar img{
@@ -60,25 +59,54 @@
    font-size: 1.4em;
    color:white;
  }
-
- .playerAtt {
-   animation-name: playerAtt;
+ .playerAtt,
+ .bankerAtt,
+ .playerDmgAni,
+ .bankerDmgAni{
    animation-duration: 0.3s;
    animation-timing-function: ease-in-out;
+ }
+ .playerAtt {
+   animation-name: playerAtt;
  }
  .bankerAtt {
    animation-name: bankerAtt;
-   animation-duration: 0.3s;
-   animation-timing-function: ease-in-out;
  }
 
+ .playerDmgAni{
+   display: block;
+   animation-name: playerDmg;
+ }
+
+ .bankerDmgAni{
+   display: block;
+   animation-name: bankerDmg;
+ }
+
+ .dmgAni{
+   display:none;
+ }
+
+
+
  @keyframes playerAtt {
-   0% { transform: translate(0, 0) rotate(0); }
-   50% { transform: translateX(50px);}
-   100% { transform: translate(0, 0) rotate(0); }
+   0% { transform: translate(0, 0); }
+   50% { transform: translateX(50px); }
+   100% { transform: translate(0, 0); }
  }
  @keyframes bankerAtt {
-   0% { transform: translate(0, 0) rotate(0); }
-   50% { transform: translateX(-50px);}
-   100% { transform: translate(0, 0) rotate(0); }
+   0% { transform: translate(0, 0); }
+   50% { transform: translateX(-50px); }
+   100% { transform: translate(0, 0); }
+ }
+
+ @keyframes playerDmg {
+   0% { transform: translate(0, 0); }
+   50% { transform: translate(-40px, -20px); }
+   100% { transform: translate(-80px, -10px); }
+ }
+ @keyframes bankerDmg {
+   0% { transform: translate(0, 0); }
+   50% { transform: translate(40px, -20px); }
+   100% { transform: translate(80px, -10px); }
  }

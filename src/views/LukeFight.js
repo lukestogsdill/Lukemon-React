@@ -15,6 +15,8 @@ function LukeFight(props) {
     const [bankerDmg, setBankerDmg] = useState([])
     const [playerAtt, setPlayerAtt] = useState(false)
     const [bankerAtt, setBankerAtt] = useState(false)
+    const [playerDmgAni, setPlayerDmgAni] = useState(false)
+    const [bankerDmgAni, setBankerDmgAni] = useState(false)
     const [clientLog, setClientLog] = useState({})
     const {id} = useParams()
     const teamData = []
@@ -128,8 +130,15 @@ function LukeFight(props) {
       acc = 1
       let critRoll = Math.round(Math.random()*100)
       let accRoll = Math.round(Math.random()*100)
+      let PdmgEffect = document.getElementById('PdmgEffect')
+      let BdmgEffect = document.getElementById('BdmgEffect')
       if(critRoll <= poke1.crit){
         crit = 1.5
+        PdmgEffect.setAttribute('style','color: orange')
+        BdmgEffect.setAttribute('style','color: orange')
+      } else {
+        PdmgEffect.setAttribute('style','color: white')
+        BdmgEffect.setAttribute('style','color: white')
       }
       if(accRoll > poke1.accuracy){
         acc = 0
@@ -168,12 +177,16 @@ function LukeFight(props) {
 
     const handlePlayerAtt = () => {
       setPlayerAtt(true)
+      setPlayerDmgAni(true)
       setTimeout(() => setPlayerAtt(false), 1000)
+      setTimeout(() => setPlayerDmgAni(false), 1000)
     }
 
     const handleBankerAtt = () => {
       setBankerAtt(true)
+      setBankerDmgAni(true)
       setTimeout(() => setBankerAtt(false), 1000)
+      setTimeout(() => setBankerDmgAni(false), 1000)
     }
     
     return(
@@ -218,29 +231,30 @@ function LukeFight(props) {
     <div className='fightContainer'>
         {playerPoke?(
           <div className='playerContainer'>
+          <h2 className={bankerDmgAni?'bankerDmgAni':'dmgAni'} id='BdmgEffect'>{Math.round(bankerDmg)}</h2>
           <h2 className='hpBar'>HP: {Math.round(playerPoke.poke_hash.hp)}</h2>
           <svg width='300' height='300'>
-            <image xlinkHref={playerPoke.poke_hash.sprite_url} 
-            id='playerPic' 
+            <image href={playerPoke.poke_hash.sprite_url} 
             x='25%' y='25%' 
             width="50%" height="50%"
-            className={playerAtt? 'playerAtt': 'image'}/>
+            className={playerAtt? 'playerAtt': 'image'}
+            id='playerPic'/>
           </svg>
-          <h2>Dmg {Math.round(playerDmg)}</h2>
           </div>
         ):(
           <></>
         )}
         {bankerPoke?(
         <div className='bankerContainer'>
+          <h2 className={playerDmgAni?'playerDmgAni':'dmgAni'} id='PdmgEffect'>{Math.round(playerDmg)}</h2>
           <h2 className='hpBar'>HP: {Math.round(bankerPoke.poke_hash.hp)}</h2>
           <svg width="300" height="300">
             <image href={bankerPoke.poke_hash.sprite_url}
             x='25%' y='25%'
             width="50%" height="50%"
-            className={bankerAtt? 'bankerAtt': 'image'}/>
+            className={bankerAtt? 'bankerAtt': 'image'}
+            id='bankerPic'/>
           </svg>
-          <h2>Dmg {Math.round(bankerDmg)}</h2>
         </div>
         ):(
           <></>
