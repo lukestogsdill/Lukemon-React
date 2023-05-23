@@ -17,7 +17,6 @@ function LukeFight(props) {
     const [bankerAtt, setBankerAtt] = useState(false)
     const [playerDmgAni, setPlayerDmgAni] = useState(false)
     const [bankerDmgAni, setBankerDmgAni] = useState(false)
-    const [clientLog, setClientLog] = useState({})
     const {id} = useParams()
     const teamData = []
     let dmg = 0
@@ -46,83 +45,45 @@ function LukeFight(props) {
       setBankerPoke(team[0])
     }
 
-    const showdown = async() => {
-      if(player.length === 0 || playerPoke === undefined){
-        var showResults = document.createElement('showResults')
-        showResults.innerHTML = 'you Lose!'
-        document.body.appendChild(showResults)
-      } else if(banker.length === 0 || bankerPoke === undefined) {
-        var showResults = document.createElement('showResults')
-        showResults.innerHTML = 'you Win!'
-        document.body.appendChild(showResults)
-      } else {
-        await battleTurn()
-    }
-    }
-
     const battleTurn = async() => {
-      while(true){
       fightBtn.style.display = 'none'
         if (playerPoke.poke_hash.speed >= bankerPoke.poke_hash.speed){
           // poke 1 goes first
-          dmg = damageDealt(playerPoke, bankerPoke)
-          handlePlayerAtt()
-          bankerPoke.poke_hash.hp -= dmg
-          setPlayerDmg(dmg)
-          await sleep(1)
-          if(bankerPoke.poke_hash.hp < 0) {
-            downed = banker.shift()
-            setBankerTrash(bankerTrash.concat(downed))
-            bankerPokeLoader(banker)
-            fightBtn.style.display = 'block'
-            break
+          handlePlayerDmg()
+          if(bankerPoke.poke_hash.hp <= 0) {
+            handleBankerDowned()
+            handleResult()
+            return
           }
+          await sleep(1)
           // then poke 2
-          dmg = damageDealt(bankerPoke, playerPoke)
-          handleBankerAtt()
-          playerPoke.poke_hash.hp -= dmg
-          setBankerDmg(dmg)
-          await sleep(1)
-          if(playerPoke.poke_hash.hp < 0) {
-            downed = player.shift()
-            setPlayerTrash(playerTrash.concat(downed))
-            playerPokeLoader(props.team)
-            fightBtn.style.display = 'block'
-            break
+          handleBankerDmg()
+          if(playerPoke.poke_hash.hp <= 0) {
+            handlePlayerDowned()
+            handleResult()
+            return
           }
+          await sleep(1)
+          
         } else if (playerPoke.poke_hash.speed < bankerPoke.poke_hash.speed){
           // poke 2 first
-          dmg = damageDealt(bankerPoke, playerPoke)
-          handleBankerAtt()
-          playerPoke.poke_hash.hp -= dmg
-          setBankerDmg(dmg)
-          await sleep(1)
-          if(playerPoke.poke_hash.hp < 0) {
-            downed = player.shift()
-            console.log(player)
-            console.log(banker)
-            setPlayerTrash(playerTrash.concat(downed))
-            playerPokeLoader(props.team)
-            fightBtn.style.display = 'block'
-            break
+          handleBankerDmg()
+          if(playerPoke.poke_hash.hp <= 0) {
+            handlePlayerDowned()
+            handleResult()
+            return
           }
+          await sleep(1)
           //then poke 1
-          dmg = damageDealt(playerPoke, bankerPoke)
-          handlePlayerAtt()
-          bankerPoke.poke_hash.hp -= dmg
-          setPlayerDmg(dmg)
-          await sleep(1)
-          if(bankerPoke.poke_hash.hp < 0) {
-            downed = banker.shift()
-            console.log(player)
-            console.log(banker)
-            setBankerTrash(bankerTrash.concat(downed))
-            bankerPokeLoader(banker)
-            fightBtn.style.display = 'block'
-            break
+          handlePlayerDmg()
+          if(bankerPoke.poke_hash.hp <= 0) {
+            handleBankerDowned()
+            handleResult()
+            return
           }
+          await sleep(1)
         }
-      }
+        handleFight()
       }
 
     const damageDealt = (poke1, poke2) => {
@@ -146,15 +107,58 @@ function LukeFight(props) {
       return(((poke1.damage*poke1.poke_hash.att)/poke2.poke_hash.defe)/4)*crit*acc
     }
 
+    const handlePlayerDmg = () => {
+      dmg = damageDealt(playerPoke, bankerPoke)
+          handlePlayerAtt()
+          bankerPoke.poke_hash.hp -= dmg
+          setPlayerDmg(dmg)
+    }
+
+    const handleBankerDmg = () => {
+      dmg = damageDealt(bankerPoke, playerPoke)
+          handleBankerAtt()
+          playerPoke.poke_hash.hp -= dmg
+          setBankerDmg(dmg)
+    }
+
+    const handleBankerDowned = () =>{
+      if(bankerPoke.poke_hash.hp <= 0) {
+        downed = banker.shift()
+        setBankerTrash(bankerTrash.concat(downed))
+        bankerPokeLoader(banker)
+        fightBtn.style.display = 'block'
+      }
+    }
+      const handlePlayerDowned = () => {
+        if(playerPoke.poke_hash.hp <= 0) {
+        downed = player.shift()
+        setPlayerTrash(playerTrash.concat(downed))
+        playerPokeLoader(props.team)
+        fightBtn.style.display = 'block'
+      }
+    }
+
+    const handleResult = () => {
+      if(player.length === 0 || playerPoke === undefined){
+        var showResults = document.createElement('showResults')
+        showResults.innerHTML = 'you Lose!'
+        document.body.appendChild(showResults)
+      } else if(banker.length === 0 || bankerPoke === undefined) {
+        var showResults = document.createElement('showResults')
+        showResults.innerHTML = 'you Win!'
+        document.body.appendChild(showResults)
+      } 
+    }
+
     const testLog = () => {
       console.log('tesstingg')
       console.log(bankerTrash)
     }
 
-    const handleFight = () => {
+    const handleFight = async () => {
       playerPokeLoader(props.team)
       bankerPokeLoader(banker)
-      showdown()
+      await battleTurn()
     }
 
     const getTeam = async () => {

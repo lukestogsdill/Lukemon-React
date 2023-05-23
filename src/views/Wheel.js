@@ -6,7 +6,6 @@ export default function Wheel(props){
 
 
     const spinBtn = () => {
-    console.log('hello')
     let container = document.getElementById('container')
     let num = (Math.round(Math.random() * 7777) + 720)
     let stopNum = Math.round(num % 360)

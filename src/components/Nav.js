@@ -1,8 +1,14 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from "axios"
 import { Link } from 'react-router-dom'
 
 export default function Nav(props){
+  
+  const [user, setUser] = useState({})
+  
+  useEffect(() => {
+   getUserData()
+  },[])
 
     function logMeOut() {
     axios({
@@ -21,6 +27,17 @@ export default function Nav(props){
         console.log(error.response.headers)
         }
     })}
+
+
+  const getUserData = async () => {
+      const response = await fetch("http://127.0.0.1:5000/getUserData",{
+        headers: {
+          Authorization: `Bearer ${props.token}`,
+        }
+      })
+        const data = await response.json()
+        setUser(data)
+  }
 
   return(
   <nav>
@@ -53,7 +70,13 @@ export default function Nav(props){
         <Link to="/roll" className="nav_link">
           <li>Roll</li>
         </Link>
-      </ul>   
+      </ul> 
+        <div className='profileBar'>
+          <img src={user.img_url} width={10}/>
+          <h3>{user.username}</h3>
+          <h3>Money:{user.money}</h3>
+          <h3>Tickets:{user.tickets}</h3>
+        </div>  
         <button onClick={logMeOut}> Logout </button>
       </div>
     
