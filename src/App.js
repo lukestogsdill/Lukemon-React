@@ -1,7 +1,6 @@
 import './App.css'
 import Nav from './components/Nav'
 import Wheel from './views/Wheel'
-import Footer from './components/Footer'
 import PostFight from './views/PostFight'
 import LukeFight from './views/LukeFight'
 import Login from './components/Login'
@@ -14,9 +13,11 @@ import { Routes, Route, BrowserRouter } from 'react-router-dom'
 
 export default function App(){
 
+  
   const { token, removeToken, setToken } = useToken()
   const [invData, setInvData] = useState([])
   const [team, setTeam] = useState([])
+
  
     return (
       <BrowserRouter>
@@ -25,7 +26,7 @@ export default function App(){
       {!token && token!=='' &&token!== undefined?(
       <Routes>
         <Route path = '/register' element ={<Register/>}/>
-        <Route path = '/login' element={<Login setToken={setToken}/>} />
+        <Route path = '/login' element={<Login setToken={setToken} />} />
         <Route path = '/' element={<PostFight token={token}/>}/>
       </Routes> 
         ):(
@@ -39,5 +40,5 @@ export default function App(){
         )}
       </div>
       </BrowserRouter>
-    )};
+    )}
 

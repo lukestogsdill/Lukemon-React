@@ -12,11 +12,22 @@ export default function Wheel(props){
     container.style.transform = `rotateZ(${num}deg)`
     console.log(num + 'spin')
     console.log(stopNum + 'stop num')
+    getReward(stopNum)
     }
 
-    
-
+    const getReward = (stopNum) => {
+        // switch (stopNum) {
+        //     case >:
+                
+        //         break;
+        
+        //     default:
+        //         break;
+        // }
+    }
+ 
     return (
+        <div className='wheelBox'>
         <div className="wheel">
             <div className="container" id='container'>
                 <div className="one">1</div>
@@ -30,8 +41,10 @@ export default function Wheel(props){
                 <div className='nine'>9</div>
                 <div className='ten'>10</div>
             </div>
+            
+            </div>
             <span className="mid" />
-            <button onClick={spinBtn} id="spin">Spin</button>
             <div className="stoper" />
+            <button onClick={spinBtn} id="spin">Spin</button>
         </div>
     )};

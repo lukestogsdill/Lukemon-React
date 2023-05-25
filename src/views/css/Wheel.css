@@ -8,8 +8,15 @@
 	align-items: center;
 	justify-content: center;
 	overflow: hidden;
-	min-height: 77vh;
+	transform: translateY(50%);
 }
+
+.wheelBox{
+	display: flex;
+	justify-content: center;
+	overflow: hidden;
+}
+
 .container{
 	height: 350px;
 	width: 350px;
@@ -18,6 +25,7 @@
 	border-radius: 50%;
 	overflow: hidden;
 	transition: 3s all;
+	z-index: -1;
 }
 .container div{
 	height: 50%;
@@ -33,7 +41,7 @@
 	font-size: 20px;
 	font-family: monospace;
 	color:#000000; 
-	 writing-mode: vertical-rl;
+	writing-mode: vertical-rl;
 }
 
 .container .one{
@@ -42,43 +50,45 @@
 }
 
 .container .two,
-.container .four{
+.container .six{
 	clip-path: polygon(35% 0,50% 100%, 0 0);
 }
 
 .container .two{
 	background: #00fff2;
 	transform: rotate(60deg);
+	clip-path: polygon(100% 0, 50% 100%, 0 0);
 }
 .container .three{
 	background: #ffbb00;
-	transform: rotate(80deg);
-	clip-path: polygon(10% 0, 50% 100%, 0 0);
+	transform: rotate(85deg);
+	clip-path: polygon(100% 0, 50% 100%, 0 0);
 	 
 }
 .container .four{
 	background: #00fff2;
-	transform: rotate(85deg);
+	transform: rotate(145deg);
+	clip-path: polygon(10% 0,50% 100%, 0 0);
 }
 .container .five{
 	background: #c300ff;
-	transform: rotate(105deg);
-	clip-path: polygon(102% 0,50% 100%, 0 0);
+	transform: rotate(150deg);
+	clip-path: polygon(100% 0,50% 100%, 0 0);
 }
 .container .six{
 	background: #ffbb00;
-	transform: rotate(165deg);
-	clip-path: polygon(10% 0,50% 100%, 0 0);
+	transform: rotate(210deg);
+	clip-path: polygon(27% 0,50% 100%, 0 0);
 }
 .container .seven{
 	background: #ffffff;
-	transform: rotate(170deg);
+	transform: rotate(225deg);
 	clip-path: polygon(100% 0,50% 100%, 0 0);
 }
 .container .eight{
 	background: #c300ff;
-	transform: rotate(230deg);
-	clip-path: polygon(102% 0,50% 100%, 0 0);
+	transform: rotate(285deg);
+	clip-path: polygon(10% 0,50% 100%, 0 0);
 }
 .container .nine{
 	background: #ffffff;
@@ -96,6 +106,7 @@
 	border-radius: 50%;
 	position: absolute;
 	background: #000000;
+	transform: translateY(340px);
 }
 #spin{
 	height: 60px;
@@ -116,6 +127,7 @@
 	background: #414141;
 	position: absolute;
 	clip-path: polygon(100% 0,50% 100%, 0 0);
-	margin-top: -350px;
+	margin-top: 140px;
 }
+
 

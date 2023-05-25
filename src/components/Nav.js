@@ -72,14 +72,17 @@ export default function Nav(props){
         </Link>
       </ul> 
         <div className='profileBar'>
-          <img src={user.img_url} width={10}/>
+          <section>
+          <img src={user.img_url} className='profilePic'/>
           <h3>{user.username}</h3>
+          </section>
+          <section className='moneyBar'>
           <h3>Money:{user.money}</h3>
           <h3>Tickets:{user.tickets}</h3>
+          <Link to='/login' onClick={logMeOut}> Logout </Link>
+          </section>
         </div>  
-        <button onClick={logMeOut}> Logout </button>
       </div>
-    
       )}
   </div>
   </nav>

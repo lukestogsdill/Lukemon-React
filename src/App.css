@@ -11,17 +11,19 @@ body .showresults{
   color:white;
 }
 
-/* * {border: solid green 2px; margin: 4px;}
+* {border: solid green 2px; margin: 4px;}
 *>*:nth-child(1) {border: solid 2px blue;}
 *>*:nth-child(2) {border: solid 2px white;}
-*>*:nth-child(3) {border: solid 2px orange;} */
+*>*:nth-child(3) {border: solid 2px orange;}
 
-body
+body,
+html,
+#root,
+.App
 {
   height:100%;
   background-color: black;
 }
-
 
 nav {
   display: flex;
@@ -175,7 +177,23 @@ nav {
   text-align: center;
   justify-content: center;
 }
+.profileBar{
+ display: flex;
+ align-self: center;
+ align-items: center;
+ gap: 1em;
+}
 
+.profilePic{
+  height: 50px;
+  width: auto;
+  border-radius: 100%;
+  width: auto;
+}
+
+.moneyBar > *{
+  margin:.4em;
+}
 
 @keyframes shake {
   20% {

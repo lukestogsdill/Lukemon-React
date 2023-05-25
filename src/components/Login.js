@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import axios from "axios";
+import React, { useState } from 'react'
+import axios from "axios"
+import { Link } from 'react-router-dom'
 import './css/universalForm.css'
 
 function Login(props) {
@@ -57,9 +58,11 @@ function Login(props) {
                   placeholder="Password" 
                   value={loginForm.password} />
 
+          <Link to='/'>
           <button onClick={logMeIn}>Submit</button>
+          </Link>
         </form>
       </div>
-    );
+    )
 }
 export default Login;
