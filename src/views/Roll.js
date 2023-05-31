@@ -10,7 +10,7 @@ export default function Pokemon(props) {
   const postSearch = async (pokeData) => {
     const res = await axios({
       method: "POST",
-      url: "http://127.0.0.1:5000/roll",
+      url: "http://localhost:5000/roll",
       headers: {
         Authorization: 'Bearer ' + props.token
       },
@@ -22,7 +22,7 @@ export default function Pokemon(props) {
   const postCatch = async () => {
     const res = await axios({
       method: "POST",
-      url: "http://127.0.0.1:5000/catch",
+      url: "http://localhost:5000/catch",
       headers: {
         Authorization: 'Bearer ' + props.token
       },
@@ -35,7 +35,7 @@ export default function Pokemon(props) {
 
   const getPokemon = async () => {
     const attMove = generateAtt()
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${attMove.poke_name}`)
+    const response = await fetch(`https://pokeapi.co/v2/pokemon/${attMove.poke_name}`)
     const data = await response.json()
 
     let pokeData = {

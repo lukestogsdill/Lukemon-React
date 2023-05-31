@@ -9,7 +9,7 @@ function Register(props) {
     function registerMe(event) {
       axios({
         method: "POST",
-        url:"http://127.0.0.1:5000/register",
+        url:"http://localhost:5000/register",
         data:{
             url: registerForm.url,
             email: registerForm.email,

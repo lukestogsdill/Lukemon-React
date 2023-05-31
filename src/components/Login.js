@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import axios from "axios"
 import { Link } from 'react-router-dom'
 import './css/universalForm.css'
 
@@ -10,23 +9,18 @@ function Login(props) {
       password: ""
     })
 
-    function logMeIn(event) {
-      axios({
-        method: "POST",
-        url:"http://127.0.0.1:5000/token",
-        data:{
-          email: loginForm.email,
-          password: loginForm.password
-         }
+    const credentials = btoa(`${loginForm.email}:${loginForm.password}`)
+
+    const logMeIn = async(event) => {
+      const response = await fetch('http://localhost:5000/token', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Basic ${credentials}`
+        },
       })
-      .then((response) => {
-        props.setToken(response.data.access_token)
-      }).catch((error) => {
-        if (error.response) {
-          console.log(error.response)
-          console.log(error.response.status)
-          }
-      })
+      const user_token = await response.json()
+      console.log(user_token.token)
+      props.setToken(user_token.token)
 
       setloginForm(({
         email: "",

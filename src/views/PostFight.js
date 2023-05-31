@@ -12,7 +12,7 @@ function PostFight(props) {
   },[])
 
   const getFeed = async () => {
-      const response = await fetch("http://127.0.0.1:5000/getFeed",{
+      const response = await fetch("http://localhost:5000/getFeed",{
         headers: {
           Authorization: `Bearer ${props.token}`,
         }
@@ -33,7 +33,7 @@ function PostFight(props) {
       if(text!== ''){
         const res = await axios({
           method: 'POST',
-          url: 'http://127.0.0.1:5000/postFight',
+          url: 'http://localhost:5000/postFight',
           headers: {
             Authorization: `Bearer ${props.token}`
           },
@@ -54,8 +54,22 @@ function PostFight(props) {
     )
   }
 
+  const handleTest = async() => {
+    const response = await fetch("http://localhost:5000/test",{
+        headers: {
+          Authorization: `Bearer ${props.token}`,
+        }
+      })
+        console.log(props.token)
+        console.log(response)
+  }
+  
+
+  
+
   return (
     <div className='postTree'>
+      <button onClick={handleTest}>asdfasdf</button>
       <CreatePost/>
       <div className='postContainer'>
         {feed.map((feed, index) => {

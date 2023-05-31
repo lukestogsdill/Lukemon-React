@@ -8,12 +8,13 @@ export default function Nav(props){
   
   useEffect(() => {
    getUserData()
+   console.log(props.token)
   },[])
 
     function logMeOut() {
     axios({
       method: "POST",
-      url:"http://127.0.0.1:5000/logout",
+      url:"http://localhost:5000/logout",
       headers: {
         Authorization: 'Bearer ' + props.token
       }
@@ -30,7 +31,7 @@ export default function Nav(props){
 
 
   const getUserData = async () => {
-      const response = await fetch("http://127.0.0.1:5000/getUserData",{
+      const response = await fetch("http://localhost:5000/getUserData",{
         headers: {
           Authorization: `Bearer ${props.token}`,
         }

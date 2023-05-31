@@ -37,7 +37,7 @@ function TeamBuilder(props){
   }
 
   const getData = async() => {
-    const response = await fetch("http://127.0.0.1:5000/getInv",{
+    const response = await fetch("http://localhost:5000/getInv",{
       headers: {
         Authorization: `Bearer ${props.token}`,
       }
@@ -55,7 +55,7 @@ function TeamBuilder(props){
     console.log(id_data)
     const res = await axios({
       method: "POST",
-      url: "http://127.0.0.1:5000/saveTeam",
+      url: "http://localhost:5000/saveTeam",
       headers: {
         Authorization: `Bearer ${props.token}`
       },
