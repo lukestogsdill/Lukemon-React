@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import {useParams} from "react-router-dom";
+import {useParams} from "react-router-dom"
+import Modal from '@mui/material/Modal'
 import './css/LukeFight.css'
 
 
@@ -17,6 +18,8 @@ function LukeFight(props) {
     const [bankerAtt, setBankerAtt] = useState(false)
     const [playerDmgAni, setPlayerDmgAni] = useState(false)
     const [bankerDmgAni, setBankerDmgAni] = useState(false)
+    const [open, setOpen] = useState(false)
+    const [result, setResult] = useState('')
     const {id} = useParams()
     const teamData = []
     let dmg = 0
@@ -43,6 +46,20 @@ function LukeFight(props) {
 
     const bankerPokeLoader = (team) => {
       setBankerPoke(team[0])
+    }
+
+    useEffect(() => {
+      getUserData()
+    }, [result])
+
+    const getUserData = async () => {
+      const response = await fetch("http://localhost:5000/getUserData",{
+        headers: {
+          Authorization: `Bearer ${props.token}`,
+        }
+      })
+      const data = await response.json()
+      props.setUser(data)
     }
 
     const battleTurn = async() => {
@@ -137,17 +154,25 @@ function LukeFight(props) {
         fightBtn.style.display = 'block'
       }
     }
+  
+    const handleClose = () => {
+      setOpen(false)
+    }
 
-    const handleResult = () => {
+    const handleResult = async () => {
       if(player.length === 0 || playerPoke === undefined){
-        var showResults = document.createElement('showResults')
-        showResults.innerHTML = 'you Lose!'
-        document.body.appendChild(showResults)
+        setOpen(true)
+        setResult('You Lose')
       } else if(banker.length === 0 || bankerPoke === undefined) {
-        var showResults = document.createElement('showResults')
-        showResults.innerHTML = 'you Win!'
-        document.body.appendChild(showResults)
-      } 
+        setOpen(true)
+        setResult('You Win')
+        const response = await fetch('http://localhost:5000/fightReward',{
+          headers: {
+          Authorization: `Bearer ${props.token}`,
+          }
+        })
+    setResult('you win 10 dollars!')
+    } 
     }
 
     const testLog = () => {
@@ -196,6 +221,14 @@ function LukeFight(props) {
     return(
     <div className='fightTree'>
       <button onClick={handleFight} id='fightBtn'>Press to Fight!</button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="parent-modal-title"
+        aria-describedby="parent-modal-description"
+        className='postModal'>
+          <h1>{result}</h1>
+      </Modal>
       <div className='fightContainer'>
         {playerPoke?(
           <div className='playerContainer'>

@@ -14,3 +14,13 @@
     border:red solid 2px;
     gap: 1em;
 }
+
+.createPost{
+    background-color: #ff000056;
+    align-self: center;
+}
+
+.postModal{
+    display:flex;
+    justify-content: center;
+}

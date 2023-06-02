@@ -13,8 +13,24 @@
 
 .wheelBox{
 	display: flex;
+	flex-direction: row;
 	justify-content: center;
 	overflow: hidden;
+}
+.wheelTree{
+	display:flex;
+	align-items: center;
+	flex-direction: column;
+	width:100%;
+	background-image: url(https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.IdQRH79A6jQBqiY3DODjYAHaEL%26pid%3DApi&f=1&ipt=0afb4ffce78a2dea52431e6bc43b0ff1b6bdd4d14057e2702decd500eab1dab0&ipo=images);
+	background-repeat: no-repeat;
+	background-size:cover;
+	width: 80%;
+	min-width: 400px;
+	max-width: 800px;
+	border:solid white 2px;
+	border-radius: 10px;
+	margin-top: .7em;
 }
 
 .container{
@@ -112,8 +128,6 @@
 	height: 60px;
 	width: 200px;
 	background: #ff0000;
-	position: absolute;
-	margin-top: 600px;
 	font-size: 30px;
 	color: white;
 	border: 1px solid white;
@@ -121,6 +135,7 @@
 	cursor: pointer;
 	transition: 0.2s all;
 }
+
 .stoper{
 	height: 50px;
 	width: 40px;
@@ -128,6 +143,31 @@
 	position: absolute;
 	clip-path: polygon(100% 0,50% 100%, 0 0);
 	margin-top: 140px;
+}
+
+.betBox{
+	display:flex;
+	width: 300px;
+	justify-content: center;
+	gap: 1em;
+	margin: 1em;
+}
+
+.betBtns{
+	display: flex;
+	gap:1em;
+	font-size: 2em;
+}
+
+.betBox h1{
+	color:white;
+}
+
+.betBtns > *{
+	background-color: #e1b503;
+	border-radius: 4px;
+	padding: .3em;
+	cursor: pointer;
 }
 
 

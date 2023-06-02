@@ -1,14 +1,15 @@
 import React, { useState } from "react"
 import axios from 'axios'
 import './css/roll.css'
-import { useEffect } from "react"
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function Pokemon(props) {
   const [poke, setPoke] = useState({})
   const [pokeAtt, setPokeAtt] = useState({})
 
   const postSearch = async (pokeData) => {
-    const res = await axios({
+    const response = await axios({
       method: "POST",
       url: "http://localhost:5000/roll",
       headers: {
@@ -16,11 +17,11 @@ export default function Pokemon(props) {
       },
       data: pokeData
     })
-    return res
+    return response
   }
 
   const postCatch = async () => {
-    const res = await axios({
+    const response = await axios({
       method: "POST",
       url: "http://localhost:5000/catch",
       headers: {
@@ -30,12 +31,17 @@ export default function Pokemon(props) {
     })
     setPoke('')
     setPokeAtt('')
-    return res
+    if(response.status !== 200){
+      toast.error(response.data.msg)
+    } else {
+      toast.success(response.data.msg)
+    }
+    return response
   }
 
   const getPokemon = async () => {
     const attMove = generateAtt()
-    const response = await fetch(`https://pokeapi.co/v2/pokemon/${attMove.poke_name}`)
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${attMove.poke_name}`)
     const data = await response.json()
 
     let pokeData = {
@@ -64,9 +70,6 @@ export default function Pokemon(props) {
     return attData
   }
 
-  const testing = () =>{
-    console.log(poke)
-  }
 
   return (
     <div className="rollContainer">

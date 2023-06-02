@@ -1,11 +1,16 @@
 import React , { useState, useEffect } from 'react'
-import axios from 'axios'
 import './css/PostFight.css'
 import { Link } from 'react-router-dom'
+import Button from '@mui/material/Button'
+import Modal from '@mui/material/Modal'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import axios from 'axios'
 
 function PostFight(props) {
   
     const [feed, setFeed] = useState([])
+    const [open, setOpen] = useState(false)
 
   useEffect(() => {
     getFeed()
@@ -31,7 +36,7 @@ function PostFight(props) {
     const handleSubmit = async (event) => {
       event.preventDefault()
       if(text!== ''){
-        const res = await axios({
+        const response = await axios({
           method: 'POST',
           url: 'http://localhost:5000/postFight',
           headers: {
@@ -40,11 +45,18 @@ function PostFight(props) {
           data: {
             caption: text
           }
-        })
+      })
+      
+      if(response.status !== 200){
+        toast.error(response.data.msg)
+      } else {
+        toast.success(response.data.msg)
+      }
         setText('')
       } else {
-        return {'msg': 'Please enter a Caption'}
+        toast.error('Please type a caption')
       }
+      
     }
     return(
       <form onSubmit={handleSubmit} className='postForm'>
@@ -54,29 +66,37 @@ function PostFight(props) {
     )
   }
 
-  const handleTest = async() => {
-    const response = await fetch("http://localhost:5000/test",{
-        headers: {
-          Authorization: `Bearer ${props.token}`,
-        }
-      })
-        console.log(props.token)
-        console.log(response)
+  const handleOpen = () => {
+    setOpen(true)
   }
-  
 
-  
+  const handleClose = () => {
+    setOpen(false)
+  }
 
   return (
     <div className='postTree'>
-      <button onClick={handleTest}>asdfasdf</button>
+      <Button onClick={handleOpen}>Create Post</Button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="parent-modal-title"
+        aria-describedby="parent-modal-description"
+        className='postModal'>
       <CreatePost/>
+      </Modal>
       <div className='postContainer'>
         {feed.map((feed, index) => {
           return(
           <div className='postedFight'>
             <h2>{feed.username}</h2>
-            <img src={feed.user_img}/>
+            <div className='profilePic'
+            style={{
+            backgroundImage: `url(${feed.user_img})`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            width: '50px'
+          }}/>
             <h4>{feed.caption}</h4>
             <img src={feed.poke_img}/>
             <p><small>{feed.date_created}</small></p>

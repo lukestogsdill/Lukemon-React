@@ -1,15 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import axios from "axios"
 import { Link } from 'react-router-dom'
 
 export default function Nav(props){
-  
-  const [user, setUser] = useState({})
-  
-  useEffect(() => {
-   getUserData()
-   console.log(props.token)
-  },[])
 
     function logMeOut() {
     axios({
@@ -28,17 +21,6 @@ export default function Nav(props){
         console.log(error.response.headers)
         }
     })}
-
-
-  const getUserData = async () => {
-      const response = await fetch("http://localhost:5000/getUserData",{
-        headers: {
-          Authorization: `Bearer ${props.token}`,
-        }
-      })
-        const data = await response.json()
-        setUser(data)
-  }
 
   return(
   <nav>
@@ -74,12 +56,17 @@ export default function Nav(props){
       </ul> 
         <div className='profileBar'>
           <section>
-          <img src={user.img_url} className='profilePic'/>
-          <h3>{user.username}</h3>
+          <div className='profilePic'
+            style={{
+            backgroundImage: `url(${props.user.img_url})`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+          }}/>
+          <h3>{props.user.username}</h3>
           </section>
           <section className='moneyBar'>
-          <h3>Money:{user.money}</h3>
-          <h3>Tickets:{user.tickets}</h3>
+          <h3>Money:{props.money}</h3>
+          <h3>Tickets:{props.tickets}</h3>
           <Link to='/login' onClick={logMeOut}> Logout </Link>
           </section>
         </div>  

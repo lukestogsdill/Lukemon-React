@@ -1,12 +1,20 @@
 import axios from "axios"
 import React, { useEffect } from 'react'
 import './css/TeamBuilder.css'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 function TeamBuilder(props){
+
+  useEffect(() => {
+    teamDisplay()
+    console.log(props.team)
+  },[])
+
   const teamData = []
 
   function addTeam(index){
-    if(teamData > 7){
+    if(teamData > 4){
       return {'msg': 'props.team is already full'}
     }
     else{
@@ -53,7 +61,7 @@ function TeamBuilder(props){
       id_data.push(props.team[i].lukemon_id)
     }
     console.log(id_data)
-    const res = await axios({
+    const response = await axios({
       method: "POST",
       url: "http://localhost:5000/saveTeam",
       headers: {
@@ -62,14 +70,15 @@ function TeamBuilder(props){
       data: {
         ids:id_data
       }
+      
     })
+    if(response.status !== 200){
+      toast.error(response.data.msg)
+    } else {
+      toast.success(response.data.msg)
+    }
   }
   
-  useEffect(() => {
-    teamDisplay()
-    console.log(props.team)
-  },[])
-
   return (
     
     <div className='invTree'>
