@@ -1,33 +1,33 @@
-import React, { useState } from 'react';
-import axios from "axios";
+import React, { useState } from 'react'
+import { useNavigate } from "react-router-dom"
 import '../components/css/universalForm.css'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 function Register(props) {
 
     const [registerForm, setRegisterForm] = useState({})
+    const navigate = useNavigate()
 
-    function registerMe(event) {
-      axios({
-        method: "POST",
-        url:"http://localhost:5000/register",
-        data:{
-            url: registerForm.url,
-            email: registerForm.email,
-            username: registerForm.username,
-            password: registerForm.password,
-            confirmPassword: registerForm.confirmPassword
-        }
-      })
-      .then((response) => {
-        props.setToken(response.data.access_token)
-      }).catch((error) => {
-        if (error.response) {
-          console.log(error.response)
-          console.log(error.response.status)
-          }
-      })
-      
+    const registerMe = async(event) => {
       event.preventDefault()
+      const response = await fetch("http://73.77.228.37:5000/register",{
+        method: "POST",
+        headers:{'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          url: registerForm.url,
+          username: registerForm.username,
+          password: registerForm.password,
+          confirmPassword: registerForm.confirmPassword
+        })
+      })
+      const data = await response.json()
+      if(response.status === 400){
+        toast.error(data.msg)
+        return
+      }
+      toast.success(data.msg)
+      navigate('/login')
     }
 
     function handleChange(event) { 
@@ -44,35 +44,29 @@ function Register(props) {
                 type="text"
                 text={registerForm.url} 
                 name="url" 
-                placeholder="Url"
+                placeholder="Img-URL (Optional)"
                 value={registerForm.url} />
-            <input onChange={handleChange} 
-                type="email"
-                text={registerForm.email} 
-                name="email" 
-                placeholder="email"
-                value={registerForm.email} />
             <input onChange={handleChange} 
                 type="text"
                 text={registerForm.username} 
                 name="username" 
-                placeholder="Username"
+                placeholder="Username*"
                 value={registerForm.username} />
             <input onChange={handleChange} 
                 type="password"
                 text={registerForm.password} 
                 name="password" 
-                placeholder="Password" 
+                placeholder="Password*" 
                 value={registerForm.password} />
             <input onChange={handleChange} 
                 type="password"
                 text={registerForm.confirmPassword} 
                 name="confirmPassword" 
-                placeholder="Confirm password" 
+                placeholder="Confirm password*" 
                 value={registerForm.confirmPassword} />
             <button onClick={registerMe}>Submit</button>
         </form>
       </div>
-    );
+    )
 }
 export default Register

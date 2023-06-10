@@ -1,6 +1,7 @@
 .fightTree{
    color:white;
     display:flex;
+    width:400px;
     flex-direction: column;
     text-align: center;
 }
@@ -33,14 +34,22 @@
 
  .aliveBar img,
  .trashBar img{
-    max-width: 100%;
-    width:3.4rem;
-    height: auto;
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
  }
  
  .playerAlive img,
- .playerTrash img{
+ .playerTrash img,
+ #playerPic{
    transform: scaleX(-1);
+ }
+
+ #playerPic,
+ #bankerPic{
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
  }
 
  .trashBar img{
@@ -54,7 +63,7 @@
     background-repeat: no-repeat;
     border-radius: 10px;
     margin: 2em;
-    min-height: 400px;
+    height:300px
 
  }
 
@@ -92,6 +101,13 @@
 
  .dmgAni{
    display:none;
+ }
+
+ .postModal{
+  align-items: center;
+  color:white;
+  font-size: 3em;
+  text-align: center;
  }
 
 

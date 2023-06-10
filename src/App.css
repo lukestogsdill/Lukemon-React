@@ -12,16 +12,14 @@
 *>*:nth-child(2) {border: solid 2px white;}
 *>*:nth-child(3) {border: solid 2px orange;} */
 
-body,
-#root,
-.App
+body
 {
   background-image: linear-gradient(to right, #525252 0%,black 10%,black 90%, #525252 100%);
 }
 
 .App{
 display: flex;
- justify-content: center;
+justify-content: center;
 }
 
 nav {
@@ -122,54 +120,6 @@ nav {
   border-radius: 100%
 }
 
-.drop_menu input{
-  width:80px;
-  height: 80px;
-  background-color: blue;
-}
-.drop_menu input:checked + .menu_bar{
-  display:contents;
-}
-
-.menu_bar{
-  display:flex;
-  display:none;
-  flex-direction: column;
-  top:500px;
-}
-
-.menu_bar,
-.menu_bar li,
-.drop_menu input {
-  display:none;
-}
-
-.alert{
-  text-align: center;
-  color:white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding:0 1em;
-}
-.alert-success{
-  background-color: #00800070;
-  border: solid green 2px;
-}
-.alert-warning{
-  background-color: #ffff0070;
-  border: solid yellow 2px;
-}
-.alert-danger{
-  background-color: #ff000070;
-  border: solid red 2px;
-}
-.closebtn{
-  cursor: pointer;
-  font-size: 2.5em;
-}
-
-
 .lukemon_tree {
   margin: 2em;
   display: flex;
@@ -192,6 +142,10 @@ nav {
 
 .moneyBar > *{
   margin:.4em;
+}
+
+.dropDown{
+  display:none;
 }
 
 @keyframes shake {
@@ -223,51 +177,32 @@ nav {
 }
 
 @media screen and (max-width:800px) {
-  .menu_bar li:nth-child(1),
-  .drop_menu input {
-      display:block;
-  }
-  .profile_nav{
+  .profileBar{
       display: none;
+  }
+  .dropDown{
+    display: block;
   }
   
 }
 @media screen and (max-width:650px) {
-  .menu_bar li:nth-child(2) {
-      display:block;
-  }
   .nav_links a:nth-child(4){
       display:none;
   }
 }
 @media screen and (max-width:650px) {
-  .menu_bar li:nth-child(3) {
-      display:block;
-  }
   .nav_links a:nth-child(3){
       display:none;
   }
 }
 @media screen and (max-width:550px) {
-  .menu_bar li:nth-child(4) {
-      display:block;
-  }
   .nav_links a:nth-child(2){
       display:none;
   }
 }
 @media screen and (max-width:450px) {
-  .menu_bar li:nth-child(5) {
-      display:block;
-  }
-  .menu_bar{
-      justify-content: center;
-  }
   .nav_links a:nth-child(1){
       display:none;
-  }
-  .nav_links{
-      justify-content: center;
   }
 }
 

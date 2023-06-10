@@ -1,26 +1,26 @@
 import React from 'react'
 import axios from "axios"
 import { Link } from 'react-router-dom'
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 export default function Nav(props){
 
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
     function logMeOut() {
-    axios({
-      method: "POST",
-      url:"http://localhost:5000/logout",
-      headers: {
-        Authorization: 'Bearer ' + props.token
-      }
-    })
-    .then((response) => {
        props.removeToken()
-    }).catch((error) => {
-      if (error.response) {
-        console.log(error.response)
-        console.log(error.response.status)
-        console.log(error.response.headers)
-        }
-    })}
+    }
 
   return(
   <nav>
@@ -65,14 +65,55 @@ export default function Nav(props){
           <h3>{props.user.username}</h3>
           </section>
           <section className='moneyBar'>
-          <h3>Money:{props.money}</h3>
-          <h3>Tickets:{props.tickets}</h3>
+          <h3>$:{props.money}</h3>
+          <h3>T:{props.tickets}</h3>
           <Link to='/login' onClick={logMeOut}> Logout </Link>
           </section>
         </div>  
       </div>
       )}
   </div>
+  <div className='dropDown'>
+      <Button
+        id="basic-button"
+        aria-controls={open ? 'basic-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleClick}
+      >
+        x
+      </Button>
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          'aria-labelledby': 'basic-button',
+        }}
+      >
+        <MenuItem onClick={handleClose}>
+          <Link to="/wheel">
+            Wheel
+          </Link>
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <Link to="/TeamBuilder">
+          Team
+        </Link>
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <Link to="/roll">
+          Roll
+        </Link>
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <Link to="/logout" onClick={logMeOut}>
+          Logout
+        </Link>
+        </MenuItem>
+      </Menu>
+    </div>
   </nav>
   )
 }

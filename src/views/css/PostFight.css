@@ -20,7 +20,9 @@
     align-self: center;
 }
 
-.postModal{
+.postModal,
+.uniModal{
     display:flex;
     justify-content: center;
 }
+

@@ -5,14 +5,14 @@ import './css/universalForm.css'
 function Login(props) {
 
     const [loginForm, setloginForm] = useState({
-      email: "",
+      username: "",
       password: ""
     })
 
-    const credentials = btoa(`${loginForm.email}:${loginForm.password}`)
+    const credentials = btoa(`${loginForm.username}:${loginForm.password}`)
 
     const logMeIn = async(event) => {
-      const response = await fetch('http://localhost:5000/token', {
+      const response = await fetch('http://73.77.228.37:5000/token', {
         method: 'GET',
         headers: {
           'Authorization': `Basic ${credentials}`
@@ -23,7 +23,7 @@ function Login(props) {
       props.setToken(user_token.token)
 
       setloginForm(({
-        email: "",
+        username: "",
         password: ""}))
 
       event.preventDefault()
@@ -41,17 +41,16 @@ function Login(props) {
           <form>
             <input onChange={handleChange} 
                   type="text"
-                  text={loginForm.email} 
-                  name="email" 
-                  placeholder="Email" 
-                  value={loginForm.email} />
+                  text={loginForm.username} 
+                  name="username" 
+                  placeholder="Username" 
+                  value={loginForm.username} />
             <input onChange={handleChange} 
                   type="password"
                   text={loginForm.password} 
                   name="password" 
                   placeholder="Password" 
                   value={loginForm.password} />
-
           <Link to='/'>
           <button onClick={logMeIn}>Submit</button>
           </Link>

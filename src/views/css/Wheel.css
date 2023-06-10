@@ -1,8 +1,4 @@
-*{
-	padding: 0;
-	margin: 0;
-	box-sizing: border-box;
-}
+
 .wheel{
 	display: flex;
 	align-items: center;
@@ -59,63 +55,64 @@
 	color:#000000; 
 	writing-mode: vertical-rl;
 }
-
+.container div {
+	clip-path: polygon(101% 0, 50% 100%, 0 0);
+}
 .container .one{
-	background: #c300ff;
 	left: 50%;
 }
-
-.container .two,
-.container .six{
-	clip-path: polygon(35% 0,50% 100%, 0 0);
-}
-
 .container .two{
-	background: #00fff2;
 	transform: rotate(60deg);
-	clip-path: polygon(100% 0, 50% 100%, 0 0);
 }
 .container .three{
-	background: #ffbb00;
 	transform: rotate(85deg);
-	clip-path: polygon(100% 0, 50% 100%, 0 0);
-	 
 }
 .container .four{
-	background: #00fff2;
 	transform: rotate(145deg);
-	clip-path: polygon(10% 0,50% 100%, 0 0);
 }
 .container .five{
-	background: #c300ff;
 	transform: rotate(150deg);
-	clip-path: polygon(100% 0,50% 100%, 0 0);
 }
 .container .six{
-	background: #ffbb00;
 	transform: rotate(210deg);
-	clip-path: polygon(27% 0,50% 100%, 0 0);
 }
 .container .seven{
-	background: #ffffff;
 	transform: rotate(225deg);
-	clip-path: polygon(100% 0,50% 100%, 0 0);
 }
 .container .eight{
-	background: #c300ff;
 	transform: rotate(285deg);
-	clip-path: polygon(10% 0,50% 100%, 0 0);
 }
 .container .nine{
-	background: #ffffff;
-	transform: rotate(290deg);
-	clip-path: polygon(100% 0,50% 100%, 0 0);
+	transform: rotate(300deg);
 }
-.container .ten{
-	background: #00ff37;
-	transform: rotate(350deg);
-	clip-path: polygon(20% 0,50% 100%, 0 0);
+
+.four{
+	background-color: #ddd900;
 }
+
+.six{
+	background-color: #f84f87;
+}
+
+.eight{
+	background-color: #9401d8;
+}
+
+.two{
+	background-color: #00ff0d;
+}
+
+.one,
+.five,
+.seven{
+	background-image:linear-gradient(red,orange,red);
+}
+
+.three,
+.nine{
+	background-image:linear-gradient(green,yellow, green);
+}
+
 .mid{
 	height: 25px;
 	width: 25px;
@@ -159,9 +156,6 @@
 	font-size: 2em;
 }
 
-.betBox h1{
-	color:white;
-}
 
 .betBtns > *{
 	background-color: #e1b503;
@@ -170,4 +164,11 @@
 	cursor: pointer;
 }
 
+.moneyBox{
+	text-align: center;
+	color:white;
+}
+.betNum{
+	color:#e1b503;
+}
 

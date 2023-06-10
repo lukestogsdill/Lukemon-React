@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {useParams} from "react-router-dom"
+import {useParams, useNavigate} from "react-router-dom"
 import Modal from '@mui/material/Modal'
 import './css/LukeFight.css'
 
@@ -22,14 +22,19 @@ function LukeFight(props) {
     const [result, setResult] = useState('')
     const {id} = useParams()
     const teamData = []
+    const navigate = useNavigate()
     let dmg = 0
     let crit = 1
     let acc = 1
     let downed = {}
     let fightBtn = document.getElementById('fightBtn')
 
+
     useEffect(() => {
-      getTeam()
+      const getTeams = async() => {
+        await getTeam()
+      }
+      getTeams()
     },[])
 
     useEffect(() => {
@@ -48,19 +53,6 @@ function LukeFight(props) {
       setBankerPoke(team[0])
     }
 
-    useEffect(() => {
-      getUserData()
-    }, [result])
-
-    const getUserData = async () => {
-      const response = await fetch("http://localhost:5000/getUserData",{
-        headers: {
-          Authorization: `Bearer ${props.token}`,
-        }
-      })
-      const data = await response.json()
-      props.setUser(data)
-    }
 
     const battleTurn = async() => {
       fightBtn.style.display = 'none'
@@ -157,6 +149,7 @@ function LukeFight(props) {
   
     const handleClose = () => {
       setOpen(false)
+      navigate('/')
     }
 
     const handleResult = async () => {
@@ -166,12 +159,8 @@ function LukeFight(props) {
       } else if(banker.length === 0 || bankerPoke === undefined) {
         setOpen(true)
         setResult('You Win')
-        const response = await fetch('http://localhost:5000/fightReward',{
-          headers: {
-          Authorization: `Bearer ${props.token}`,
-          }
-        })
-    setResult('you win 10 dollars!')
+        props.setMoney(props.money + 10)
+        setResult('you win 10 dollars!')
     } 
     }
 
@@ -187,7 +176,7 @@ function LukeFight(props) {
     }
 
     const getTeam = async () => {
-    const response = await fetch(`http://localhost:5000/getTeam/${id}`,{
+    const response = await fetch(`http://73.77.228.37:5000/getTeam/${id}`,{
       headers: {
         Authorization: `Bearer ${props.token}`,
       }
@@ -220,7 +209,8 @@ function LukeFight(props) {
     
     return(
     <div className='fightTree'>
-      <button onClick={handleFight} id='fightBtn'>Press to Fight!</button>
+      
+      
       <Modal
         open={open}
         onClose={handleClose}
@@ -229,39 +219,7 @@ function LukeFight(props) {
         className='postModal'>
           <h1>{result}</h1>
       </Modal>
-      <div className='fightContainer'>
-        {playerPoke?(
-          <div className='playerContainer'>
-          <h2 className={bankerDmgAni?'bankerDmgAni':'dmgAni'} id='bDmgEff'>{Math.round(bankerDmg)}</h2>
-          <svg width='200' height='200'>
-            <image href={playerPoke.poke_hash.sprite_url} 
-            x='25%' y='25%'
-            width="50%" height="50%"
-            className={playerAtt? 'playerAtt': 'image'}
-            id='playerPic'/>
-          </svg>
-          <h2 className='hpBar'>HP: {Math.round(playerPoke.poke_hash.hp)}</h2>
-          </div>
-        ):(
-          <></>
-        )}
-        {bankerPoke?(
-        <div className='bankerContainer'>
-          <h2 className={playerDmgAni?'playerDmgAni':'dmgAni'} id='pDmgEff'>{Math.round(playerDmg)}</h2>
-          <svg width="200" height="200">
-            <image href={bankerPoke.poke_hash.sprite_url}
-            x='25%' y='25%'
-            width="50%" height="50%"
-            className={bankerAtt? 'bankerAtt': 'image'}
-            id='bankerPic'/>
-          </svg>
-          <h2 className='hpBar'>HP: {Math.round(bankerPoke.poke_hash.hp)}</h2>
-        </div>
-        ):(
-          <></>
-        )}
-    </div>
-    <div className='aliveBar'>
+      <div className='aliveBar'>
     <div className='playerAlive'>
     <h1>Player</h1>
     {props.team.map((player) => {
@@ -297,6 +255,28 @@ function LukeFight(props) {
     })}
     </div>
     </div>
+      <div className='fightContainer'>
+        
+        {playerPoke?(
+          <div className='playerContainer'>
+          <h2 className={bankerDmgAni?'bankerDmgAni':'dmgAni'} id='bDmgEff'>{Math.round(bankerDmg)}</h2>
+          <img src={playerPoke.poke_hash.sprite_url} className={playerAtt? 'playerAtt': 'image'} id='playerPic'/>
+          <h2 className='hpBar'>HP: {Math.round(playerPoke.poke_hash.hp)}</h2>
+          </div>
+        ):(
+          <></>
+        )}
+        {bankerPoke?(
+        <div className='bankerContainer'>
+          <h2 className={playerDmgAni?'playerDmgAni':'dmgAni'} id='pDmgEff'>{Math.round(playerDmg)}</h2>
+          <img src={bankerPoke.poke_hash.sprite_url} className={bankerAtt? 'bankerAtt': 'image'} id='bankerPic'/>
+          <h2 className='hpBar'>HP: {Math.round(bankerPoke.poke_hash.hp)}</h2>
+        </div>
+        ):(
+          <></>
+        )}
+    </div>
+    <button onClick={handleFight} id='fightBtn'>Press to Fight!</button>
     
     </div>
     )

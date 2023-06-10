@@ -1,6 +1,8 @@
 import axios from "axios"
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './css/TeamBuilder.css'
+import '../components/css/pokeTypes.css'
+import Modal from '@mui/material/Modal'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -12,10 +14,12 @@ function TeamBuilder(props){
   },[])
 
   const teamData = []
+  const [open, setOpen] = useState(false)
+  const [delPoke, setDelPoke] = useState(null)
 
   function addTeam(index){
-    if(teamData > 4){
-      return {'msg': 'props.team is already full'}
+    if(props.team.length > 4){
+      toast.error('Team Limit Reached')
     }
     else{
       teamData.push(props.invData[index])
@@ -35,7 +39,7 @@ function TeamBuilder(props){
   }
 
   const teamDisplay = async () =>{
-    const data = await getData()
+    const data = await getTeamData()
     for(let i = 0; i < data.length; i++){
       if(data[i]['onTeam']!=null){
         teamData[data[i]['onTeam']] = data[i]
@@ -44,8 +48,8 @@ function TeamBuilder(props){
     props.setTeam(teamData)
   }
 
-  const getData = async() => {
-    const response = await fetch("http://localhost:5000/getInv",{
+  const getTeamData = async() => {
+    const response = await fetch("http://73.77.228.37:5000/getInv",{
       headers: {
         Authorization: `Bearer ${props.token}`,
       }
@@ -63,7 +67,7 @@ function TeamBuilder(props){
     console.log(id_data)
     const response = await axios({
       method: "POST",
-      url: "http://localhost:5000/saveTeam",
+      url: "http://73.77.228.37:5000/saveTeam",
       headers: {
         Authorization: `Bearer ${props.token}`
       },
@@ -78,18 +82,54 @@ function TeamBuilder(props){
       toast.success(response.data.msg)
     }
   }
+
+  const handleDel = async () => {
+    const response = await fetch(`http://73.77.228.37:5000/delPoke/${delPoke}`,{
+      headers: {
+        Authorization: `Bearer ${props.token}`,
+      }
+    }) 
+    if(response.status === 200){
+      getTeamData()
+      toast.success('Successfully Deleted')
+    } else {
+      toast.error('Error, could not delete')
+    }
+    
+  }
+
+  const handleOpen = (num) =>{
+    setOpen(true)
+    setDelPoke(num)
+  }
+  const handleClose = () => {
+    console.log('asdklfa')
+    setOpen(false)
+    setDelPoke(null)
+  }
   
   return (
     
     <div className='invTree'>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="parent-modal-title"
+        aria-describedby="parent-modal-description"
+        className='postModal'>
+          <div>
+          <h1>Are you sure you want to delete this pokemon?</h1>
+          <button onClick={() => {handleDel()}}>Yes</button>
+          <button onClick={()=>{handleClose()}}>No</button>
+          </div>
+      </Modal>
+      <h1>TEAM</h1>
       <div className='teamContainer'>
-      <h1>MY TEAM</h1>
         <ul className='teamList'>
         {props.team.map((team, index) => {
             return(
               team.onTeam!=null?(
-                <div className="pokeCard">
-                <button onClick={() => delTeam(index)}>X</button>
+                <div className='pokeCard'  id={team.poke_hash.poke_type} onClick={() => delTeam(index)}>
                 <img className='teamImg' src={team.poke_hash.sprite_url}></img>
                 <h3>{team.poke_hash.poke_name}</h3>
                 <h4>{team.poke_hash.poke_type}</h4>
@@ -116,10 +156,13 @@ function TeamBuilder(props){
     <div className='invContainer'>
       {props.invData.map((poke, index) =>{
         return(
-          poke.onTeam==null?( 
-            <div className="pokeCard">
-              {props.team.length<7?(<button onClick={() => addTeam(index)}>ADD</button>):(<></>)}
-            
+          poke.onTeam==null?(
+            <div className="teamList">
+            <div className="pokeCard" id={poke.poke_hash.poke_type} onClick={() => addTeam(index)}>
+            <button onClick={(event) => {
+              event.stopPropagation()
+              handleOpen(poke.lukemon_id)
+            }}>x</button>
             <img src={poke.poke_hash.sprite_url}></img>
             <h2>{poke.poke_hash.poke_name}</h2>
             <h4>{poke.poke_hash.poke_type}</h4>
@@ -135,6 +178,8 @@ function TeamBuilder(props){
               <li>CRIT<br/>%{poke.crit}</li>
               <li>ACC<br/>%{poke.accuracy}</li>
             </ul>
+          </div>
+          
           </div>
           ):(
             <></>
