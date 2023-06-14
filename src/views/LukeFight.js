@@ -159,14 +159,9 @@ function LukeFight(props) {
       } else if(banker.length === 0 || bankerPoke === undefined) {
         setOpen(true)
         setResult('You Win')
-        props.setMoney(props.money + 10)
-        setResult('you win 10 dollars!')
+        props.setMoney(props.money + 20)
+        setResult('You Win $20!')
     } 
-    }
-
-    const testLog = () => {
-      console.log('tesstingg')
-      console.log(bankerTrash)
     }
 
     const handleFight = async () => {

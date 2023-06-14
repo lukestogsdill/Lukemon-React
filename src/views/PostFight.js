@@ -1,16 +1,11 @@
 import React , { useState, useEffect } from 'react'
 import './css/PostFight.css'
 import { Link } from 'react-router-dom'
-import Button from '@mui/material/Button'
-import Modal from '@mui/material/Modal'
-import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import axios from 'axios'
 
 function PostFight(props) {
   
     const [feed, setFeed] = useState([])
-    const [open, setOpen] = useState(false)
     const teamData = []
 
   useEffect(() => {
@@ -21,8 +16,6 @@ function PostFight(props) {
       }
       fetchData()
   },[])
-  
-
 
   const getFeed = async () => {
       const response = await fetch("http://73.77.228.37:5000/getFeed",{
@@ -31,6 +24,9 @@ function PostFight(props) {
         }
       })
         const data = await response.json()
+        for(let i = 0; i < data.length; i++){
+          data[i].team_urls = data[i].team_urls.split(',')
+        }
         setFeed(data)
   }
   const updateCurr = async () => {
@@ -46,11 +42,9 @@ function PostFight(props) {
           money: props.money
       })
       })
-      console.log(props.money)
-    } else {
-      console.log('not logged in')
-    }
+    } 
   }
+
   const getPlayerTeam = async () => {
     const response = await fetch(`http://73.77.228.37:5000/getPlayerTeam`,{
       headers: {
@@ -62,87 +56,44 @@ function PostFight(props) {
         teamData[data[i]['onTeam']] = data[i]
       }
       props.setTeam(teamData)
+      console.log(data)
     }
-
-
-
-  const CreatePost = () => {
-    const [text, setText] = useState('')
-
-    function handleChange(event) {
-      setText(event.target.value);
-    }
-
-    const handleSubmit = async (event) => {
-      event.preventDefault()
-      if(text!== ''){
-        const response = await axios({
-          method: 'POST',
-          url: 'http://73.77.228.37:5000/postFight',
-          headers: {
-            Authorization: `Bearer ${props.token}`
-          },
-          data: {
-            caption: text
-          }
-      })
-      
-      if(response.status !== 200){
-        toast.error(response.data.msg)
-      } else {
-        toast.success(response.data.msg)
-      }
-        setText('')
-      } else {
-        toast.error('Please type a caption')
-      }
-      
-    }
-    return(
-      <form onSubmit={handleSubmit} className='postForm'>
-        <input type="textbox" value={text} onChange={handleChange}/>
-        <button type="submit">Add</button>
-      </form>
-    )
-  }
-
-  const handleOpen = () => {
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
 
   return (
     <div className='postTree'>
-      <Button onClick={handleOpen}>Create Post</Button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="parent-modal-title"
-        aria-describedby="parent-modal-description"
-        className='postModal'>
-          <div className='uniModal'>
-        <CreatePost/>
-        </div>
-      </Modal>
+      <div className='teamDisplay'>
+      {props.team.map((team) => {
+        return(
+          <img src={team.poke_hash.sprite_url} className='team_urls'/>
+        )
+        })}
+      </div>
       <div className='postContainer'>
-        {feed.map((feed, index) => {
+        
+        {feed.map((feed) => {
           return(
           <div className='postedFight'>
-            <h2>{feed.username}</h2>
+            <div className='profileContainer'>
             <div className='profilePic'
             style={{
-            backgroundImage: `url(${feed.user_img})`,
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-            width: '50px'
-          }}/>
+              backgroundImage: `url(${feed.user_img})`,
+              backgroundSize: 'cover',
+              backgroundRepeat: 'no-repeat',
+              width: '50px'
+            }}/>
+            
+            <h2>{feed.username}</h2>
+            </div>
             <h4>{feed.caption}</h4>
-            <img src={feed.poke_img}/>
+            <ul>
+              {feed.team_urls.map((urls) => {
+                return(
+                  <img className='team_urls' src={urls}/>
+                )
+              })}
+            </ul>
             <p><small>{feed.date_created}</small></p>
-            <Link to={`/lukefight/${feed.user_id}`}>
+            <Link to={`/lukefight/${feed.user_id}`} className='fightBtn'>
             <div>FIGHT!</div>
             </Link>
           </div>

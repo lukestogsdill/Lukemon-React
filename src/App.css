@@ -27,6 +27,7 @@ nav {
   background-color: #ff1100c7;
   border-bottom: solid 2px #ffffff;
   height:80px;
+  color:white;
 }
 
 .home_btn {
@@ -36,8 +37,8 @@ nav {
 }
 
 .pokeball {
-  width: 4em;
-  height: 4em;
+  width: 3em;
+  height: 3em;
   background-image: url(https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse3.mm.bing.net%2Fth%3Fid%3DOIP.BRKdMuuIo04zMLiFF3RiKQHaFw%26pid%3DApi&f=1&ipt=d6b6ca656035dc5d950068211b8dffa1b943bfdac225e4c2a6e209fb69728bef&ipo=images);
   background-size: cover;
   background-position: center;
@@ -126,6 +127,7 @@ nav {
   text-align: center;
   justify-content: center;
 }
+
 .profileBar{
  display: flex;
  align-self: center;
@@ -135,9 +137,8 @@ nav {
 
 .profilePic{
   height: 50px;
-  width: auto;
+  width: 50px;
   border-radius: 100%;
-  width: auto;
 }
 
 .moneyBar > *{
@@ -146,6 +147,11 @@ nav {
 
 .dropDown{
   display:none;
+  align-self: center;
+}
+.hamburger{
+  font-size: 3em;
+  color:white
 }
 
 @keyframes shake {
@@ -176,33 +182,19 @@ nav {
   src: url('./font/PokemonHollowNormal.woff2') format('woff2');
 }
 
-@media screen and (max-width:800px) {
-  .profileBar{
-      display: none;
+
+@media screen and (max-width:750px) {
+  .nav_links a{
+      display:none;
   }
   .dropDown{
     display: block;
   }
-  
 }
-@media screen and (max-width:650px) {
-  .nav_links a:nth-child(4){
-      display:none;
-  }
-}
-@media screen and (max-width:650px) {
-  .nav_links a:nth-child(3){
-      display:none;
-  }
-}
-@media screen and (max-width:550px) {
-  .nav_links a:nth-child(2){
-      display:none;
-  }
-}
+
 @media screen and (max-width:450px) {
-  .nav_links a:nth-child(1){
-      display:none;
+  .profileBar{
+    display: none;
   }
 }
 

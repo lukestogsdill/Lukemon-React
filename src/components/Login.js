@@ -19,7 +19,6 @@ function Login(props) {
         },
       })
       const user_token = await response.json()
-      console.log(user_token.token)
       props.setToken(user_token.token)
 
       setloginForm(({

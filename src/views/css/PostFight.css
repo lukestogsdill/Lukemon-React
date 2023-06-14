@@ -7,22 +7,59 @@
 
 }
 
+.postContainer{
+    display:flex;
+    flex-wrap: wrap;
+    margin-top: .5em;
+    gap: .5em;
+    justify-content: center;
+}
+
+.profileContainer{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.team_urls{
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    align-self: center;
+}
+
 .postedFight{
     display:flex;
     flex-direction: column;
     background-color: #ff000056;
     border:red solid 2px;
+    border-radius: 7px;
+    width:175px;
     gap: 1em;
 }
 
-.createPost{
-    background-color: #ff000056;
+.teamDisplay{
+    display:flex;
+    justify-content: center;
+    margin-top: .5em;
+}
+
+.teamDisplay img{
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
     align-self: center;
 }
 
-.postModal,
-.uniModal{
-    display:flex;
-    justify-content: center;
+.fightBtn{
+    align-self: center;
+    text-align: center;
+    width:80%;
+    padding: .5em .25em;
+    margin-bottom: .25em;
+    background-color:#ff110059;
+    border: solid 2px #ff1100c7;
+    border-radius: 7px;
+    color: white;
 }
 

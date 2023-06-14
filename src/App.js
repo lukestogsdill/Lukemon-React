@@ -8,10 +8,10 @@ import TeamBuilder from './views/TeamBuilder'
 import useToken from './components/useToken'
 import Register from './views/Register'
 import Roll from './views/Roll'
-import HowToPlay from './HowToPlay'
+import HowToPlay from './views/HowToPlay'
 import React, { useState, useEffect } from 'react'
 import { Routes, Route, BrowserRouter } from 'react-router-dom'
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 export default function App(){
@@ -59,9 +59,10 @@ export default function App(){
           <Routes>
             <Route path = '/' element={<PostFight token={token} tickets={tickets} money={money} setMoney={setMoney} setTickets={setTickets} setUser={setUser} user={user} setTeam={setTeam} team={team}/>}/>
             <Route path="/TeamBuilder" element={<TeamBuilder token={token} team={team} invData={invData} setTeam={setTeam} setInvData={setInvData}/>}/>
-            <Route path = '/wheel' element ={<Wheel token={token} money={money} setMoney={setMoney} tickets={tickets} setTickets={setTickets}/>}/>
-            <Route path = '/roll' element = {<Roll token={token} tickets={tickets} setTickets={setTickets}/>}/>
+            <Route path = '/wheel' element ={<Wheel token={token} money={money} setMoney={setMoney} tickets={tickets} setTickets={setTickets} />}/>
+            <Route path = '/roll' element = {<Roll token={token} tickets={tickets} setTickets={setTickets} invData={invData} />}/>
             <Route path = '/lukefight/:id' element={<LukeFight token={token} team={team} setUser={setUser} money={money} setMoney={setMoney} setInvData={setInvData}/>}/>
+            <Route path = '/HowToPlay' element={<HowToPlay />}/>
           </Routes>
         )}
       </div>

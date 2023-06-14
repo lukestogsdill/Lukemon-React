@@ -1,0 +1,43 @@
+.howToPlayContainer section{
+    display:flex;
+    flex-wrap: wrap;
+    color:white;
+    justify-content: center;
+    margin: .4em;
+}
+
+
+.speechBubble{
+    border: solid white 4px;
+    border-radius: 20%;
+    width: 375px;
+    height:325px;
+    margin:.25em
+}
+.speechBubble h1{
+    text-align: center;
+}
+.speechBubble > *{
+    margin:.25em;
+}
+.speechBubble h2{
+    color:yellow;
+}
+.professorPikachu{
+    background-image: url('/src/images/professorPikachu.png');
+    transform: scaleX(-1);
+    width:375px;
+    height: 325px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.pokeballExplained{
+    width: 1.5em;
+    height: 1.5em;
+}
+.explainHome{
+    display:flex;
+    align-items: center;
+}

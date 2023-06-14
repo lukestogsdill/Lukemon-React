@@ -10,12 +10,12 @@ function TeamBuilder(props){
 
   useEffect(() => {
     teamDisplay()
-    console.log(props.team)
   },[])
 
   const teamData = []
-  const [open, setOpen] = useState(false)
+  const [delOpen, setDelOpen] = useState(false)
   const [delPoke, setDelPoke] = useState(null)
+  const [saveOpen, setSaveOpen] = useState(false)
 
   function addTeam(index){
     if(props.team.length > 4){
@@ -24,10 +24,7 @@ function TeamBuilder(props){
     else{
       teamData.push(props.invData[index])
       props.invData[index]['onTeam'] = teamData.length-1
-      console.log(teamData.length)
-      console.log(teamData)
       props.setTeam(props.team.concat(teamData))
-      console.log(props.team)
     }
   }
 
@@ -64,7 +61,6 @@ function TeamBuilder(props){
     for(let i in props.team){
       id_data.push(props.team[i].lukemon_id)
     }
-    console.log(id_data)
     const response = await axios({
       method: "POST",
       url: "http://73.77.228.37:5000/saveTeam",
@@ -95,32 +91,100 @@ function TeamBuilder(props){
     } else {
       toast.error('Error, could not delete')
     }
-    
+    handleDelClose()
   }
 
-  const handleOpen = (num) =>{
-    setOpen(true)
+  const CreatePost = () => {
+    const [text, setText] = useState('')
+
+    function handleChange(event) {
+      setText(event.target.value);
+    }
+
+    const handleSubmit = async (event) => {
+      event.preventDefault()
+      if(text!== ''){
+        const teamUrls = []
+        for(let i = 0; i < props.team.length; i++){
+          teamUrls.push(props.team[i].poke_hash.sprite_url)
+        }
+        const stringUrls = teamUrls.join()
+        
+        const response = await axios({
+          method: 'POST',
+          url: 'http://73.77.228.37:5000/postFight',
+          headers: {
+            Authorization: `Bearer ${props.token}`
+          },
+          data: {
+            caption: text,
+            team_urls: stringUrls
+          }
+      })
+      
+      if(response.status !== 200){
+        toast.error(response.data.msg)
+      } else {
+        saveTeam()
+        handleSaveClose()
+      }
+        setText('')
+      } else {
+        toast.error('Please type a caption')
+      }
+      
+    }
+    return(
+      <form onSubmit={handleSubmit} className='postForm'>
+        <h4>Add a comment!</h4>
+        <input type="textbox" value={text} onChange={handleChange}/>
+        <button type="submit">Save & Post</button>
+      </form>
+    )
+  }
+
+  const handleDelOpen = (num) =>{
+    setDelOpen(true)
     setDelPoke(num)
   }
-  const handleClose = () => {
-    console.log('asdklfa')
-    setOpen(false)
+  const handleDelClose = () => {
+    setDelOpen(false)
     setDelPoke(null)
   }
+  const handleSaveOpen = () =>{
+    setSaveOpen(true)
+  }
+  const handleSaveClose = () => {
+    setSaveOpen(false)
+  }
+
   
   return (
     
     <div className='invTree'>
       <Modal
-        open={open}
-        onClose={handleClose}
+        open={saveOpen}
+        onClose={handleSaveClose}
+        aria-labelledby="parent-modal-title"
+        aria-describedby="parent-modal-description"
+        className='postModal'>
+          <div className='uniModal'>
+        <CreatePost/>
+        </div>
+      </Modal>
+      <Modal
+        open={delOpen}
+        onClose={handleDelClose}
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
         className='postModal'>
           <div>
-          <h1>Are you sure you want to delete this pokemon?</h1>
-          <button onClick={() => {handleDel()}}>Yes</button>
-          <button onClick={()=>{handleClose()}}>No</button>
+          <h4>Are you sure you want to delete this pokemon?</h4>
+          <div className="delBtns">
+            <button onClick={() => {handleDel()}} className="delBtn">Yes</button>
+            <button onClick={()=>{handleDelClose()}} className="delBtn">No</button>
+
+          </div>
           </div>
       </Modal>
       <h1>TEAM</h1>
@@ -151,7 +215,7 @@ function TeamBuilder(props){
               )
         )})}
         </ul>
-        <button id='saveBtn' onClick={saveTeam}>Save</button>
+        <button id='saveBtn' onClick={handleSaveOpen}>Save</button>
       </div>
     <div className='invContainer'>
       {props.invData.map((poke, index) =>{
@@ -161,7 +225,7 @@ function TeamBuilder(props){
             <div className="pokeCard" id={poke.poke_hash.poke_type} onClick={() => addTeam(index)}>
             <button onClick={(event) => {
               event.stopPropagation()
-              handleOpen(poke.lukemon_id)
+              handleDelOpen(poke.lukemon_id)
             }}>x</button>
             <img src={poke.poke_hash.sprite_url}></img>
             <h2>{poke.poke_hash.poke_name}</h2>

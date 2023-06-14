@@ -66,13 +66,37 @@
     padding:0 .4em;
 }
 
-#saveBtn{
+.delBtns{
+    display:flex;
+    justify-content: space-around;
+}
+
+#saveBtn,
+.delBtn{
     align-self: center;
-    width:80%;
     padding: 1em .5em;
     background-color:#ff1100a4;
     border: solid 2px #ff1100c7;
     border-radius: 7px;
     color: white;
+}
+
+.delBtn{
+    width:40%;
+}
+
+#saveBtn{
+    width:70%;
+}
+
+.createPost{
+    background-color: #ff000056;
+    align-self: center;
+}
+
+.postModal,
+.uniModal{
+    display:flex;
+    justify-content: center;
 }
 

@@ -23,8 +23,6 @@ export default function Wheel(props){
             let stopNum = Math.round(num % 360)
             container.style.transform = `rotateZ(${num}deg)`
             spinBtn.style.display = 'none'
-            console.log(num + 'spin')
-            console.log(stopNum + 'stop num')
             const btnBuffer = setInterval(()=>{
                 spinBtn.style.display = 'block'
                 clearInterval(btnBuffer)

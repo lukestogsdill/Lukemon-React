@@ -43,7 +43,11 @@ export default function Pokemon(props) {
   const getPokemon = async () => {
     if(props.tickets <= 0){
       toast.error('Insufficient Tickets')
-    } else {
+    } 
+    else if(props.invData && props.invData.length > 25) {
+      toast.error('Inventory Full (25 max)')
+    } 
+    else {
       const attMove = generateAtt()
       const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${attMove.poke_name}`)
       const data = await response.json()
@@ -57,7 +61,6 @@ export default function Pokemon(props) {
         'speed': data['stats'][5]['base_stat']
       }
       attMove.poke_name = pokeData.poke_name
-      console.log(pokeData)
       props.setTickets(props.tickets - 1)
       setPoke(pokeData)
       setPokeAtt(attMove)
