@@ -33,7 +33,7 @@ export default function App(){
   },[token])
 
   const getUserData = async () => {
-        const response = await fetch("http://73.77.228.37:5000/getUserData",{
+        const response = await fetch("https://lukemon-api-9ec20912cdb1.herokuapp.com/getUserData",{
           headers: {
           Authorization: `Bearer ${token}`
           }
