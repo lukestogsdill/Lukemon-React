@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import axios from 'axios'
 import './css/roll.css'
 import '../components/css/pokeTypes.css'
@@ -8,6 +8,23 @@ import 'react-toastify/dist/ReactToastify.css'
 export default function Pokemon(props) {
   const [poke, setPoke] = useState({})
   const [pokeAtt, setPokeAtt] = useState({})
+  const [invCount, setInvCount] = useState(0)
+
+  useEffect(() => {
+    const fetchData = async() => {
+      await getInvLen()
+    }
+    fetchData()
+  },[])
+  
+  const getInvLen = async() => {
+    const response = await fetch('http://73.77.228.37:5000/invCount',{
+      headers: {
+        Authorization: `Bearer ${props.token}`
+      }}) 
+      const data = await response.json()
+      setInvCount(data.inv_count)
+    }
 
   const postSearch = async (pokeData) => {
     const response = await axios({
@@ -36,6 +53,7 @@ export default function Pokemon(props) {
       toast.error(response.data.msg)
     } else {
       toast.success(response.data.msg)
+      setInvCount(invCount+1)
     }
     return response
   }
@@ -44,7 +62,7 @@ export default function Pokemon(props) {
     if(props.tickets <= 0){
       toast.error('Insufficient Tickets')
     } 
-    else if(props.invData && props.invData.length > 25) {
+    else if(invCount && invCount > 25) {
       toast.error('Inventory Full (25 max)')
     } 
     else {
