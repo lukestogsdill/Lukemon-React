@@ -12,7 +12,7 @@ function Login(props) {
     const credentials = btoa(`${loginForm.username}:${loginForm.password}`)
 
     const logMeIn = async(event) => {
-      const response = await fetch('http://https://lukemon-api-9ec20912cdb1.herokuapp.com/token', {
+      const response = await fetch('https://lukemon-api-9ec20912cdb1.herokuapp.com/token', {
         method: 'GET',
         headers: {
           'Authorization': `Basic ${credentials}`

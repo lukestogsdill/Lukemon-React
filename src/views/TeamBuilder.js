@@ -46,7 +46,7 @@ function TeamBuilder(props){
   }
 
   const getTeamData = async() => {
-    const response = await fetch("http://https://lukemon-api-9ec20912cdb1.herokuapp.com/getInv",{
+    const response = await fetch("https://lukemon-api-9ec20912cdb1.herokuapp.com/getInv",{
       headers: {
         Authorization: `Bearer ${props.token}`,
       }
@@ -63,7 +63,7 @@ function TeamBuilder(props){
     }
     const response = await axios({
       method: "POST",
-      url: "http://https://lukemon-api-9ec20912cdb1.herokuapp.com/saveTeam",
+      url: "https://lukemon-api-9ec20912cdb1.herokuapp.com/saveTeam",
       headers: {
         Authorization: `Bearer ${props.token}`
       },
@@ -80,7 +80,7 @@ function TeamBuilder(props){
   }
 
   const handleDel = async () => {
-    const response = await fetch(`http://https://lukemon-api-9ec20912cdb1.herokuapp.com/delPoke/${delPoke}`,{
+    const response = await fetch(`https://lukemon-api-9ec20912cdb1.herokuapp.com/delPoke/${delPoke}`,{
       headers: {
         Authorization: `Bearer ${props.token}`,
       }
@@ -112,7 +112,7 @@ function TeamBuilder(props){
         
         const response = await axios({
           method: 'POST',
-          url: 'http://https://lukemon-api-9ec20912cdb1.herokuapp.com/postFight',
+          url: 'https://lukemon-api-9ec20912cdb1.herokuapp.com/postFight',
           headers: {
             Authorization: `Bearer ${props.token}`
           },

@@ -19,7 +19,7 @@ export default function Pokemon(props) {
   },[])
   
   const getInvLen = async() => {
-    const response = await fetch('http://https://lukemon-api-9ec20912cdb1.herokuapp.com/invCount',{
+    const response = await fetch('https://lukemon-api-9ec20912cdb1.herokuapp.com/invCount',{
       headers: {
         Authorization: `Bearer ${props.token}`
       }}) 
@@ -30,7 +30,7 @@ export default function Pokemon(props) {
   const postSearch = async (pokeData) => {
     const response = await axios({
       method: "POST",
-      url: "http://https://lukemon-api-9ec20912cdb1.herokuapp.com/roll",
+      url: "https://lukemon-api-9ec20912cdb1.herokuapp.com/roll",
       headers: {
         Authorization: 'Bearer ' + props.token
       },
@@ -50,7 +50,7 @@ export default function Pokemon(props) {
   const postCatch = async () => {
     const response = await axios({
       method: "POST",
-      url: "http://https://lukemon-api-9ec20912cdb1.herokuapp.com/catch",
+      url: "https://lukemon-api-9ec20912cdb1.herokuapp.com/catch",
       headers: {
         Authorization: 'Bearer ' + props.token
       },
