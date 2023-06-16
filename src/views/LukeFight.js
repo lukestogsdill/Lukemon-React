@@ -171,7 +171,7 @@ function LukeFight(props) {
     }
 
     const getTeam = async () => {
-    const response = await fetch(`http://127.0.0.1:5000/getTeam/${id}`,{
+    const response = await fetch(`http://https://lukemon-api-9ec20912cdb1.herokuapp.com/getTeam/${id}`,{
       headers: {
         Authorization: `Bearer ${props.token}`,
       }
