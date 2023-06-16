@@ -18,7 +18,7 @@ function PostFight(props) {
   },[])
 
   const getFeed = async () => {
-      const response = await fetch("https://lukemon-api-9ec20912cdb1.herokuapp.com/getFeed",{
+      const response = await fetch("http://127.0.0.1:5000/getFeed",{
         headers: {
           Authorization: `Bearer ${props.token}`,
         }
@@ -31,7 +31,7 @@ function PostFight(props) {
   }
   const updateCurr = async () => {
     if(props.token && props.money !== undefined){
-      const response = await fetch("https://lukemon-api-9ec20912cdb1.herokuapp.com/updateCurr",{
+      const response = await fetch("http://127.0.0.1:5000/updateCurr",{
       method: 'POST',  
       headers: {
         'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ function PostFight(props) {
   }
 
   const getPlayerTeam = async () => {
-    const response = await fetch(`https://lukemon-api-9ec20912cdb1.herokuapp.com/getPlayerTeam`,{
+    const response = await fetch(`http://127.0.0.1:5000/getPlayerTeam`,{
       headers: {
         Authorization: `Bearer ${props.token}`,
       }

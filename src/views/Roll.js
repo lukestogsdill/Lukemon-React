@@ -9,6 +9,7 @@ export default function Pokemon(props) {
   const [poke, setPoke] = useState({})
   const [pokeAtt, setPokeAtt] = useState({})
   const [invCount, setInvCount] = useState(0)
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async() => {
@@ -18,7 +19,7 @@ export default function Pokemon(props) {
   },[])
   
   const getInvLen = async() => {
-    const response = await fetch('https://lukemon-api-9ec20912cdb1.herokuapp.com/invCount',{
+    const response = await fetch('http://127.0.0.1:5000/invCount',{
       headers: {
         Authorization: `Bearer ${props.token}`
       }}) 
@@ -29,7 +30,7 @@ export default function Pokemon(props) {
   const postSearch = async (pokeData) => {
     const response = await axios({
       method: "POST",
-      url: "https://lukemon-api-9ec20912cdb1.herokuapp.com/roll",
+      url: "http://127.0.0.1:5000/roll",
       headers: {
         Authorization: 'Bearer ' + props.token
       },
@@ -38,10 +39,18 @@ export default function Pokemon(props) {
     return response
   }
 
+  const handleCatch = () => {
+    setLoading(true)
+    const postData = async() => {
+      await postCatch()
+    }
+    postData()
+  }
+
   const postCatch = async () => {
     const response = await axios({
       method: "POST",
-      url: "https://lukemon-api-9ec20912cdb1.herokuapp.com/catch",
+      url: "http://127.0.0.1:5000/catch",
       headers: {
         Authorization: 'Bearer ' + props.token
       },
@@ -55,6 +64,7 @@ export default function Pokemon(props) {
       toast.success(response.data.msg)
       setInvCount(invCount+1)
     }
+    setLoading(false)
     return response
   }
 
@@ -66,7 +76,17 @@ export default function Pokemon(props) {
       toast.error('Inventory Full (25 max)')
     } 
     else {
-      const attMove = generateAtt()
+      setLoading(true)
+      const getData = async() => {
+        await generatePoke()
+      }
+      getData()
+    }
+  }
+
+  const generatePoke = async() => {
+    setLoading(true)
+    const attMove = generateAtt()
       const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${attMove.poke_name}`)
       const data = await response.json()
       let pokeData = {
@@ -83,7 +103,7 @@ export default function Pokemon(props) {
       setPoke(pokeData)
       setPokeAtt(attMove)
       postSearch(pokeData)
-    }
+      setLoading(false)
   }
 
   const generateAtt = () => {
@@ -100,10 +120,9 @@ export default function Pokemon(props) {
   return (
     <div className="rollContainer">
       <h1>Tickets:{props.tickets}</h1>
-      <button onClick={getPokemon}>Roll</button>
       {poke.poke_name?(
         <div className="pokeCard" id={poke.poke_type}>
-            <button onClick={postCatch}>Catch</button>
+            <button onClick={handleCatch} disabled={isLoading}> {isLoading?'Loading...': 'Catch'}</button>
                 <img className='teamImg' src={poke.sprite_url}></img>
                 <h3>{poke.poke_name}</h3>
                 <h4>{poke.poke_type}</h4>
@@ -123,7 +142,7 @@ export default function Pokemon(props) {
       ):(
         <>Loading...</>
       )}
-      
+      <button onClick={getPokemon} disabled={isLoading}>{isLoading?'Loading...': 'Roll'}</button>
         
     </div>
     )
