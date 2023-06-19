@@ -22,6 +22,8 @@ export default function App(){
   const [user, setUser] = useState({})
   const [money, setMoney] = useState()
   const [tickets, setTickets] = useState()
+  const [isLoading, setLoading] = useState(false)
+
 
   useEffect(() => {
     const fetchData = async() =>{
@@ -59,9 +61,9 @@ export default function App(){
           <Routes>
             <Route path = '/' element={<PostFight token={token} tickets={tickets} money={money} setMoney={setMoney} setTickets={setTickets} setUser={setUser} user={user} setTeam={setTeam} team={team}/>}/>
             <Route path="/TeamBuilder" element={<TeamBuilder token={token} team={team} invData={invData} setTeam={setTeam} setInvData={setInvData}/>}/>
-            <Route path = '/wheel' element ={<Wheel token={token} money={money} setMoney={setMoney} tickets={tickets} setTickets={setTickets} />}/>
-            <Route path = '/roll' element = {<Roll token={token} tickets={tickets} setTickets={setTickets} invData={invData} />}/>
-            <Route path = '/lukefight/:id' element={<LukeFight token={token} team={team} setUser={setUser} money={money} setMoney={setMoney} setInvData={setInvData}/>}/>
+            <Route path = '/wheel' element ={<Wheel token={token} money={money} setMoney={setMoney} tickets={tickets} setTickets={setTickets} isLoading={isLoading} setLoading={setLoading}/>}/>
+            <Route path = '/roll' element = {<Roll token={token} tickets={tickets} setTickets={setTickets} invData={invData} isLoading={isLoading} setLoading={setLoading}/>}/>
+            <Route path = '/lukefight/:id' element={<LukeFight token={token} team={team} setUser={setUser} money={money} setMoney={setMoney} setInvData={setInvData} isLoading={isLoading} setLoading={setLoading}/>}/>
             <Route path = '/HowToPlay' element={<HowToPlay />}/>
           </Routes>
         )}

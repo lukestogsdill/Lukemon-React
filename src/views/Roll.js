@@ -9,7 +9,6 @@ export default function Pokemon(props) {
   const [poke, setPoke] = useState({})
   const [pokeAtt, setPokeAtt] = useState({})
   const [invCount, setInvCount] = useState(0)
-  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async() => {
@@ -40,7 +39,7 @@ export default function Pokemon(props) {
   }
 
   const handleCatch = () => {
-    setLoading(true)
+    props.setLoading(true)
     const postData = async() => {
       await postCatch()
     }
@@ -64,7 +63,7 @@ export default function Pokemon(props) {
       toast.success(response.data.msg)
       setInvCount(invCount+1)
     }
-    setLoading(false)
+    props.setLoading(false)
     return response
   }
 
@@ -76,7 +75,7 @@ export default function Pokemon(props) {
       toast.error('Inventory Full (25 max)')
     } 
     else {
-      setLoading(true)
+      props.setLoading(true)
       const getData = async() => {
         await generatePoke()
       }
@@ -85,7 +84,6 @@ export default function Pokemon(props) {
   }
 
   const generatePoke = async() => {
-    setLoading(true)
     const attMove = generateAtt()
       const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${attMove.poke_name}`)
       const data = await response.json()
@@ -103,7 +101,7 @@ export default function Pokemon(props) {
       setPoke(pokeData)
       setPokeAtt(attMove)
       postSearch(pokeData)
-      setLoading(false)
+      props.setLoading(false)
   }
 
   const generateAtt = () => {
@@ -122,7 +120,7 @@ export default function Pokemon(props) {
       <h1>Tickets:{props.tickets}</h1>
       {poke.poke_name?(
         <div className="pokeCard" id={poke.poke_type}>
-            <button onClick={handleCatch} disabled={isLoading}> {isLoading?'Loading...': 'Catch'}</button>
+            <button onClick={handleCatch} disabled={props.isLoading}> {props.isLoading?'Loading...': 'Catch'}</button>
                 <img className='teamImg' src={poke.sprite_url}></img>
                 <h3>{poke.poke_name}</h3>
                 <h4>{poke.poke_type}</h4>
@@ -142,7 +140,7 @@ export default function Pokemon(props) {
       ):(
         <>Loading...</>
       )}
-      <button onClick={getPokemon} disabled={isLoading}>{isLoading?'Loading...': 'Roll'}</button>
+      <button onClick={getPokemon} disabled={props.isLoading}>{props.isLoading?'Loading...': 'Roll'}</button>
         
     </div>
     )

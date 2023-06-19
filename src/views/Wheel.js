@@ -35,6 +35,7 @@ export default function Wheel(props){
 
     const getReward = (stopNum) => {
         props.setMoney(props.money-betNum)
+        props.setLoading(true)
         if(stopNum >= 240 && stopNum <= 245){
             handleReward(10)
             handleTickets(betNum*4)
@@ -54,6 +55,7 @@ export default function Wheel(props){
             setJackpot('Nice Win!')
             handleOpen()
         }
+        props.setLoading(false)
     }
 
     const handleReward = (num) => {
@@ -112,7 +114,7 @@ export default function Wheel(props){
                     <FontAwesomeIcon icon={faArrowDown} onClick={handleDecrease}/>
                 </div>
             </div>
-            <button onClick={spinBtn} id="spin">Spin</button>
+            <button onClick={spinBtn} id="spin"disabled={props.isLoading}>{props.isLoading?'Spinning...': 'Spin'}</button>
         <div className='wheelBox'>
             <div className="wheel">
                 <div className='container' id='container'>
