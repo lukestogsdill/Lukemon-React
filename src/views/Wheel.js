@@ -17,14 +17,13 @@ export default function Wheel(props){
 
     const spinBtn = () => {
         if(betNum <= props.money){
-            let spinBtn = document.getElementById('spin')
             let container = document.getElementById('container')
             let num = (Math.round(Math.random() * 7777) + 720)
             let stopNum = Math.round(num % 360)
             container.style.transform = `rotateZ(${num}deg)`
-            spinBtn.style.display = 'none'
+            props.setLoading(true)
             const btnBuffer = setInterval(()=>{
-                spinBtn.style.display = 'block'
+                props.setLoading(false)
                 clearInterval(btnBuffer)
             },2000)
             getReward(stopNum)
@@ -35,7 +34,6 @@ export default function Wheel(props){
 
     const getReward = (stopNum) => {
         props.setMoney(props.money-betNum)
-        props.setLoading(true)
         if(stopNum >= 240 && stopNum <= 245){
             handleReward(10)
             handleTickets(betNum*4)
@@ -55,7 +53,6 @@ export default function Wheel(props){
             setJackpot('Nice Win!')
             handleOpen()
         }
-        props.setLoading(false)
     }
 
     const handleReward = (num) => {
