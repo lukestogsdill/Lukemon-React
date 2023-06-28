@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate, Link } from "react-router-dom"
+import bcrypt from 'bcryptjs'
 import './css/universalForm.css'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 function Login(props) {
 
@@ -9,9 +12,11 @@ function Login(props) {
       password: ""
     })
 
-    const credentials = btoa(`${loginForm.username}:${loginForm.password}`)
+    const navigate = useNavigate()
+    var credentials = btoa(`${loginForm.username}:${loginForm.password}`)
 
-    const logMeIn = async(event) => {
+    const logMeIn = async() => {
+      console.log(credentials)
       const response = await fetch('https://lukemon-api-9ec20912cdb1.herokuapp.com/token', {
         method: 'GET',
         headers: {
@@ -21,11 +26,7 @@ function Login(props) {
       const user_token = await response.json()
       props.setToken(user_token.token)
 
-      setloginForm(({
-        username: "",
-        password: ""}))
-
-      event.preventDefault()
+      navigate('/')
     }
 
     function handleChange(event) { 
@@ -33,6 +34,31 @@ function Login(props) {
       setloginForm(prevNote => ({
           ...prevNote, [name]: value})
       )}
+
+      const createGuest = async (event) => {
+        event.preventDefault()
+        const salt = bcrypt.genSaltSync(10)
+        const hashedPassword = bcrypt.hashSync('password', salt)
+        const response = await fetch('https://lukemon-api-9ec20912cdb1.herokuapp.com/create_guest',{
+          method: 'POST',
+          headers:{'Content-Type': 'application/json'},
+          body: JSON.stringify({
+          password: hashedPassword
+        })})
+        if(response.status !== 200){
+          toast.error(response.msg)
+        } else {
+          const userData = await response.json()
+          credentials = btoa(`${userData['username']}:password`)
+          console.log(userData['username'])
+          logMeIn()
+      }
+    }
+
+    const handleLogin = async(event) => {
+      event.preventDefault()
+      await logMeIn()
+    }
 
     return (
       <div className='formContainer'>
@@ -51,10 +77,18 @@ function Login(props) {
                   placeholder="Password" 
                   value={loginForm.password} />
           <Link to='/'>
-          <button onClick={logMeIn}>Submit</button>
+          <button onClick={handleLogin}>Submit</button>
           </Link>
         </form>
+        <div className='btnContainer'>
+        <Link to='/'>
+        <button onClick={createGuest} className='btn'>Generate Guest</button>
+        </Link>
+        <Link to='/register'>
+        <button className='btn'>Register</button>
+        </Link>
+        </div>
       </div>
     )
 }
-export default Login;
+export default Login

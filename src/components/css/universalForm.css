@@ -33,3 +33,19 @@ form button{
     border-radius: 7px;
     color: white;
 }
+
+.btn{
+    align-self: center;
+    width:150px;
+    padding: 1em .5em;
+    background-color:#ff1100a4;
+    border: solid 2px #ff1100c7;
+    border-radius: 7px;
+    color: white;
+}
+
+.btnContainer{
+    display: flex;
+    justify-content: center;
+    gap: 2em;
+}

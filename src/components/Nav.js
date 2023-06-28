@@ -25,20 +25,17 @@ export default function Nav(props){
 
   return(
   <nav>
-    <div className="home_btn">
-      <Link className="pokeball" to="/" />
+      <Link to="/">
+        <img className="pokeball" src='https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpurepng.com%2Fpublic%2Fuploads%2Flarge%2Fpurepng.com-pokeballpokeballdevicepokemon-ballpokemon-capture-ball-17015278259020osdb.png&f=1&nofb=1&ipt=48da63eda8616666b39f1ae37a90af1d07b0a39b422fbdc869b938cc57f21460&ipo=images'/>
+      </Link>
       <div className="btn_title">
-        <h1 className="home_title solid">LUKEMON</h1>
-        <h1 className="home_title hollow">LUKEMON</h1>
+        <div className="solid">LUKEMON</div>
+        <div className="hollow">LUKEMON</div>
       </div>
-    </div>
     <div className="link_container">
     {!props.token && props.token!=='' &&props.token!== undefined?(
       <div className='linkDiv'>
       <ul className='nav_links'>
-        <Link to="/register" className="nav_link">
-          <li>Register</li>
-        </Link>
         <Link to="/login" className="nav_link">
           <li>Log In</li>
         </Link>
@@ -63,11 +60,6 @@ export default function Nav(props){
             }}
           >
             <MenuItem onClick={handleClose}>
-              <Link to="/register">
-                Register
-              </Link>
-            </MenuItem>
-            <MenuItem onClick={handleClose}>
               <Link to="/login">
               Log In
             </Link>
@@ -88,7 +80,7 @@ export default function Nav(props){
           <li>Team</li>
         </Link>
         <Link to="/HowToPlay" className="nav_link">
-          <li>HowToPlay</li>
+          <li>Info</li>
         </Link>
         
       </ul> 
@@ -128,6 +120,11 @@ export default function Nav(props){
             }}
           >
             <MenuItem onClick={handleClose}>
+              <Link to="/roll">
+              Catch
+            </Link>
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
               <Link to="/wheel">
                 Wheel
               </Link>
@@ -138,13 +135,8 @@ export default function Nav(props){
             </Link>
             </MenuItem>
             <MenuItem onClick={handleClose}>
-              <Link to="/roll">
-              Roll
-            </Link>
-            </MenuItem>
-            <MenuItem onClick={handleClose}>
               <Link to="/HowToPlay" onClick={handleClose}>
-              HowToPlay
+              Info
             </Link>
             </MenuItem>
             <MenuItem onClick={handleClose}>
