@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import {useParams, useNavigate} from "react-router-dom"
 import Modal from '@mui/material/Modal'
+import pokeType from '../components/pokeType'
 import './css/LukeFight.css'
 
 
@@ -28,6 +29,7 @@ function LukeFight(props) {
     let acc = 1
     let downed = {}
     let fightBtn = document.getElementById('fightBtn')
+    let typeStatus = document.getElementById('typeStatus')
 
 
     useEffect(() => {
@@ -102,6 +104,8 @@ function LukeFight(props) {
       let accRoll = Math.round(Math.random()*100)
       let pDmgEff = document.getElementById('pDmgEff')
       let bDmgEff = document.getElementById('bDmgEff')
+      
+      let type = pokeType(poke1.poke_hash.poke_type, poke2.poke_hash.poke_type)
       if(critRoll <= poke1.crit){
         crit = 1.5
         pDmgEff.setAttribute('style','color: orange')
@@ -113,7 +117,18 @@ function LukeFight(props) {
       if(accRoll > poke1.accuracy){
         acc = 0
       }
-      return(((poke1.damage*poke1.poke_hash.att)/poke2.poke_hash.defe)/4)*crit*acc
+      switch (type) {
+        case 1.5:
+            typeStatus.innerHTML = 'Super Effective'
+            break
+        case 0.5:
+            typeStatus.innerHTML = 'Not Very Effective'
+            break
+        case 1:
+            typeStatus.innerHTML = ' '
+            break
+      }
+      return(((poke1.damage*poke1.poke_hash.att)/poke2.poke_hash.defe)/4)*crit*acc*type
     }
 
     const handlePlayerDmg = () => {
@@ -135,6 +150,7 @@ function LukeFight(props) {
         downed = banker.shift()
         setBankerTrash(bankerTrash.concat(downed))
         bankerPokeLoader(banker)
+        typeStatus.innerHTML = ''
         fightBtn.style.display = 'block'
       }
     }
@@ -143,6 +159,7 @@ function LukeFight(props) {
         downed = player.shift()
         setPlayerTrash(playerTrash.concat(downed))
         playerPokeLoader(props.team)
+        typeStatus.innerHTML = ''
         fightBtn.style.display = 'block'
       }
     }
@@ -255,6 +272,7 @@ function LukeFight(props) {
         {playerPoke?(
           <div className='playerContainer'>
           <h2 className={bankerDmgAni?'bankerDmgAni':'dmgAni'} id='bDmgEff'>{Math.round(bankerDmg)}</h2>
+          
           <img src={playerPoke.poke_hash.sprite_url} className={playerAtt? 'playerAtt': 'image'} id='playerPic'/>
           <h2 className='hpBar'>HP: {Math.round(playerPoke.poke_hash.hp)}</h2>
           </div>
@@ -264,6 +282,7 @@ function LukeFight(props) {
         {bankerPoke?(
         <div className='bankerContainer'>
           <h2 className={playerDmgAni?'playerDmgAni':'dmgAni'} id='pDmgEff'>{Math.round(playerDmg)}</h2>
+          
           <img src={bankerPoke.poke_hash.sprite_url} className={bankerAtt? 'bankerAtt': 'image'} id='bankerPic'/>
           <h2 className='hpBar'>HP: {Math.round(bankerPoke.poke_hash.hp)}</h2>
         </div>
@@ -271,6 +290,7 @@ function LukeFight(props) {
           <></>
         )}
     </div>
+    <p id='typeStatus'></p>
     <button onClick={handleFight} id='fightBtn'>Press to Fight!</button>
     
     </div>
