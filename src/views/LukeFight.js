@@ -7,29 +7,29 @@ import './css/LukeFight.css'
 
 function LukeFight(props) {
 
-  const [player, setPlayer] = useState([])
-  const [banker, setBanker] = useState([])
-  const [playerPoke, setPlayerPoke] = useState()
-  const [bankerPoke, setBankerPoke] = useState()
-  const [playerTrash, setPlayerTrash] = useState([])
-  const [bankerTrash, setBankerTrash] = useState([])
-  const [playerDmg, setPlayerDmg] = useState([])
-  const [bankerDmg, setBankerDmg] = useState([])
-  const [playerAtt, setPlayerAtt] = useState(false)
-  const [bankerAtt, setBankerAtt] = useState(false)
-  const [playerDmgAni, setPlayerDmgAni] = useState(false)
-  const [bankerDmgAni, setBankerDmgAni] = useState(false)
-  const [open, setOpen] = useState(false)
-  const [result, setResult] = useState('')
-  const { id } = useParams()
-  const teamData = []
-  const navigate = useNavigate()
-  let dmg = 0
-  let crit = 1
-  let acc = 1
-  let downed = {}
-  let fightBtn = document.getElementById('fightBtn')
-  let typeStatus = document.getElementById('typeStatus')
+    const [player, setPlayer] = useState([])
+    const [banker, setBanker] = useState([])
+    const [playerPoke, setPlayerPoke] = useState()
+    const [bankerPoke, setBankerPoke] = useState()
+    const [playerTrash, setPlayerTrash] = useState([])
+    const [bankerTrash, setBankerTrash] = useState([])
+    const [playerDmg, setPlayerDmg] = useState([])
+    const [bankerDmg, setBankerDmg] = useState([])
+    const [playerAtt, setPlayerAtt] = useState(false)
+    const [bankerAtt, setBankerAtt] = useState(false)
+    const [playerDmgAni, setPlayerDmgAni] = useState(false)
+    const [bankerDmgAni, setBankerDmgAni] = useState(false)
+    const [open, setOpen] = useState(false)
+    const [result, setResult] = useState('')
+    const {id} = useParams()
+    const teamData = []
+    const navigate = useNavigate()
+    let dmg = 0
+    let crit = 1
+    let acc = 1
+    let downed = {}
+    let fightBtn = document.getElementById('fightBtn')
+    let typeStatus = document.getElementById('typeStatus')
 
 
   useEffect(() => {
@@ -131,21 +131,19 @@ function LukeFight(props) {
     return (((poke1.damage * poke1.poke_hash.att) / poke2.poke_hash.defe) / 4) * crit * acc * type
   }
 
-  const handlePlayerDmg = () => {
-    dmg = Math.round(damageDealt(playerPoke, bankerPoke))
-    setMessage(message + `player did ${dmg}`)
-    handlePlayerAtt()
-    bankerPoke.poke_hash.hp -= dmg
-    setPlayerDmg(dmg)
-  }
+    const handlePlayerDmg = () => {
+      dmg = damageDealt(playerPoke, bankerPoke)
+          handlePlayerAtt()
+          bankerPoke.poke_hash.hp -= dmg
+          setPlayerDmg(dmg)
+    }
 
-  const handleBankerDmg = () => {
-    dmg = Math.round(damageDealt(bankerPoke, playerPoke))
-    setMessage(message + `banker did ${dmg}`)
-    handleBankerAtt()
-    playerPoke.poke_hash.hp -= dmg
-    setBankerDmg(dmg)
-  }
+    const handleBankerDmg = () => {
+      dmg = damageDealt(bankerPoke, playerPoke)
+          handleBankerAtt()
+          playerPoke.poke_hash.hp -= dmg
+          setBankerDmg(dmg)
+    }
 
   const handleBankerDowned = () => {
     if (bankerPoke.poke_hash.hp <= 0) {
@@ -273,29 +271,28 @@ function LukeFight(props) {
 
         {playerPoke ? (
           <div className='playerContainer'>
-            <h2 className={bankerDmgAni ? 'bankerDmgAni' : 'dmgAni'} id='bDmgEff'>{Math.round(bankerDmg) !== 0 ? (Math.round(bankerDmg)) : 'miss'}</h2>
-
-            <img src={playerPoke.poke_hash.sprite_url} className={playerAtt ? 'playerAtt' : 'image'} id='playerPic' />
-            <h2 className='hpBar'>HP: {Math.round(playerPoke.poke_hash.hp)}</h2>
+          <h2 className={bankerDmgAni?'bankerDmgAni':'dmgAni'} id='bDmgEff'>{Math.round(bankerDmg)}</h2>
+          
+          <img src={playerPoke.poke_hash.sprite_url} className={playerAtt? 'playerAtt': 'image'} id='playerPic'/>
+          <h2 className='hpBar'>HP: {Math.round(playerPoke.poke_hash.hp)}</h2>
           </div>
         ) : (
           <></>
         )}
-        {bankerPoke ? (
-          <div className='bankerContainer'>
-            <h2 className={playerDmgAni ? 'playerDmgAni' : 'dmgAni'} id='pDmgEff'>{Math.round(playerDmg) !== 0 ? (Math.round(playerDmg)) : 'miss'}</h2>
-
-            <img src={bankerPoke.poke_hash.sprite_url} className={bankerAtt ? 'bankerAtt' : 'image'} id='bankerPic' />
-            <h2 className='hpBar'>HP: {Math.round(bankerPoke.poke_hash.hp)}</h2>
-          </div>
-        ) : (
+        {bankerPoke?(
+        <div className='bankerContainer'>
+          <h2 className={playerDmgAni?'playerDmgAni':'dmgAni'} id='pDmgEff'>{Math.round(playerDmg)}</h2>
+          
+          <img src={bankerPoke.poke_hash.sprite_url} className={bankerAtt? 'bankerAtt': 'image'} id='bankerPic'/>
+          <h2 className='hpBar'>HP: {Math.round(bankerPoke.poke_hash.hp)}</h2>
+        </div>
+        ):(
           <></>
         )}
-      </div>
-      <p id='typeStatus'></p>
-      <p>{message}</p>
-      <button onClick={handleFight} id='fightBtn'>Press to Fight!</button>
-
+    </div>
+    <p id='typeStatus'></p>
+    <button onClick={handleFight} id='fightBtn'>Press to Fight!</button>
+    
     </div>
   )
 
