@@ -21,6 +21,7 @@ function LukeFight(props) {
     const [bankerDmgAni, setBankerDmgAni] = useState(false)
     const [open, setOpen] = useState(false)
     const [result, setResult] = useState('')
+    const [message, setMessage] = useState('')
     const {id} = useParams()
     const teamData = []
     const navigate = useNavigate()
@@ -132,14 +133,16 @@ function LukeFight(props) {
     }
 
     const handlePlayerDmg = () => {
-      dmg = damageDealt(playerPoke, bankerPoke)
+      dmg = Math.round(damageDealt(playerPoke, bankerPoke))
+	  setMessage(message + `player did ${dmg}`)
           handlePlayerAtt()
           bankerPoke.poke_hash.hp -= dmg
           setPlayerDmg(dmg)
     }
 
     const handleBankerDmg = () => {
-      dmg = damageDealt(bankerPoke, playerPoke)
+      dmg = Math.round(damageDealt(bankerPoke, playerPoke))
+	  setMessage(message + `banker did ${dmg}`)
           handleBankerAtt()
           playerPoke.poke_hash.hp -= dmg
           setBankerDmg(dmg)
@@ -271,7 +274,7 @@ function LukeFight(props) {
         
         {playerPoke?(
           <div className='playerContainer'>
-          <h2 className={bankerDmgAni?'bankerDmgAni':'dmgAni'} id='bDmgEff'>{Math.round(bankerDmg)}</h2>
+          <h2 className={bankerDmgAni?'bankerDmgAni':'dmgAni'} id='bDmgEff'>{Math.round(bankerDmg) !== 0 ?( Math.round(bankerDmg)) : 'miss'}</h2>
           
           <img src={playerPoke.poke_hash.sprite_url} className={playerAtt? 'playerAtt': 'image'} id='playerPic'/>
           <h2 className='hpBar'>HP: {Math.round(playerPoke.poke_hash.hp)}</h2>
@@ -281,7 +284,7 @@ function LukeFight(props) {
         )}
         {bankerPoke?(
         <div className='bankerContainer'>
-          <h2 className={playerDmgAni?'playerDmgAni':'dmgAni'} id='pDmgEff'>{Math.round(playerDmg)}</h2>
+          <h2 className={playerDmgAni?'playerDmgAni':'dmgAni'} id='pDmgEff'>{Math.round(playerDmg) !== 0 ?( Math.round(playerDmg)) : 'miss'}</h2>
           
           <img src={bankerPoke.poke_hash.sprite_url} className={bankerAtt? 'bankerAtt': 'image'} id='bankerPic'/>
           <h2 className='hpBar'>HP: {Math.round(bankerPoke.poke_hash.hp)}</h2>
@@ -291,6 +294,7 @@ function LukeFight(props) {
         )}
     </div>
     <p id='typeStatus'></p>
+    <p>{message}</p>
     <button onClick={handleFight} id='fightBtn'>Press to Fight!</button>
     
     </div>
