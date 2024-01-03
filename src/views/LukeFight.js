@@ -134,7 +134,7 @@ function LukeFight(props) {
 
     const handlePlayerDmg = () => {
       dmg = Math.round(damageDealt(playerPoke, bankerPoke))
-	  setMessage(message + `player did ${dmg}`)
+	  setMessage(`player did ${dmg} damage`)
           handlePlayerAtt()
           bankerPoke.poke_hash.hp -= dmg
           setPlayerDmg(dmg)
@@ -142,7 +142,7 @@ function LukeFight(props) {
 
     const handleBankerDmg = () => {
       dmg = Math.round(damageDealt(bankerPoke, playerPoke))
-	  setMessage(message + `banker did ${dmg}`)
+	  setMessage(`banker did ${dmg} damage`)
           handleBankerAtt()
           playerPoke.poke_hash.hp -= dmg
           setBankerDmg(dmg)
@@ -294,7 +294,7 @@ function LukeFight(props) {
         )}
     </div>
     <p id='typeStatus'></p>
-    <p>{message}</p>
+    <p className="logMessage">{message}</p>
     <button onClick={handleFight} id='fightBtn'>Press to Fight!</button>
     
     </div>

@@ -110,6 +110,11 @@
   text-align: center;
  }
 
+ .logMessage{
+  padding: 1em;
+  font-size: larger;
+ }
+
 
 
  @keyframes playerAtt {
