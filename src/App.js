@@ -49,6 +49,7 @@ export default function App(){
     return (
       <BrowserRouter>
       <Nav removeToken={removeToken} token={token} user={user} money={money} tickets={tickets} />
+      
       <ToastContainer/>
       <div className="App">
       {!token && token!=='' &&token!== undefined?(
