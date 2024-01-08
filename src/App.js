@@ -56,7 +56,7 @@ export default function App(){
       <Routes>
         <Route path = '/register' element ={<Register/>}/>
         <Route path = '/login' element={<Login setToken={setToken} />} />
-        <Route path = '/' element={<HowToPlay />}/>
+        <Route path = '/' element={<HowToPlay setSelected={setSelected} />}/>
       </Routes> 
         ):(
           <Routes>
