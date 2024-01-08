@@ -1,8 +1,8 @@
 import React from 'react'
 import './css/HowToPlay.css'
 
-export default function HowToPlay() {
-
+export default function HowToPlay(props) {
+  props.setSelected("info")
   return (
     <div className='howToPlayContainer'>
     <section>

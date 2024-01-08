@@ -144,13 +144,35 @@ nav {
   margin:.4em;
 }
 
-.dropDown{
-  display:none;
-  align-self: center;
+.appBar {
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  background-color: black;
+  opacity: 0.75;
+ font-size: 1.25em;
+ width: 100%;
+ justify-content: center;
 }
-.hamburger{
-  font-size: 3em;
-  color:white
+.appBar ul {
+	display: flex;
+	width: 100%;
+	justify-content: space-around;
+	list-style: none;
+}
+ .appBar li a{
+  text-decoration: none;
+  color: white;
+  opacity: 1.0;
+  padding: .5em;
+ }
+.appBar li {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.selected  {
+  border-top: .2em solid blue;
 }
 
 @keyframes shake {

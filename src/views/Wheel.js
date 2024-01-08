@@ -14,6 +14,7 @@ export default function Wheel(props){
     const [ticketWin, setTicketWin] = useState(0)
     const [jackpot, setJackpot] = useState()
     const [open, setOpen] = useState(false)
+    props.setSelected("wheel")
 
     const spinBtn = () => {
         if(betNum <= props.money){

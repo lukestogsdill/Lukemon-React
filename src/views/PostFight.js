@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css'
 
 function PostFight(props) {
-  
+    props.setSelected("home")  
     const [feed, setFeed] = useState([])
     const teamData = []
 

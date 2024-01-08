@@ -1,5 +1,6 @@
 import './App.css'
 import Nav from './components/Nav'
+import AppBar from './components/AppBar'
 import Wheel from './views/Wheel'
 import PostFight from './views/PostFight'
 import LukeFight from './views/LukeFight'
@@ -23,7 +24,7 @@ export default function App(){
   const [money, setMoney] = useState()
   const [tickets, setTickets] = useState()
   const [isLoading, setLoading] = useState(false)
-
+  const [selected, setSelected] = useState('home')
 
   useEffect(() => {
     const fetchData = async() =>{
@@ -49,7 +50,6 @@ export default function App(){
     return (
       <BrowserRouter>
       <Nav removeToken={removeToken} token={token} user={user} money={money} tickets={tickets} />
-      
       <ToastContainer/>
       <div className="App">
       {!token && token!=='' &&token!== undefined?(
@@ -60,15 +60,16 @@ export default function App(){
       </Routes> 
         ):(
           <Routes>
-            <Route path = '/' element={<PostFight token={token} tickets={tickets} money={money} setMoney={setMoney} setTickets={setTickets} setUser={setUser} user={user} setTeam={setTeam} team={team}/>}/>
-            <Route path="/TeamBuilder" element={<TeamBuilder token={token} team={team} invData={invData} setTeam={setTeam} setInvData={setInvData}/>}/>
-            <Route path = '/wheel' element ={<Wheel token={token} money={money} setMoney={setMoney} tickets={tickets} setTickets={setTickets} isLoading={isLoading} setLoading={setLoading}/>}/>
-            <Route path = '/roll' element = {<Roll token={token} tickets={tickets} setTickets={setTickets} invData={invData} isLoading={isLoading} setLoading={setLoading}/>}/>
-            <Route path = '/lukefight/:id' element={<LukeFight token={token} team={team} setUser={setUser} money={money} setMoney={setMoney} setInvData={setInvData} isLoading={isLoading} setLoading={setLoading}/>}/>
-            <Route path = '/HowToPlay' element={<HowToPlay />}/>
+            <Route path = '/' element={<PostFight token={token} tickets={tickets} money={money} setMoney={setMoney} setTickets={setTickets} setUser={setUser} user={user} setTeam={setTeam} team={team} setSelected={setSelected}/>}/>
+            <Route path="/TeamBuilder" element={<TeamBuilder token={token} team={team} invData={invData} setTeam={setTeam} setInvData={setInvData} setSelected={setSelected}/>}/>
+            <Route path = '/wheel' element ={<Wheel token={token} money={money} setMoney={setMoney} tickets={tickets} setTickets={setTickets} isLoading={isLoading} setLoading={setLoading} setSelected={setSelected}/>}/>
+            <Route path = '/roll' element = {<Roll token={token} tickets={tickets} setTickets={setTickets} invData={invData} isLoading={isLoading} setLoading={setLoading} setSelected={setSelected} /> }/>
+            <Route path = '/lukefight/:id' element={<LukeFight token={token} team={team} setUser={setUser} money={money} setMoney={setMoney} setInvData={setInvData} isLoading={isLoading} setLoading={setLoading} setSelected={setSelected}/>}/>
+            <Route path = '/HowToPlay' element={<HowToPlay setSelected={setSelected}/>}/>
           </Routes>
         )}
       </div>
+      <AppBar selected={selected}/>
       </BrowserRouter>
     )}
 

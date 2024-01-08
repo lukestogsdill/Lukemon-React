@@ -16,6 +16,7 @@ function TeamBuilder(props){
   const [delOpen, setDelOpen] = useState(false)
   const [delPoke, setDelPoke] = useState(null)
   const [saveOpen, setSaveOpen] = useState(false)
+  props.setSelected("team")
 
   function addTeam(index){
     if(props.team.length > 4){

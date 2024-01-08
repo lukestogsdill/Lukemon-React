@@ -6,6 +6,7 @@ import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 export default function Pokemon(props) {
+  props.setSelected("roll")
   const [poke, setPoke] = useState({})
   const [pokeAtt, setPokeAtt] = useState({})
   const [invCount, setInvCount] = useState(0)
