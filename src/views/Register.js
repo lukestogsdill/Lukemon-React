@@ -22,7 +22,7 @@ function Register(props) {
       }
       const salt = bcrypt.genSaltSync(10)
       const hashedPassword = bcrypt.hashSync(registerForm.password, salt)
-      const response = await fetch("https://lukemon-api-9ec20912cdb1.herokuapp.com/register",{
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/register`,{
         method: "POST",
         headers:{'Content-Type': 'application/json'},
         body: JSON.stringify({

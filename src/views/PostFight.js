@@ -53,7 +53,7 @@ function PostFight(props) {
   };
 
   const getFeed = async () => {
-      const response = await fetch("https://lukemon-api-9ec20912cdb1.herokuapp.com/getFeed")
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/getFeed`)
         const data = await response.json()
         for(let i = 0; i < data.length; i++){
           data[i].team_urls = data[i].team_urls.split(',')
@@ -62,7 +62,7 @@ function PostFight(props) {
   }
   const updateCurr = async () => {
     if(props.token && props.money !== undefined){
-      const response = await fetch("https://lukemon-api-9ec20912cdb1.herokuapp.com/updateCurr",{
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/updateCurr`,{
       method: 'POST',  
       headers: {
         'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ function PostFight(props) {
   }
 
   const getPlayerTeam = async () => {
-    const response = await fetch(`https://lukemon-api-9ec20912cdb1.herokuapp.com/getPlayerTeam`,{
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/getPlayerTeam`,{
       headers: {
         Authorization: `Bearer ${props.token}`,
       }

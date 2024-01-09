@@ -146,6 +146,7 @@ nav {
 
 .appBar {
   display: flex;
+  display: none;
   position: fixed;
   bottom: 0;
   background-color: black;
@@ -154,23 +155,27 @@ nav {
  width: 100%;
  justify-content: center;
 }
+
 .appBar ul {
 	display: flex;
 	width: 100%;
 	justify-content: space-around;
 	list-style: none;
 }
+
  .appBar li a{
   text-decoration: none;
   color: white;
   opacity: 1.0;
   padding: .5em;
  }
+
 .appBar li {
   display: flex;
   flex-direction: column;
   text-align: center;
 }
+
 .selected  {
   border-top: .2em solid blue;
 }
@@ -208,7 +213,7 @@ nav {
   .nav_links a{
       display:none;
   }
-  .dropDown{
+  .appBar{
     display: block;
   }
 }

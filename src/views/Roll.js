@@ -5,32 +5,33 @@ import '../components/css/pokeTypes.css'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-export default function Pokemon(props) {
+export default function Roll(props) {
   props.setSelected("roll")
   const [poke, setPoke] = useState({})
   const [pokeAtt, setPokeAtt] = useState({})
   const [invCount, setInvCount] = useState(0)
 
   useEffect(() => {
-    const fetchData = async() => {
+    const fetchData = async () => {
       await getInvLen()
     }
     fetchData()
-  },[])
-  
-  const getInvLen = async() => {
-    const response = await fetch('https://lukemon-api-9ec20912cdb1.herokuapp.com/invCount',{
+  }, [])
+
+  const getInvLen = async () => {
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/invCount`, {
       headers: {
         Authorization: `Bearer ${props.token}`
-      }}) 
-      const data = await response.json()
-      setInvCount(data.inv_count)
-    }
+      }
+    })
+    const data = await response.json()
+    setInvCount(data.inv_count)
+  }
 
   const postSearch = async (pokeData) => {
     const response = await axios({
       method: "POST",
-      url: "https://lukemon-api-9ec20912cdb1.herokuapp.com/roll",
+      url: `${process.env.REACT_APP_BACKEND_URL}/roll`,
       headers: {
         Authorization: 'Bearer ' + props.token
       },
@@ -41,7 +42,7 @@ export default function Pokemon(props) {
 
   const handleCatch = () => {
     props.setLoading(true)
-    const postData = async() => {
+    const postData = async () => {
       await postCatch()
     }
     postData()
@@ -50,7 +51,7 @@ export default function Pokemon(props) {
   const postCatch = async () => {
     const response = await axios({
       method: "POST",
-      url: "https://lukemon-api-9ec20912cdb1.herokuapp.com/catch",
+      url: `${process.env.REACT_APP_BACKEND_URL}/catch`,
       headers: {
         Authorization: 'Bearer ' + props.token
       },
@@ -58,51 +59,55 @@ export default function Pokemon(props) {
     })
     setPoke('')
     setPokeAtt('')
-    if(response.status !== 200){
+    if (response.status !== 200) {
       toast.error(response.data.msg)
     } else {
       toast.success(response.data.msg)
-      setInvCount(invCount+1)
+      setInvCount(invCount + 1)
     }
     props.setLoading(false)
     return response
   }
 
   const getPokemon = async () => {
-    if(props.tickets <= 0){
+    if (props.tickets <= 0) {
       toast.error('Insufficient Tickets')
-    } 
-    else if(invCount && invCount > 25) {
+    }
+    else if (invCount && invCount > 25) {
       toast.error('Inventory Full (25 max)')
-    } 
+    }
     else {
       props.setLoading(true)
-      const getData = async() => {
+      const getData = async () => {
         await generatePoke()
       }
       getData()
     }
   }
 
-  const generatePoke = async() => {
+  const generatePoke = async () => {
     const attMove = generateAtt()
-      const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${attMove.poke_name}`)
-      const data = await response.json()
-      let pokeData = {
-        'poke_name': data['name'],
-        'poke_type': data['types'][0]['type']['name'],
-        'sprite_url': data['sprites']['versions']['generation-v']['black-white']['animated']['front_default'],
-        'hp': (data['stats'][0]['base_stat'] * 1.5),
-        'att': data['stats'][1]['base_stat'] + data['stats'][3]['base_stat'],
-        'defe': data['stats'][2]['base_stat'] + data['stats'][4]['base_stat'],
-        'speed': data['stats'][5]['base_stat']
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/${attMove.poke_name}`)
+    const pokeData = await response.json()
+    if (attMove.shiny_roll === 1) {
+      if (attMove.damage < 100) {
+        attMove.damage = 100
       }
-      attMove.poke_name = pokeData.poke_name
-      props.setTickets(props.tickets - 1)
-      setPoke(pokeData)
-      setPokeAtt(attMove)
-      postSearch(pokeData)
-      props.setLoading(false)
+      if (attMove.crit < 50) {
+        attMove.crit = 50
+      }
+      if (attMove.accuracy < 50) {
+        attMove.accuracy = 50
+      }
+      pokeData.shiny = true
+      attMove.shiny = true
+    }
+    attMove.poke_name = pokeData.poke_name
+    props.setTickets(props.tickets - 1)
+    setPoke(pokeData)
+    setPokeAtt(attMove)
+    postSearch(pokeData)
+    props.setLoading(false)
   }
 
   const generateAtt = () => {
@@ -110,39 +115,42 @@ export default function Pokemon(props) {
       'poke_name': Math.floor(Math.random() * 649) + 1,
       'damage': Math.floor(Math.random() * 140) + 40,
       'crit': Math.floor(Math.random() * 100),
-      'accuracy': Math.floor(Math.random() * 100)
+      'accuracy': Math.floor(Math.random() * 100),
+      'shiny_roll': Math.floor(Math.random() * 400) + 1,
+      'shiny': false
     }
- 
+
     return attData
   }
+
 
   return (
     <div className="rollContainer">
       <h1>Tickets:{props.tickets}</h1>
-      {poke.poke_name?(
-        <div className="pokeCard" id={poke.poke_type}>
-            <button onClick={handleCatch} disabled={props.isLoading}> {props.isLoading?'Loading...': 'Catch'}</button>
-                <img className='teamImg' src={poke.sprite_url}></img>
-                <h3>{poke.poke_name}</h3>
-                <h4>{poke.poke_type}</h4>
-                <ul>
-                  <li className="hp">HP<br/>{poke.hp}</li>
-                  <li className="att">ATT<br/>{poke.att}</li>
-                  <li className="def">DEF<br/>{poke.defe}</li>
-                  <li className="speed">SPD<br/>{poke.speed}</li>
-                </ul>
-                <h4>Super Duper Punch</h4>
-                <ul>
-                  <li>DMG<br/>{pokeAtt.damage}</li>
-                  <li>CRIT<br/>%{pokeAtt.crit}</li>
-                  <li>ACC<br/>%{pokeAtt.accuracy}</li>
-                </ul>
-              </div>
-      ):(
+      {poke.poke_name ? (
+        <div className={poke.shiny === true ? 'pokeCard shinyBackground' : 'pokeCard'} id={poke.poke_type[0]}  >
+          <button onClick={handleCatch} disabled={props.isLoading}> {props.isLoading ? 'Loading...' : 'Catch'}</button>
+          <img className='teamImg' src={poke.shiny === true ? poke.shiny_url : poke.sprite_url}></img>
+          <h3>{poke.poke_name}</h3>
+          {poke.poke_type.map(type => <h5>{type}</h5>)}
+          <ul>
+            <li className="hp">HP<br />{poke.hp}</li>
+            <li className="att">ATT<br />{poke.att}</li>
+            <li className="def">DEF<br />{poke.defe}</li>
+            <li className="speed">SPD<br />{poke.speed}</li>
+          </ul>
+          <h4>Super Duper Punch</h4>
+          <ul>
+            <li>DMG<br />{pokeAtt.damage}</li>
+            <li>CRIT<br />%{pokeAtt.crit}</li>
+            <li>ACC<br />%{pokeAtt.accuracy}</li>
+          </ul>
+        </div>
+      ) : (
         <>Loading...</>
       )}
-      <button onClick={getPokemon} disabled={props.isLoading}>{props.isLoading?'Loading...': 'Roll'}</button>
-        
+      <button onClick={getPokemon} disabled={props.isLoading}>{props.isLoading ? 'Loading...' : 'Roll'}</button>
+
     </div>
-    )
+  )
 }

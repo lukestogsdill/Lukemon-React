@@ -87,3 +87,8 @@
     border: #EE99AC solid 2px;
     background-color: #EE99AC88;
 }
+
+.shinyBackground {
+    border: gold;
+    background: linear-gradient(45deg, violet, indigo, blue, green, yellow, orange, red)
+}

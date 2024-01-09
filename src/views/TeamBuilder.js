@@ -47,7 +47,7 @@ function TeamBuilder(props){
   }
 
   const getTeamData = async() => {
-    const response = await fetch("https://lukemon-api-9ec20912cdb1.herokuapp.com/getInv",{
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/getInv`,{
       headers: {
         Authorization: `Bearer ${props.token}`,
       }
@@ -64,7 +64,7 @@ function TeamBuilder(props){
     }
     const response = await axios({
       method: "POST",
-      url: "https://lukemon-api-9ec20912cdb1.herokuapp.com/saveTeam",
+      url: `${process.env.REACT_APP_BACKEND_URL}/saveTeam`,
       headers: {
         Authorization: `Bearer ${props.token}`
       },
@@ -81,7 +81,7 @@ function TeamBuilder(props){
   }
 
   const handleDel = async () => {
-    const response = await fetch(`https://lukemon-api-9ec20912cdb1.herokuapp.com/delPoke/${delPoke}`,{
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/delPoke/${delPoke}`,{
       headers: {
         Authorization: `Bearer ${props.token}`,
       }
@@ -113,7 +113,7 @@ function TeamBuilder(props){
         
         const response = await axios({
           method: 'POST',
-          url: 'https://lukemon-api-9ec20912cdb1.herokuapp.com/postFight',
+          url: `${process.env.REACT_APP_BACKEND_URL}/postFight`,
           headers: {
             Authorization: `Bearer ${props.token}`
           },
@@ -194,8 +194,8 @@ function TeamBuilder(props){
         {props.team.map((team, index) => {
             return(
               team.onTeam!=null?(
-                <div className='pokeCard'  id={team.poke_hash.poke_type} onClick={() => delTeam(index)}>
-                <img className='teamImg' src={team.poke_hash.sprite_url}></img>
+                <div className={team.shiny === true ? 'pokeCard shinyBackground' : 'pokeCard'} id={team.poke_hash.poke_type} onClick={() => delTeam(index)}>
+                <img className='teamImg' src={team.shiny === true ? team.poke_hash.shiny_url : team.poke_hash.sprite_url}></img>
                 <h3>{team.poke_hash.poke_name}</h3>
                 <h4>{team.poke_hash.poke_type}</h4>
                 <ul>
@@ -223,12 +223,12 @@ function TeamBuilder(props){
         return(
           poke.onTeam==null?(
             <div className="teamList">
-            <div className="pokeCard" id={poke.poke_hash.poke_type} onClick={() => addTeam(index)}>
+            <div className={poke.shiny === true ? 'pokeCard shinyBackground' : 'pokeCard'} id={poke.poke_hash.poke_type} onClick={() => addTeam(index)}>
             <button onClick={(event) => {
               event.stopPropagation()
               handleDelOpen(poke.lukemon_id)
             }}>x</button>
-            <img src={poke.poke_hash.sprite_url}></img>
+            <img src={poke.shiny === true ? poke.poke_hash.shiny_url : poke.poke_hash.sprite_url}></img>
             <h2>{poke.poke_hash.poke_name}</h2>
             <h4>{poke.poke_hash.poke_type}</h4>
             <ul>

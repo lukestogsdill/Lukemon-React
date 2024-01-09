@@ -17,7 +17,7 @@ function Login(props) {
 
     const logMeIn = async() => {
       console.log(credentials)
-      const response = await fetch('https://lukemon-api-9ec20912cdb1.herokuapp.com/token', {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/token`, {
         method: 'GET',
         headers: {
           'Authorization': `Basic ${credentials}`
@@ -39,7 +39,7 @@ function Login(props) {
         event.preventDefault()
         const salt = bcrypt.genSaltSync(10)
         const hashedPassword = bcrypt.hashSync('password', salt)
-        const response = await fetch('https://lukemon-api-9ec20912cdb1.herokuapp.com/create_guest',{
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/create_guest`,{
           method: 'POST',
           headers:{'Content-Type': 'application/json'},
           body: JSON.stringify({
