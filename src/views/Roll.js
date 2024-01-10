@@ -10,6 +10,7 @@ export default function Roll(props) {
   const [poke, setPoke] = useState({})
   const [pokeAtt, setPokeAtt] = useState({})
   const [invCount, setInvCount] = useState(0)
+  const [counter, setCounter] = useState(642)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -87,7 +88,7 @@ export default function Roll(props) {
 
   const generatePoke = async () => {
     const attMove = generateAtt()
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/${attMove.poke_name}`)
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/getPokeHash/${attMove.poke_name}`)
     const pokeData = await response.json()
     if (attMove.shiny_roll === 1) {
       if (attMove.damage < 100) {
@@ -112,15 +113,24 @@ export default function Roll(props) {
 
   const generateAtt = () => {
     const attData = {
-      'poke_name': Math.floor(Math.random() * 649) + 1,
+      'poke_name': counter,
+      // 'poke_name': Math.floor(Math.random() * 649) + 1,
       'damage': Math.floor(Math.random() * 140) + 40,
       'crit': Math.floor(Math.random() * 100),
       'accuracy': Math.floor(Math.random() * 100),
       'shiny_roll': Math.floor(Math.random() * 400) + 1,
       'shiny': false
     }
-
+    setCounter(counter +1)
     return attData
+  }
+
+  function truncateString(str, maxLength) {
+    const newStr = str.charAt(0).toUpperCase() + str.slice(1)
+    if (str.length > maxLength) {
+      return newStr.substring(0, maxLength) + '...'
+    }
+    return newStr
   }
 
 
@@ -128,10 +138,10 @@ export default function Roll(props) {
     <div className="rollContainer">
       <h1>Tickets:{props.tickets}</h1>
       {poke.poke_name ? (
+        
         <div className={poke.shiny === true ? 'pokeCard shinyBackground' : 'pokeCard'} id={poke.poke_type[0]}  >
-          <button onClick={handleCatch} disabled={props.isLoading}> {props.isLoading ? 'Loading...' : 'Catch'}</button>
-          <img className='teamImg' src={poke.shiny === true ? poke.shiny_url : poke.sprite_url}></img>
-          <h3>{poke.poke_name}</h3>
+          <img src={poke.shiny === true ? poke.shiny_url : poke.sprite_url}></img>
+          <h3>{truncateString(poke.poke_name, 10)}</h3>
           {poke.poke_type.map(type => <h5>{type}</h5>)}
           <ul>
             <li className="hp">HP<br />{poke.hp}</li>
@@ -149,6 +159,7 @@ export default function Roll(props) {
       ) : (
         <>Loading...</>
       )}
+      <button onClick={handleCatch} disabled={props.isLoading}> {props.isLoading ? 'Loading...' : 'Catch'}</button>
       <button onClick={getPokemon} disabled={props.isLoading}>{props.isLoading ? 'Loading...' : 'Roll'}</button>
 
     </div>

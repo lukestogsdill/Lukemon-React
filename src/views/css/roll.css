@@ -15,32 +15,7 @@
     border-radius: 7px;
     color: white;
 }
-.att{
-    border: #ff0000 solid 2px;
-    background-color: #ff000088;
-}
-.def{
-    border: #1100ff solid 2px;
-    background-color: #1100ff88;
-}
-.hp {
-    border: #15ff00 solid 2px;
-    background-color: #15ff0088;
-}
-
-.speed {
-    border: #b700ff solid 2px;
-    background-color: #b700ff88;
-}
 
 .rollContainer h1{
     color:white;
-}
-
-
-.pokeCard{
-    flex-direction: column;
-    justify-content: space-between;
-    border-radius: 10px;
-    margin:.5em;
 }

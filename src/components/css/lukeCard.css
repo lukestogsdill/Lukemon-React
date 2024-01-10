@@ -1,0 +1,44 @@
+.pokeCard{
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 10px;
+    margin:.5em;
+    width: 110px;
+    height: 190px;
+    font-size: .7em;
+}
+
+.pokeCard img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    align-self: center;
+}
+
+.pokeCard,
+.pokeCard ul,
+.attMove{
+    display:flex;
+    color:white;
+    justify-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+}
+
+.att{
+    border: #ff0000 solid 2px;
+    background-color: #ff000088;
+}
+.def{
+    border: #1100ff solid 2px;
+    background-color: #1100ff88;
+}
+.hp {
+    border: #15ff00 solid 2px;
+    background-color: #15ff0088;
+}
+
+.speed {
+    border: #b700ff solid 2px;
+    background-color: #b700ff88;
+}

@@ -1,21 +1,10 @@
-.invContainer,
-.invTree,
-.pokeCard,
-.pokeCard ul,
-.teamList,
-.teamContainer,
-.attMove{
+
+.invTree {
     display:flex;
     color:white;
     justify-content: center;
     text-align: center;
     flex-wrap: wrap;
-}
-.pokeCard{
-    flex-direction: column;
-    justify-content: space-between;
-    border-radius: 10px;
-    margin:.5em;
 }
 
 .invTree{
@@ -23,26 +12,23 @@
     justify-content: center;
     background-color: #ffd0005d;
     border: solid rgb(199, 169, 0) 2px;
-    width:95%
+    width: 1000px; 
 }
-.invContainer{
+.teamContainer{
     width: 100%;
+    height: fit-content;
     justify-content: center;
 }
+
 .teamList{
-    min-height: 250px;
+    display:flex;
+    justify-content: center;
+    flex-wrap: wrap;
     border-radius: 10px;
-    max-width:80%;
+    width:100%;
     align-self: center;
-    max-height: fit-content;
 }
 
-.pokeCard img{
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-    align-self: center;
-}
 .teamContainer{
     flex-direction: column;
     background-color: #0000008a;
@@ -53,13 +39,6 @@
     align-self:center;
     margin: 1em;
     padding:.4em;
-}
-.teamContainer button,
-.pokeCard button{
-    position: relative;
-    border-radius: 10px 10px 0 0;
-    background-color: #f3000041;
-    border: 2px solid #f30000;
 }
 
 .pokeCard ul li{
@@ -100,3 +79,4 @@
     justify-content: center;
 }
 
+@media

@@ -5,6 +5,7 @@ import '../components/css/pokeTypes.css'
 import Modal from '@mui/material/Modal'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { LukeCard } from '../components/lukeCard'
 
 function TeamBuilder(props){
 
@@ -191,26 +192,12 @@ function TeamBuilder(props){
       <h1>TEAM</h1>
       <div className='teamContainer'>
         <ul className='teamList'>
-        {props.team.map((team, index) => {
+        {props.team.map((poke, index) => {
             return(
-              team.onTeam!=null?(
-                <div className={team.shiny === true ? 'pokeCard shinyBackground' : 'pokeCard'} id={team.poke_hash.poke_type} onClick={() => delTeam(index)}>
-                <img className='teamImg' src={team.shiny === true ? team.poke_hash.shiny_url : team.poke_hash.sprite_url}></img>
-                <h3>{team.poke_hash.poke_name}</h3>
-                <h4>{team.poke_hash.poke_type}</h4>
-                <ul>
-                  <li className="hp">HP<br/>{team.poke_hash.hp}</li>
-                  <li className="att">ATT<br/>{team.poke_hash.att}</li>
-                  <li className="def">DEF<br/>{team.poke_hash.defe}</li>
-                  <li className="speed">SPD<br/>{team.poke_hash.speed}</li>
-                </ul>
-                <h4>Super Duper Punch</h4>
-                <ul>
-                  <li>DMG<br/>{team.damage}</li>
-                  <li>CRIT<br/>%{team.crit}</li>
-                  <li>ACC<br/>%{team.accuracy}</li>
-                </ul>
-              </div>
+              poke.onTeam!=null?(
+                <div onClick={() => delTeam(index)}>
+                  <LukeCard poke={poke} />
+                </div>
             ):(
               <></>
               )
@@ -218,33 +205,16 @@ function TeamBuilder(props){
         </ul>
         <button id='saveBtn' onClick={handleSaveOpen}>Save</button>
       </div>
-    <div className='invContainer'>
+    <div className='teamList'>
       {props.invData.map((poke, index) =>{
         return(
           poke.onTeam==null?(
-            <div className="teamList">
-            <div className={poke.shiny === true ? 'pokeCard shinyBackground' : 'pokeCard'} id={poke.poke_hash.poke_type} onClick={() => addTeam(index)}>
-            <button onClick={(event) => {
+            <div className="" onClick={() => addTeam(index)}>
+              <button onClick={(event) => {
               event.stopPropagation()
               handleDelOpen(poke.lukemon_id)
             }}>x</button>
-            <img src={poke.shiny === true ? poke.poke_hash.shiny_url : poke.poke_hash.sprite_url}></img>
-            <h2>{poke.poke_hash.poke_name}</h2>
-            <h4>{poke.poke_hash.poke_type}</h4>
-            <ul>
-              <li className="hp">HP<br/>{poke.poke_hash.hp}</li>
-              <li className="att">ATT<br/>{poke.poke_hash.att}</li>
-              <li className="def">DEF<br/>{poke.poke_hash.defe}</li>
-              <li className="speed">SPD<br/>{poke.poke_hash.speed}</li>
-            </ul>
-            <h4>Super Duper Punch</h4>
-            <ul>
-              <li>DMG<br/>{poke.damage}</li>
-              <li>CRIT<br/>%{poke.crit}</li>
-              <li>ACC<br/>%{poke.accuracy}</li>
-            </ul>
-          </div>
-          
+              <LukeCard poke={poke} />
           </div>
           ):(
             <></>

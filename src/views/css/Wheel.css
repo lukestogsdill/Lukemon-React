@@ -3,8 +3,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	overflow: hidden;
-	transform: translateY(50%);
+	transform: translateY(40%);
 }
 
 .wheelBox{
@@ -27,6 +26,7 @@
 	border:solid white 2px;
 	border-radius: 10px;
 	margin-top: .7em;
+	height: 350px;
 }
 
 .container{
@@ -87,30 +87,30 @@
 }
 
 .four{
-	background-color: #ddd900;
+	background-image: linear-gradient(#ffffff,#ddd900,#000000);
 }
 
 .six{
-	background-color: #f84f87;
+	background-image: linear-gradient(#ffffff,#f84f87,#000000);
 }
 
 .eight{
-	background-color: #9401d8;
+	background-image: linear-gradient(#ffffff,#9401d8,#000000);
 }
 
 .two{
-	background-color: #00ff0d;
+	background-image: linear-gradient(#ffffff,#00ff0d,#000000);
 }
 
 .one,
 .five,
 .seven{
-	background-image:linear-gradient(red,orange,red);
+	background-image:linear-gradient(#8c8c8c,#011229,#000000);
 }
 
 .three,
 .nine{
-	background-image:linear-gradient(green,yellow, green);
+	background-image:linear-gradient(#8c8c8c,#380000, #000000);
 }
 
 .mid{
@@ -118,8 +118,9 @@
 	width: 25px;
 	border-radius: 50%;
 	position: absolute;
-	background: #000000;
+	background: #271600;
 	transform: translateY(340px);
+	top: 73px;
 }
 #spin{
 	height: 60px;
@@ -140,6 +141,7 @@
 	position: absolute;
 	clip-path: polygon(100% 0,50% 100%, 0 0);
 	margin-top: 140px;
+	top: 84px;
 }
 
 .betBox{
@@ -172,3 +174,19 @@
 	color:#e1b503;
 }
 
+.jackpotList {
+	color:white;
+	text-align: center;
+}
+.niceWin{
+	color: #00ff0d
+}
+.superMoneyJackpot{
+	color: #f84f87
+}
+.superTicketJackpot {
+	color: #9401d8
+}
+.superDuperJackpot{
+	color: #ddd900
+}
