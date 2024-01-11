@@ -5,12 +5,17 @@ import 'react-toastify/dist/ReactToastify.css'
 
 function PostFight(props) {
     props.setSelected("home")  
-    const [feed, setFeed] = useState([])
+    const [feed, setFeed] = useState({
+      posts: [],
+      total_pages: 1,
+      current_page: 1,
+      total_posts: 0
+    })
     const teamData = []
 
   useEffect(() => {
       const fetchData = async () => {
-        await getFeed()
+        await getFeed(1, 10)
         await getPlayerTeam()
         await updateCurr()
       }
@@ -52,14 +57,20 @@ function PostFight(props) {
     return <small>{timeDifference}</small>;
   };
 
-  const getFeed = async () => {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/getFeed`)
-        const data = await response.json()
-        for(let i = 0; i < data.length; i++){
-          data[i].team_urls = data[i].team_urls.split(',')
-        }
-        setFeed(data)
+  const getFeed = async (page = 1, perPage = 10) => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BACKEND_URL}/getFeed?page=${page}&per_page=${perPage}`
+      );
+      const data = await response.json()
+      console.log(data)
+      setFeed(data)
+    } catch (error) {
+      console.error('Error fetching feed:', error);
+      
+    }
   }
+
   const updateCurr = async () => {
     if(props.token && props.money !== undefined){
       const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/updateCurr`,{
@@ -101,7 +112,7 @@ function PostFight(props) {
       </div>
       <div className='postContainer'>
         
-        {feed.map((feed) => {
+        {feed.posts.map((feed) => {
           return(
           <div className='postedFight'>
             <div className='profileContainer'>

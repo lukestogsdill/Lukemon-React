@@ -3,7 +3,7 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	transform: translateY(40%);
+	transform: translateY(47%);
 }
 
 .wheelBox{
@@ -120,7 +120,7 @@
 	position: absolute;
 	background: #271600;
 	transform: translateY(340px);
-	top: 73px;
+	top: 79px;
 }
 #spin{
 	height: 60px;
@@ -137,11 +137,11 @@
 .stoper{
 	height: 50px;
 	width: 40px;
-	background: #414141;
+	background: #383838;
 	position: absolute;
 	clip-path: polygon(100% 0,50% 100%, 0 0);
 	margin-top: 140px;
-	top: 84px;
+	top: 107px;
 }
 
 .betBox{
@@ -171,7 +171,22 @@
 	color:white;
 }
 .betNum{
+	display: flex;
 	color:#e1b503;
+}
+.betForm {
+	display:flex;
+	flex-direction: column;
+	align-items: center;
+}
+.betNum input {
+	background-color: #ffffff34;
+	color: #e1b503;
+	width: 88px;
+	border-radius: 6px;
+	text-align: center;
+	font-size: .75em;
+	margin: .2em;
 }
 
 .jackpotList {

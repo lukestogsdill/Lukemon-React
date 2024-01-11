@@ -106,12 +106,20 @@ function TeamBuilder(props){
     const handleSubmit = async (event) => {
       event.preventDefault()
       if(text!== ''){
-        const teamUrls = []
+        let team_value = 0
+        console.log(props.team)
         for(let i = 0; i < props.team.length; i++){
-          teamUrls.push(props.team[i].poke_hash.sprite_url)
+          team_value = team_value + props.team[i].poke_hash.value
         }
-        const stringUrls = teamUrls.join()
-        
+        const team_urls = []
+        for(let i = 0; i < props.team.length; i++){
+          if(props.team[i].shiny === true){
+            team_urls.push(props.team[i].poke_hash.shiny_url)
+          } else {
+            team_urls.push(props.team[i].poke_hash.sprite_url)
+          }
+        }
+        console.log(team_urls)
         const response = await axios({
           method: 'POST',
           url: `${process.env.REACT_APP_BACKEND_URL}/postFight`,
@@ -120,7 +128,8 @@ function TeamBuilder(props){
           },
           data: {
             caption: text,
-            team_urls: stringUrls
+            team_value: team_value,
+            team_urls: team_urls
           }
       })
       
@@ -209,7 +218,7 @@ function TeamBuilder(props){
       {props.invData.map((poke, index) =>{
         return(
           poke.onTeam==null?(
-            <div className="" onClick={() => addTeam(index)}>
+            <div className="teamCard" onClick={() => addTeam(index)}>
               <button onClick={(event) => {
               event.stopPropagation()
               handleDelOpen(poke.lukemon_id)

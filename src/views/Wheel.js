@@ -89,6 +89,10 @@ export default function Wheel(props) {
         setJackpot('')
     }
 
+    const handleBetChange = (e) => {
+        setBetNum(e.target.value)
+    }
+
     return (
         <div className='parentContainer'>
 
@@ -104,17 +108,26 @@ export default function Wheel(props) {
                         <h2>Win:${moneyWin} T:{ticketWin}</h2>
                     </div>
                 </Modal>
-                <div className='betBox'>
-                    <div className='moneyBox'>
-                        <h1>Bank:${props.money}</h1>
-                        <h1 className='betNum'>Bet:${betNum}</h1>
+                <form onSubmit={spinBtn} className='betForm'>
+                    <div className='betBox'>
+                        <div className='moneyBox'>
+                            <h1>Bank:${props.money}</h1>
+                            <h1 className='betNum'>Bet:$
+                                <input
+                                    type='text'
+                                    value={betNum}
+                                    onChange={handleBetChange}
+                                    onSubmit={spinBtn}
+                                />
+                            </h1>
+                        </div>
+                        <div className='betBtns'>
+                            <FontAwesomeIcon icon={faArrowUp} onClick={handleIncrease} />
+                            <FontAwesomeIcon icon={faArrowDown} onClick={handleDecrease} />
+                        </div>
                     </div>
-                    <div className='betBtns'>
-                        <FontAwesomeIcon icon={faArrowUp} onClick={handleIncrease} />
-                        <FontAwesomeIcon icon={faArrowDown} onClick={handleDecrease} />
-                    </div>
-                </div>
-                <button onClick={spinBtn} id="spin" disabled={props.isLoading}>{props.isLoading ? 'Spinning...' : 'Spin'}</button>
+                    <button onClick={spinBtn} id="spin" disabled={props.isLoading}>{props.isLoading ? 'Spinning...' : 'Spin'}</button>
+                </form>
                 <div className='wheelBox'>
                     <div className="wheel">
                         <div className='container' id='container'>

@@ -79,4 +79,9 @@
     justify-content: center;
 }
 
-@media
+.teamCard button{
+    width:80%;
+    border-radius: 10px 10px 0px 0px;
+    background-color: #ff000065;
+    border: solid red;
+}

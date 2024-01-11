@@ -1,4 +1,0 @@
-FIGHT:
-    healthbar
-    
-SET UP CORS!!! --dont not do this

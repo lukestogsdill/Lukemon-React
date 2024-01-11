@@ -15,7 +15,16 @@
     border-radius: 7px;
     color: white;
 }
-
+.rollDisplay {
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.pokeCatch{
+    display:flex;
+    flex-direction: column;
+    margin: .25em
+}
 .rollContainer h1{
     color:white;
 }
