@@ -179,7 +179,7 @@
 	flex-direction: column;
 	align-items: center;
 }
-.betNum input {
+.betInput {
 	background-color: #ffffff34;
 	color: #e1b503;
 	width: 88px;

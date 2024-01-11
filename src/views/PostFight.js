@@ -1,37 +1,40 @@
-import React , { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import './css/PostFight.css'
 import { Link } from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSackDollar } from '@fortawesome/free-solid-svg-icons'
+import '../components/css/pokeTypes.css'
 
 function PostFight(props) {
-    props.setSelected("home")  
-    const [feed, setFeed] = useState({
-      posts: [],
-      total_pages: 1,
-      current_page: 1,
-      total_posts: 0
-    })
-    const teamData = []
+  props.setSelected("home")
+  const [feed, setFeed] = useState({
+    posts: [],
+    total_pages: 1,
+    current_page: 1,
+    total_posts: 0
+  })
+  const teamData = []
 
   useEffect(() => {
-      const fetchData = async () => {
-        await getFeed(1, 10)
-        await getPlayerTeam()
-        await updateCurr()
-      }
-      fetchData()
-  },[])
+    const fetchData = async () => {
+      await getFeed(1, 10)
+      await getPlayerTeam()
+      await updateCurr()
+    }
+    fetchData()
+  }, [])
 
   const MomentAgo = ({ storedTime }) => {
     const [timeDifference, setTimeDifference] = useState('');
-  
+
     useEffect(() => {
       const calculateTimeDifference = () => {
         const storedDateTime = new Date(storedTime);
         const currentTime = new Date();
-  
+
         const timeDiffInSeconds = Math.floor((currentTime - storedDateTime) / 1000);
-  
+
         if (timeDiffInSeconds < 60) {
           setTimeDifference('moments ago');
         } else if (timeDiffInSeconds < 3600) {
@@ -53,7 +56,7 @@ function PostFight(props) {
       };
       calculateTimeDifference();
     }, [storedTime]);
-  
+
     return <small>{timeDifference}</small>;
   };
 
@@ -67,78 +70,87 @@ function PostFight(props) {
       setFeed(data)
     } catch (error) {
       console.error('Error fetching feed:', error);
-      
+
     }
   }
 
   const updateCurr = async () => {
-    if(props.token && props.money !== undefined){
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/updateCurr`,{
-      method: 'POST',  
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${props.token}`
-      },
-      body: JSON.stringify({
+    if (props.token && props.money !== undefined) {
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/updateCurr`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${props.token}`
+        },
+        body: JSON.stringify({
           tickets: props.tickets,
           money: props.money
+        })
       })
-      })
-    } 
+    }
   }
 
   const getPlayerTeam = async () => {
-    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/getPlayerTeam`,{
+    const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/getPlayerTeam`, {
       headers: {
         Authorization: `Bearer ${props.token}`,
       }
-    }) 
-      const data = await response.json()
-      for(let i = 0; i < data.length; i++){
-        teamData[data[i]['onTeam']] = data[i]
-      }
-      props.setTeam(teamData)
-      console.log(data)
+    })
+    const data = await response.json()
+    for (let i = 0; i < data.length; i++) {
+      teamData[data[i]['onTeam']] = data[i]
     }
+    props.setTeam(teamData)
+    console.log(data)
+  }
 
   return (
     <div className='postTree'>
       <div className='teamDisplay'>
-      {props.team.map((team) => {
-        return(
-          <img src={team.poke_hash.sprite_url} className='team_urls'/>
-        )
+        {props.team.map((poke) => {
+          return (
+            <>
+              {poke.shiny ? (
+                <img src={poke.poke_hash.shiny_url} className='team_urls shinyBackground' id={poke.poke_hash.poke_type[0]}/>
+                ) : (
+                <img src={poke.poke_hash.sprite_url} className='team_urls' id={poke.poke_hash.poke_type[0]}/>
+              )
+              }
+
+            </>
+          )
         })}
       </div>
       <div className='postContainer'>
-        
+
         {feed.posts.map((feed) => {
-          return(
-          <div className='postedFight'>
-            <div className='profileContainer'>
-            <div className='profilePic'
-            style={{
-              backgroundImage: `url(${feed.user_img})`,
-              backgroundSize: 'cover',
-              backgroundRepeat: 'no-repeat',
-              width: '50px'
-            }}/>
-            
-            <h2>{feed.username}</h2>
+          return (
+            <div className='postedFight'>
+              <div className='profileContainer'>
+                <div className='profilePic'
+                  style={{
+                    backgroundImage: `url(${feed.user_img})`,
+                    backgroundSize: 'cover',
+                    backgroundRepeat: 'no-repeat',
+                    width: '50px'
+                  }} />
+
+                <h2>{feed.username}</h2>
+              </div>
+              <h4>{feed.caption}</h4>
+              <ul>
+                {feed.team_urls.map((urls) => {
+                  return (
+                    <img className='team_urls' src={urls} />
+                  )
+                })}
+              </ul>
+              <p className='team_value'><FontAwesomeIcon icon={faSackDollar} /> {feed.team_value}</p>
+              <p><MomentAgo storedTime={feed.date_created} /></p>
+              <Link to={`/lukefight/${feed.user_id}`} className='fightBtn'>
+                <div>FIGHT!</div>
+              </Link>
             </div>
-            <h4>{feed.caption}</h4>
-            <ul>
-              {feed.team_urls.map((urls) => {
-                return(
-                  <img className='team_urls' src={urls}/>
-                )
-              })}
-            </ul>
-            <p><MomentAgo storedTime={feed.date_created} /></p>
-            <Link to={`/lukefight/${feed.user_id}`} className='fightBtn'>
-            <div>FIGHT!</div>
-            </Link>
-          </div>
           )
         })}
       </div>

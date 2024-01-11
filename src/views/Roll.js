@@ -4,19 +4,24 @@ import './css/roll.css';
 import '../components/css/pokeTypes.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowUp, faArrowDown, faTicket } from '@fortawesome/free-solid-svg-icons'
+
 
 export default function Roll(props) {
   props.setSelected("roll");
-  const [pokeArray, setPokeArray] = useState([]);
-  const [pokeAttArray, setPokeAttArray] = useState([]);
-  const [invCount, setInvCount] = useState(0);
+  const [pokeArray, setPokeArray] = useState([])
+  const [pokeAttArray, setPokeAttArray] = useState([])
+  const [invCount, setInvCount] = useState(0)
+  const [ticketCount, setTicketCount] = useState(10)
+  const rollLimit = 100
 
   useEffect(() => {
     const fetchData = async () => {
-      await getInvLen();
-    };
-    fetchData();
-  }, []);
+      await getInvLen()
+    }
+    fetchData()
+  }, [])
 
   const getInvLen = async () => {
     const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/invCount`, {
@@ -69,26 +74,27 @@ export default function Roll(props) {
   };
 
   const getPokemon = async () => {
-    if (props.tickets <= 0) {
-      toast.error('Insufficient Tickets');
+    if (props.tickets <= 0 || ticketCount > rollLimit) {
+      toast.error(`Roll Limit ${rollLimit}`)
     } else if (invCount && invCount > 25) {
-      toast.error('Inventory Full (25 max)');
+      toast.error('Inventory Full (25 max)')
     } else {
-      props.setLoading(true);
+      props.setLoading(true)
 
-      setPokeArray([]);
-      setPokeAttArray([]);
+
+      setPokeArray([])
+      setPokeAttArray([])
 
       const getData = async () => {
-        await generatePoke();
-      };
-      getData();
+        await generatePoke()
+      }
+      getData()
     }
-  };
+  }
 
 
   const generatePoke = async () => {
-    const pokeRollAmount = 5;
+    const pokeRollAmount = ticketCount
     const attMoves = generateAtt(pokeRollAmount);
     let pokeDataArray = [];
 
@@ -101,7 +107,6 @@ export default function Roll(props) {
       },
       body: JSON.stringify({ pokeNames })
     });
-    //pokeNames comes out a different order when recieved below
     pokeDataArray = await response.json();
     console.log(pokeDataArray)
 
@@ -126,43 +131,75 @@ export default function Roll(props) {
     });
 
     props.setTickets((prevTickets) => prevTickets - pokeRollAmount);
-    setPokeArray(updatedAttMoves);
-    setPokeAttArray(attMoves);
+    setPokeArray(updatedAttMoves)
+    setPokeAttArray(attMoves)
 
-    props.setLoading(false);
-  };
+    props.setLoading(false)
+  }
 
   const generateAtt = (pokeRollAmount) => {
-
-    const rollArray = [];
-
+    const rollArray = []
     for (let i = 0; i < pokeRollAmount; i++) {
       const attData = {
         poke_name: Math.floor(Math.random() * 649) + 1,
         damage: Math.floor(Math.random() * 140) + 40,
         crit: Math.floor(Math.random() * 100),
         accuracy: Math.floor(Math.random() * 100),
-        shiny_roll: Math.floor(Math.random() * 1) + 1,
+        shiny_roll: Math.floor(Math.random() * 1000) + 1,
         shiny: false
       };
-      rollArray.push(attData);
+      rollArray.push(attData)
     }
     console.log(rollArray)
     console.log('this is in geneAtt func')
-    return rollArray;
+    return rollArray
   };
 
   function truncateString(str, maxLength) {
-    const newStr = str.charAt(0).toUpperCase() + str.slice(1);
+    const newStr = str.charAt(0).toUpperCase() + str.slice(1)
     if (str.length > maxLength) {
-      return newStr.substring(0, maxLength) + '...';
+      return newStr.substring(0, maxLength) + '...'
     }
-    return newStr;
+    return newStr
   }
+
+  const handleTicketChange = (e) => {
+    document.getElementById('numberInput').addEventListener('input', function (e) {
+      let inputValue = e.target.value
+      let numericValue = inputValue.replace(/[^0-9]/g, '')
+      setTicketCount(numericValue)
+    })
+  }
+
+  const handleIncrease = () => {
+    if (ticketCount < rollLimit) {
+      setTicketCount(ticketCount + 1)
+    }
+  }
+
+  const handleDecrease = () => {
+    if (1 < ticketCount) {
+      setTicketCount(ticketCount - 1)
+    }
+  }
+
 
   return (
     <div className="rollContainer">
-      <h1>Tickets:{props.tickets}</h1>
+      <div className="ticketRoll">
+        <h1><FontAwesomeIcon icon={faTicket} />:{props.tickets}</h1>
+        <h1 className="rollColor">Roll</h1>
+        <input
+          value={ticketCount}
+          className="ticketInput"
+          id='numberInput'
+          type='text'
+          onChange={handleTicketChange} />
+        <div className='betBtns'>
+          <FontAwesomeIcon icon={faArrowUp} onClick={handleIncrease} />
+          <FontAwesomeIcon icon={faArrowDown} onClick={handleDecrease} />
+        </div>
+      </div>
       <div className="rollDisplay">
         {pokeArray.length > 0 ? (
           pokeArray.map((poke, index) => (
@@ -188,14 +225,23 @@ export default function Roll(props) {
               ) : (
                 <p>Pokemon details not available</p>
               )}
-              <button onClick={() => handleCatch(index)} disabled={props.isLoading}> {props.isLoading ? 'Loading...' : 'Catch'}</button>
+              <button className='catchButton'
+                onClick={() => handleCatch(index)}
+                disabled={props.isLoading}>
+                {props.isLoading ? 'Loading...' : 'Catch'}
+              </button>
             </div>
           ))
         ) : (
           <>Loading...</>
         )}
       </div>
-      <button onClick={getPokemon} disabled={props.isLoading}>{props.isLoading ? 'Loading...' : 'Roll'}</button>
+      <button
+        onClick={getPokemon}
+        className='rollButton'
+        disabled={props.isLoading}>
+        {props.isLoading ? 'Loading...' : 'Roll'}
+      </button>
     </div>
-  );
+  )
 }

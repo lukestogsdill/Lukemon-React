@@ -16,7 +16,8 @@ export default function Wheel(props) {
     const [open, setOpen] = useState(false)
     props.setSelected("wheel")
 
-    const spinBtn = () => {
+    const spinBtn = (e) => {
+        e.preventDefault()
         if (betNum <= props.money) {
             let container = document.getElementById('container')
             let num = (Math.round(Math.random() * 7777) + 720)
@@ -90,7 +91,11 @@ export default function Wheel(props) {
     }
 
     const handleBetChange = (e) => {
-        setBetNum(e.target.value)
+        document.getElementById('numberInput').addEventListener('input', function (e) {
+            let inputValue = e.target.value
+            let numericValue = inputValue.replace(/[^0-9]/g, '')
+            setBetNum(numericValue)
+        })
     }
 
     return (
@@ -115,6 +120,8 @@ export default function Wheel(props) {
                             <h1 className='betNum'>Bet:$
                                 <input
                                     type='text'
+                                    className='betInput'
+                                    id='numberInput'
                                     value={betNum}
                                     onChange={handleBetChange}
                                     onSubmit={spinBtn}
