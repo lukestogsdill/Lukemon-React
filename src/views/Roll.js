@@ -172,7 +172,7 @@ export default function Roll(props) {
   }
 
   const handleIncrease = () => {
-    if (ticketCount < rollLimit) {
+    if (ticketCount < props.tickets && ticketCount < rollLimit) {
       setTicketCount(ticketCount + 1)
     }
   }

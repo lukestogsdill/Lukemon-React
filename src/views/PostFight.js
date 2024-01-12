@@ -5,6 +5,8 @@ import 'react-toastify/dist/ReactToastify.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSackDollar } from '@fortawesome/free-solid-svg-icons'
 import '../components/css/pokeTypes.css'
+import { LukeCard } from '../components/lukeCard'
+import { Pagination } from '../components/pagination'
 
 function PostFight(props) {
   props.setSelected("home")
@@ -12,13 +14,13 @@ function PostFight(props) {
     posts: [],
     total_pages: 1,
     current_page: 1,
-    total_posts: 0
+    total_posts: 1,
   })
   const teamData = []
 
   useEffect(() => {
     const fetchData = async () => {
-      await getFeed(1, 10)
+      await getFeed(1,2)
       await getPlayerTeam()
       await updateCurr()
     }
@@ -60,18 +62,17 @@ function PostFight(props) {
     return <small>{timeDifference}</small>;
   };
 
-  const getFeed = async (page = 1, perPage = 10) => {
+  const getFeed = async (page, perPage) => {
     try {
       const response = await fetch(
         `${process.env.REACT_APP_BACKEND_URL}/getFeed?page=${page}&per_page=${perPage}`
       );
       const data = await response.json()
-      console.log(data)
       setFeed(data)
     } catch (error) {
       console.error('Error fetching feed:', error);
-
     }
+    console.log(feed)
   }
 
   const updateCurr = async () => {
@@ -101,7 +102,6 @@ function PostFight(props) {
       teamData[data[i]['onTeam']] = data[i]
     }
     props.setTeam(teamData)
-    console.log(data)
   }
 
   return (
@@ -110,19 +110,14 @@ function PostFight(props) {
         {props.team.map((poke) => {
           return (
             <>
-              {poke.shiny ? (
-                <img src={poke.poke_hash.shiny_url} className='team_urls shinyBackground' id={poke.poke_hash.poke_type[0]}/>
-                ) : (
-                <img src={poke.poke_hash.sprite_url} className='team_urls' id={poke.poke_hash.poke_type[0]}/>
-              )
-              }
+              <LukeCard poke={poke} />
 
             </>
           )
         })}
       </div>
       <div className='postContainer'>
-
+        <Pagination feed={feed} getFeed={getFeed} />
         {feed.posts.map((feed) => {
           return (
             <div className='postedFight'>
