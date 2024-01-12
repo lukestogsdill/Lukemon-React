@@ -110,7 +110,7 @@ function PostFight(props) {
         {props.team.map((poke) => {
           return (
             <>
-              <LukeCard poke={poke} />
+              <LukeCard poke={poke} className='scaleDown'/>
 
             </>
           )

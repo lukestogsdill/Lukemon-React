@@ -42,3 +42,14 @@
     border: #b700ff solid 2px;
     background-color: #b700ff88;
 }
+
+.scaleDown {
+    transform: scale(.8);
+    margin: -10px;
+    font-size: .88em;
+}
+
+.scaleDown img {
+    width: 40px;
+    height: auto;
+}

@@ -2,9 +2,6 @@
     display:flex;
     flex-direction: column;
     color: white;
-    justify-content: center;
-    gap:1em;
-
 }
 
 .postContainer{
@@ -42,6 +39,7 @@
 .teamDisplay{
     display:flex;
     justify-content: center;
+    flex-wrap: wrap;
     margin-top: .5em;
 }
 
@@ -55,6 +53,7 @@
     border: solid 2px #ff1100c7;
     border-radius: 7px;
     color: white;
+    flex-wrap: wrap;
 }
 
 .team_urls {

@@ -11,10 +11,10 @@ export function LukeCard (props) {
     }
     
     return (
-        <div className={props.poke.shiny === true ? 'pokeCard shinyBackground' : 'pokeCard'} id={props.poke.poke_hash.poke_type[0]}>
+      <div className={`${props.className} ${props.poke.shiny === true ? 'pokeCard shinyBackground' : 'pokeCard'}`} id={props.poke.poke_hash.poke_type[0]}>
+                <img src={props.poke.shiny === true ? props.poke.poke_hash.shiny_url : props.poke.poke_hash.sprite_url}></img>
                 <h3 className={props.poke.shiny === true ? 'shinyText' : ''} >{truncateString(props.poke.poke_hash.poke_name)}</h3>
                 {props.poke.poke_hash.poke_type.map(type => <h5 className={props.poke.shiny === true ? 'shinyText' : ''}>{type}</h5>)}
-                <img src={props.poke.shiny === true ? props.poke.poke_hash.shiny_url : props.poke.poke_hash.sprite_url}></img>
                 <ul>
                   <li className="hp">HP<br/>{props.poke.poke_hash.hp}</li>
                   <li className="att">ATT<br/>{props.poke.poke_hash.att}</li>
