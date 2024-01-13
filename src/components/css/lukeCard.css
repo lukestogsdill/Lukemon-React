@@ -43,13 +43,19 @@
     background-color: #b700ff88;
 }
 
-.scaleDown {
-    transform: scale(.8);
-    margin: -10px;
-    font-size: .88em;
-}
 
-.scaleDown img {
-    width: 40px;
-    height: auto;
-}
+
+@media screen and (max-width:355px) {
+    .pokeCard,
+    .postedFight
+     {
+        transform: scale(.8);
+        margin: -10px;
+        font-size: .88em;
+    }
+    
+    .pokeCard img {
+        width: 40px;
+        height: auto;
+    }
+  }

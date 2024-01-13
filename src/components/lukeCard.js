@@ -2,7 +2,7 @@ import '../components/css/pokeTypes.css'
 import './css/lukeCard.css'
 
 export function LukeCard (props) {
-    function truncateString(str, maxLength) {
+    function truncateString(str, maxLength = 10) {
       const newStr = str.charAt(0).toUpperCase() + str.slice(1)
       if (str.length > maxLength) {
         return newStr.substring(0, maxLength) + '...'
@@ -11,7 +11,7 @@ export function LukeCard (props) {
     }
     
     return (
-      <div className={`${props.className} ${props.poke.shiny === true ? 'pokeCard shinyBackground' : 'pokeCard'}`} id={props.poke.poke_hash.poke_type[0]}>
+      <div className={`${props.poke.shiny === true ? 'pokeCard shinyBackground' : 'pokeCard'}`} id={props.poke.poke_hash.poke_type[0]}>
                 <img src={props.poke.shiny === true ? props.poke.poke_hash.shiny_url : props.poke.poke_hash.sprite_url}></img>
                 <h3 className={props.poke.shiny === true ? 'shinyText' : ''} >{truncateString(props.poke.poke_hash.poke_name)}</h3>
                 {props.poke.poke_hash.poke_type.map(type => <h5 className={props.poke.shiny === true ? 'shinyText' : ''}>{type}</h5>)}

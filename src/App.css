@@ -12,14 +12,22 @@
 *>*:nth-child(2) {border: solid 2px white;}
 *>*:nth-child(3) {border: solid 2px orange;} */
 
-body
-{
+html,
+body {
   background-image: linear-gradient(to right, #525252 0%,black 10%,black 90%, #525252 100%);
+}
+
+#root{
+  display:flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
 .App{
 display: flex;
+flex: 1;
 justify-content: center;
+margin-bottom: 4em;
 }
 
 nav {
@@ -178,6 +186,11 @@ nav {
 
 .selected  {
   border-top: .2em solid blue;
+}
+
+.footer{
+  height:50px;
+  width: 100%;
 }
 
 @keyframes shake {

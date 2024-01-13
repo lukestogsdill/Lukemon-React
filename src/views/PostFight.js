@@ -7,6 +7,7 @@ import { faSackDollar } from '@fortawesome/free-solid-svg-icons'
 import '../components/css/pokeTypes.css'
 import { LukeCard } from '../components/lukeCard'
 import { Pagination } from '../components/pagination'
+import { FilterBox } from '../components/filterBox'
 
 function PostFight(props) {
   props.setSelected("home")
@@ -16,16 +17,20 @@ function PostFight(props) {
     current_page: 1,
     total_posts: 1,
   })
+  const [filter, setFilter] = useState(['Date'])
+  const [perPage, setPerPage] = useState([10])
+  const [page, setPage] = useState(1)
   const teamData = []
+  const filterOptions = [ 'Date', 'Value' ]
+  const perPageOptions = [ 1, 3, 5 ]
 
   useEffect(() => {
-    const fetchData = async () => {
-      await getFeed(1,2)
-      await getPlayerTeam()
-      await updateCurr()
-    }
-    fetchData()
-  }, [])
+      getPlayerTeam()
+  },[])
+
+  useEffect(() => {
+    getFeed(page, perPage, filter)
+  },[page, perPage, filter])
 
   const MomentAgo = ({ storedTime }) => {
     const [timeDifference, setTimeDifference] = useState('');
@@ -59,36 +64,21 @@ function PostFight(props) {
       calculateTimeDifference();
     }, [storedTime]);
 
-    return <small>{timeDifference}</small>;
+    return <small>{timeDifference}</small>
   };
 
-  const getFeed = async (page, perPage) => {
+  const getFeed = async () => {
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_BACKEND_URL}/getFeed?page=${page}&per_page=${perPage}`
-      );
+        `${process.env.REACT_APP_BACKEND_URL}/getFeed?page=${page}&per_page=${perPage}&filter=${filter}`
+      )
       const data = await response.json()
       setFeed(data)
     } catch (error) {
-      console.error('Error fetching feed:', error);
+      console.error('Error fetching feed:', error)
     }
+    console.log('tt')
     console.log(feed)
-  }
-
-  const updateCurr = async () => {
-    if (props.token && props.money !== undefined) {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/updateCurr`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${props.token}`
-        },
-        body: JSON.stringify({
-          tickets: props.tickets,
-          money: props.money
-        })
-      })
-    }
   }
 
   const getPlayerTeam = async () => {
@@ -104,20 +94,30 @@ function PostFight(props) {
     props.setTeam(teamData)
   }
 
+  const handleFilterSelect = (selectedOption) => {
+    console.log(`Selected option: ${selectedOption}`)
+    setFilter(selectedOption)
+  }
+
+  const handlePerPage = (selectedOption) => {
+    setPerPage(selectedOption)
+  }
+
   return (
     <div className='postTree'>
       <div className='teamDisplay'>
         {props.team.map((poke) => {
           return (
             <>
-              <LukeCard poke={poke} className='scaleDown'/>
-
+              <LukeCard poke={poke} />
             </>
           )
         })}
       </div>
+        <Pagination feed={feed} setPage={setPage} />
+        <FilterBox options={filterOptions} onSelect={handleFilterSelect} />
+        <FilterBox options={perPageOptions} onSelect={handlePerPage} />
       <div className='postContainer'>
-        <Pagination feed={feed} getFeed={getFeed} />
         {feed.posts.map((feed) => {
           return (
             <div className='postedFight'>
@@ -149,6 +149,7 @@ function PostFight(props) {
           )
         })}
       </div>
+      <Pagination feed={feed} getFeed={getFeed} />
     </div>
   )
 }

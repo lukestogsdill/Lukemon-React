@@ -1,19 +1,23 @@
-import React, { useState, useEffect } from "react";
-import axios from 'axios';
-import './css/roll.css';
-import '../components/css/pokeTypes.css';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState, useEffect } from "react"
+import axios from 'axios'
+import './css/roll.css'
+import '../components/css/pokeTypes.css'
+import { toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp, faArrowDown, faTicket } from '@fortawesome/free-solid-svg-icons'
+import { FilterBox } from "../components/filterBox"
+
 
 
 export default function Roll(props) {
-  props.setSelected("roll");
+  props.setSelected("roll")
   const [pokeArray, setPokeArray] = useState([])
   const [pokeAttArray, setPokeAttArray] = useState([])
   const [invCount, setInvCount] = useState(0)
   const [ticketCount, setTicketCount] = useState(10)
+  const [filterOption, setFilterOption] = useState([])
+  const optionArr = ['HP', 'Att', 'Def', 'Speed', 'Damage', 'Crit', 'Accuracy']
   const rollLimit = 100
 
   useEffect(() => {
@@ -108,7 +112,6 @@ export default function Roll(props) {
       body: JSON.stringify({ pokeNames })
     });
     pokeDataArray = await response.json();
-    console.log(pokeDataArray)
 
     const updatedAttMoves = attMoves.map((attMove, index) => {
       const pokeData = pokeDataArray[index];
@@ -147,13 +150,11 @@ export default function Roll(props) {
         accuracy: Math.floor(Math.random() * 100),
         shiny_roll: Math.floor(Math.random() * 1000) + 1,
         shiny: false
-      };
+      }
       rollArray.push(attData)
     }
-    console.log(rollArray)
-    console.log('this is in geneAtt func')
     return rollArray
-  };
+  }
 
   function truncateString(str, maxLength) {
     const newStr = str.charAt(0).toUpperCase() + str.slice(1)
@@ -164,11 +165,9 @@ export default function Roll(props) {
   }
 
   const handleTicketChange = (e) => {
-    document.getElementById('numberInput').addEventListener('input', function (e) {
-      let inputValue = e.target.value
-      let numericValue = inputValue.replace(/[^0-9]/g, '')
-      setTicketCount(numericValue)
-    })
+    let inputValue = e.target.value
+    let numericValue = inputValue.replace(/[^0-9]/g, '')
+    setTicketCount(numericValue)
   }
 
   const handleIncrease = () => {
@@ -181,6 +180,61 @@ export default function Roll(props) {
     if (1 < ticketCount) {
       setTicketCount(ticketCount - 1)
     }
+  }
+
+  const filterResults = (option, selection) => {
+    if (selection === 1) {
+      const arrHash = pokeArray.map((obj, index) => ({ ...obj, originalIndex: index }))
+      const sortedArrHash = arrHash.sort((a, b) => b[option] - a[option])
+      const sortedIndices = sortedArrHash.map((obj) => obj.originalIndex)
+      const sortedPokeAttArray = sortedIndices.map((index) => pokeAttArray[index])
+      setPokeArray(sortedArrHash.map((obj) => ({ ...obj, originalIndex: undefined })))
+      setPokeAttArray(sortedPokeAttArray)
+    } else if (selection === 2) {
+      const arrHash = pokeAttArray.map((obj, index) => ({ ...obj, originalIndex: index }))
+      const sortedArrHash = arrHash.sort((a, b) => b[option] - a[option])
+      const sortedIndices = sortedArrHash.map((obj) => obj.originalIndex)
+      const sortedPokeAttArray = sortedIndices.map((index) => pokeArray[index])
+      setPokeAttArray(sortedArrHash.map((obj) => ({ ...obj, originalIndex: undefined })))
+      setPokeArray(sortedPokeAttArray)
+    }
+  }
+
+  const handleFilter = (selectedOption) => {
+    let option = ''
+    let selection = 0
+    switch (selectedOption) {
+      case 'HP':
+        option = 'hp'
+        selection = 1
+        break
+      case 'Att':
+        option = 'att'
+        selection = 1
+        break
+      case 'Def':
+        option = 'defe'
+        selection = 1
+        break
+      case 'Speed':
+        option = 'speed'
+        selection = 1
+        break
+      case 'Damage':
+        option = 'damage'
+        selection = 2
+        break
+      case 'Accuracy':
+        option = 'accuracy'
+        selection = 2
+        break
+      case 'Crit':
+        option = 'crit'
+        selection = 2
+        break
+    }
+    setFilterOption(option)
+    filterResults(option, selection)
   }
 
 
@@ -200,6 +254,16 @@ export default function Roll(props) {
           <FontAwesomeIcon icon={faArrowDown} onClick={handleDecrease} />
         </div>
       </div>
+      <button
+        onClick={getPokemon}
+        className='rollButton'
+        disabled={props.isLoading}>
+        {props.isLoading ? 'Loading...' : 'Roll'}
+      </button>
+      {pokeArray[0] ? (
+
+        <FilterBox onSelect={handleFilter} options={optionArr} />
+      ) : (null)}
       <div className="rollDisplay">
         {pokeArray.length > 0 ? (
           pokeArray.map((poke, index) => (
@@ -236,12 +300,14 @@ export default function Roll(props) {
           <>Loading...</>
         )}
       </div>
-      <button
-        onClick={getPokemon}
-        className='rollButton'
-        disabled={props.isLoading}>
-        {props.isLoading ? 'Loading...' : 'Roll'}
-      </button>
+      {pokeArray[0] ? (
+        <button
+          onClick={getPokemon}
+          className='rollButton'
+          disabled={props.isLoading}>
+          {props.isLoading ? 'Loading...' : 'Roll'}
+        </button>
+      ) : (null)}
     </div>
   )
 }

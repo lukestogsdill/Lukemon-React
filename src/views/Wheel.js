@@ -91,11 +91,9 @@ export default function Wheel(props) {
     }
 
     const handleBetChange = (e) => {
-        document.getElementById('numberInput').addEventListener('input', function (e) {
-            let inputValue = e.target.value
-            let numericValue = inputValue.replace(/[^0-9]/g, '')
-            setBetNum(numericValue)
-        })
+        let inputValue = e.target.value
+        let numericValue = inputValue.replace(/[^0-9]/g, '')
+        setBetNum(numericValue)
     }
 
     return (
