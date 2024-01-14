@@ -80,8 +80,8 @@ export default function Roll(props) {
   const getPokemon = async () => {
     if (props.tickets <= 0 || ticketCount > rollLimit) {
       toast.error(`Roll Limit ${rollLimit}`)
-    } else if (invCount && invCount > 25) {
-      toast.error('Inventory Full (25 max)')
+    } else if (invCount && invCount > 100) {
+      toast.error('Inventory Full (100 max)')
     } else {
       props.setLoading(true)
 
