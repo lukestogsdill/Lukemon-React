@@ -1,71 +1,42 @@
 .fightTree{
-   color:white;
-    display:flex;
-    width:400px;
-    flex-direction: column;
-    text-align: center;
+  width: 100%;
+  display:flex;
+  flex-direction: column;
+  color: white;
+  text-align: center;
 }
 
-.aliveBar,
-.trashBar,
+.pokeBar{
+  display: flex;
+  justify-content: space-around;
+}
+
+.pokeList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .fightContainer{
-    display:flex;
-    flex-direction: row;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-around;
 }
 
-.bankerContainer,
-.playerContainer{
-  align-self: center;
+.deadPoke{
+  opacity: 0.5;
+  position: relative;
 }
 
- .bankerContainer img,
- .playerContainer img{
-    max-width: 100%;
-    width:24rem;
-    height: auto;
-    max-height: 300px;
- }
+.deadPoke::before {
+  content: 'X';
+  color: red;
+  font-size: 7em; /* Adjust the font size as needed */
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
 
- .aliveBar div,
- .trashBar div{
-    max-width: 40%;
- }
-
- .aliveBar img,
- .trashBar img{
-  width: 30px;
-  height: 30px;
-  object-fit: contain;
- }
- 
- .playerAlive img,
- .playerTrash img,
- #playerPic{
-   transform: scaleX(-1);
- }
-
- #playerPic,
- #bankerPic{
-  width: 150px;
-  height: 150px;
-  object-fit: contain;
- }
-
- .trashBar img{
-    opacity: 0.4;
- }
- .fightContainer{
-    justify-content: space-around;
-    background-image: url(https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.LG7_ujyE1VBRGrFwuOMjjgHaEc%26pid%3DApi&f=1&ipt=e3552fad75ae4b5bdb195ee22664e9c8d95115776991435a1f7e03ab03198cce&ipo=images);
-    background-size:cover;
-    background-position: bottom;
-    background-repeat: no-repeat;
-    border-radius: 10px;
-    margin: 2em;
-    height:300px
-
- }
 
  #fightBtn{
    border-radius: 10px;

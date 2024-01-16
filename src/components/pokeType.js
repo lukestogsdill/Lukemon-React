@@ -73,10 +73,27 @@ const typeChart = {
     }
 }
 
-export default function pokeType(type1, type2) {
-    const type1Data = typeChart[type1] || { strong: [], weak: [] }
-    
-    if (type1Data.strong.includes(type2)) return 1.5
-    if (type1Data.weak.includes(type2)) return 0.5
-    return 1
+export default function pokeType(types1, types2) {
+    // Initialize effectiveness to 1 (neutral)
+    let effectiveness = 1;
+
+    // Loop through each type in the first array
+    for (const type1 of types1) {
+        const type1Data = typeChart[type1] || { strong: [], weak: [] };
+
+        // Loop through each type in the second array
+        for (const type2 of types2) {
+            const type2Data = typeChart[type2] || { strong: [], weak: [] };
+
+            // Update effectiveness based on the interaction between the two types
+            if (type1Data.weak.includes(type2)) {
+                effectiveness = 0.5;
+            }
+            if (type1Data.strong.includes(type2)) {
+                effectiveness = 1.5;
+            }
+        }
+    }
+
+    return effectiveness;
 }

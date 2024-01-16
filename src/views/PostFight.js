@@ -142,7 +142,7 @@ function PostFight(props) {
               </ul>
               <p className='team_value'><FontAwesomeIcon icon={faSackDollar} /> {feed.team_value}</p>
               <p><MomentAgo storedTime={feed.date_created} /></p>
-              <Link to={`/lukefight/${feed.user_id}`} className='fightBtn'>
+              <Link to={`/lukefight/?id=${feed.user_id}&value=${feed.team_value}&bankerName=${feed.username}`} className='fightBtn'>
                 <div>FIGHT!</div>
               </Link>
             </div>

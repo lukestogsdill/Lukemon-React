@@ -5,20 +5,16 @@
     justify-content: space-around;
     text-align: center;
     border-radius: 10px;
-    margin:.5em;
-    width: 15vw;
-    min-width: 14em;
-    min-height: 24em;
-    height: 25vh;
+    margin:.25em;
+    max-width: 15em;
+    min-height: 20em;
     font-size: .7em;
     color: white;
 }
 
 .pokeCard img {
-    width: 12vw;
-    height: auto;
-    min-width: 10em;
-    max-height: 12em;
+    width: 2cm;
+    height: 2cm;
     object-fit: contain;
     align-self: center;
 }
@@ -44,4 +40,25 @@
 .speed {
     border: #b700ff solid 2px;
     background-color: #b700ff88;
+}
+
+@media screen and (max-width:570px) {
+    .pokeCard {
+        min-height: unset;
+        overflow: hidden;
+      }
+    .pokeCard img{
+        height: 1cm;
+        width: 1cm;
+    }
+    
+    .lukeStats{
+        display:none;
+    }
+    .pokeCard:hover .lukeStats {
+        display: block;
+      }
+      .deadPoke:hover .lukeStats {
+        display: block;
+      }
 }

@@ -85,7 +85,7 @@ export default function App() {
             <Route path="/TeamBuilder" element={<TeamBuilder token={token} team={team} invData={invData} setTeam={setTeam} setInvData={setInvData} setSelected={setSelected} />} />
             <Route path='/wheel' element={<Wheel token={token} money={money} setMoney={setMoney} tickets={tickets} setTickets={setTickets} isLoading={isLoading} setLoading={setLoading} setSelected={setSelected} />} />
             <Route path='/roll' element={<Roll token={token} tickets={tickets} setTickets={setTickets} invData={invData} isLoading={isLoading} setLoading={setLoading} setSelected={setSelected} />} />
-            <Route path='/lukefight/:id' element={<LukeFight token={token} team={team} setUser={setUser} money={money} setMoney={setMoney} setInvData={setInvData} isLoading={isLoading} setLoading={setLoading} setSelected={setSelected} />} />
+            <Route path='/lukefight/' element={<LukeFight token={token} team={team} setUser={setUser} money={money} setMoney={setMoney} setInvData={setInvData} isLoading={isLoading} setLoading={setLoading} setSelected={setSelected} user={user}/>} />
             <Route path='/HowToPlay' element={<HowToPlay setSelected={setSelected} />} />
           </Routes>
         )}

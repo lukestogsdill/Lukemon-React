@@ -18,7 +18,7 @@ export default function Roll(props) {
   const [ticketCount, setTicketCount] = useState(10)
   const [filterOption, setFilterOption] = useState([])
   const optionArr = ['HP', 'Att', 'Def', 'Speed', 'Damage', 'Crit', 'Accuracy']
-  const rollLimit = 1000
+  const rollLimit = 400
 
   useEffect(() => {
     const fetchData = async () => {
