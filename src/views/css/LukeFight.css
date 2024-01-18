@@ -1,9 +1,15 @@
 .fightTree{
   width: 100%;
   display:flex;
+  justify-content: space-around;
   flex-direction: column;
   color: white;
   text-align: center;
+  background-image: url('https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.LG7_ujyE1VBRGrFwuOMjjgHaEc%26pid%3DApi&f=1&ipt=300ff9ec5d672ffafc65ba98dd62ef4214c9bf9b2a63704e273926cb1bb422f3&ipo=images');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size:cover;
+  
 }
 
 .pokeBar{
@@ -30,13 +36,35 @@
 .deadPoke::before {
   content: 'X';
   color: red;
-  font-size: 7em; /* Adjust the font size as needed */
+  font-size: 5em;
   position: absolute;
   top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 
+.fightSection{
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  align-self: center;
+}
+
+.fightContainer{
+  display:flex;
+  width: 80%;
+  align-self: center;
+  justify-content: space-around;
+}
+
+.fightContainer img{
+  height: 4cm;
+  width: 4cm;
+}
+
+.playerContainer img{
+  transform: scaleX(-1)
+}
 
  #fightBtn{
    border-radius: 10px;
@@ -109,3 +137,24 @@
    50% { transform: translate(40px, -20px); }
    100% { transform: translate(80px, -10px); }
  }
+
+ @media screen and (max-width:1144px) {
+  .pokeList .pokeCard {
+      min-height: unset;
+      overflow: hidden;
+    }
+  .pokeList .pokeCard img{
+      height: 1cm;
+      width: 1cm;
+  }
+  
+  .pokeList .lukeStats{
+      display:none;
+  }
+  .pokeList .pokeCard:hover .lukeStats {
+      display: block;
+    }
+    .pokeList .deadPoke:hover .lukeStats {
+      display: block;
+    }
+}

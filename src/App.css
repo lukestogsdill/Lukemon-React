@@ -12,35 +12,37 @@
 *>*:nth-child(2) {border: solid 2px white;}
 *>*:nth-child(3) {border: solid 2px orange;} */
 
-html,
-body {
-  background-image: linear-gradient(to right, #525252 0%,black 10%,black 90%, #525252 100%);
-}
 
-#root{
-  display:flex;
-  flex-direction: column;
+body,
+html {
+  background-image: linear-gradient(to right, #525252 0%, black 10%, black 90%, #525252 100%);
   height: 100dvh;
 }
 
-.App{
-display: flex;
-flex: 1;
-justify-content: center;
-margin-bottom: 4em;
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.App {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  margin-bottom: 4em;
 }
 
 nav {
   display: flex;
   background-color: #ff1100c7;
   border-bottom: solid 2px #ffffff;
-  height:80px;
-  color:white;
+  height: 80px;
+  color: white;
 }
 
 .pokeball {
   border-radius: 100%;
-  height:80px;
+  height: 80px;
   width: 80px;
 }
 
@@ -51,16 +53,16 @@ nav {
   animation-iteration-count: 2;
 }
 
-.btn_title{
+.btn_title {
   position: relative;
   margin: 0 2em;
-  width: 200px;
+  width: 100px;
   height: 100%;
 }
 
 .btn_title .solid,
 .btn_title .hollow {
-  font-size: 2.5em;
+  font-size: 2em;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -78,21 +80,23 @@ nav {
   font-family: 'pokefont_hollow';
   color: blue;
 }
-.link_container{
-  display:flex;
+
+.link_container {
+  display: flex;
   margin-left: 3em;
-  width:100%;
+  width: 100%;
   justify-content: space-between;
 }
 
-.nav_links{
-  display:flex;
+.nav_links {
+  display: flex;
   max-width: fit-content;
   gap: 1em;
+  text-align: center;
 }
 
-.nav_link{
-  display:flex;
+.nav_link {
+  display: flex;
   width: 75px;
   height: 95%;
   justify-content: center;
@@ -100,31 +104,31 @@ nav {
   border-top: 0px;
   border-bottom: 0px;
   border-radius: 10px;
-  color:white;
+  color: white;
   font-size: large;
 }
 
-.nav_link:hover{
+.nav_link:hover {
   box-shadow: 3px 3px 0px 0px black;
   transform: translateX(-2px);
 }
 
-.linkDiv{
-  display:flex;
+.linkDiv {
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width:100%;
+  width: 100%;
 }
 
-.nav_link li{
+.nav_link li {
   align-self: center;
 }
 
-.profile_nav{
-  display:flex;
+.profile_nav {
+  display: flex;
 }
 
-.profile_nav img{
+.profile_nav img {
   border-radius: 100%
 }
 
@@ -135,48 +139,49 @@ nav {
   justify-content: center;
 }
 
-.profileBar{
- display: flex;
- align-self: center;
- align-items: center;
- gap: 1em;
+.profileBar {
+  display: flex;
+  align-self: center;
+  align-items: center;
+  gap: 1em;
 }
 
-.profilePic{
+.profilePic {
   height: 50px;
   width: 50px;
   border-radius: 100%;
 }
 
-.moneyBar > *{
-  margin:.4em;
+.moneyBar>* {
+  margin: .4em;
 }
 
 .appBar {
   display: flex;
   display: none;
   position: fixed;
+  z-index: 2;
   bottom: 0;
   background-color: black;
   opacity: 0.75;
- font-size: 1.25em;
- width: 100%;
- justify-content: center;
+  font-size: 1.25em;
+  width: 100%;
+  justify-content: center;
 }
 
 .appBar ul {
-	display: flex;
-	width: 100%;
-	justify-content: space-around;
-	list-style: none;
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  list-style: none;
 }
 
- .appBar li a{
+.appBar li a {
   text-decoration: none;
   color: white;
   opacity: 1.0;
   padding: .5em;
- }
+}
 
 .appBar li {
   display: flex;
@@ -184,30 +189,30 @@ nav {
   text-align: center;
 }
 
-.selected  {
+.selected {
   border-top: .2em solid blue;
 }
 
-.footer{
-  height:50px;
-  width: 100%;
+.loginBtn{
+  color:white;
+  border: rgb(8, 8, 8) solid 1px;
 }
 
 @keyframes shake {
   20% {
-      transform: translateX(-.2rem);
+    transform: translateX(-.2rem);
   }
 
   40% {
-      transform: translateX(.2rem);
+    transform: translateX(.2rem);
   }
 
   50% {
-      transform: rotateZ(0.15turn);
+    transform: rotateZ(0.15turn);
   }
 
   80% {
-      transform: rotateZ(-0.15turn);
+    transform: rotateZ(-0.15turn);
   }
 }
 
@@ -223,20 +228,11 @@ nav {
 
 
 @media screen and (max-width:750px) {
-  .linkDiv{
-      display:none;
+  .nav_link {
+    display: none;
   }
-  .appBar{
+
+  .appBar {
     display: block;
   }
 }
-
-@media screen and (max-width:450px) {
-  .profileBar{
-    display: none;
-  }
-}
-
-
-
-

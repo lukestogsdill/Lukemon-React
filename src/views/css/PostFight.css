@@ -28,10 +28,11 @@
 .postedFight{
     display:flex;
     flex-direction: column;
+    justify-content: space-around;
     background-color: #ff000056;
     border:red solid 2px;
     border-radius: 7px;
-    width:175px;
+    width:4.4cm;
     gap: .3em;
     padding: .2em;
 }

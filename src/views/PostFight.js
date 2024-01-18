@@ -18,11 +18,11 @@ function PostFight(props) {
     total_posts: 1,
   })
   const [filter, setFilter] = useState(['Date'])
-  const [perPage, setPerPage] = useState([10])
+  const [perPage, setPerPage] = useState([50])
   const [page, setPage] = useState(1)
   const teamData = []
   const filterOptions = [ 'Date', 'Value' ]
-  const perPageOptions = [ 1, 3, 5 ]
+  const perPageOptions = [ 10, 30, 50 ]
 
   useEffect(() => {
       getPlayerTeam()
@@ -115,8 +115,8 @@ function PostFight(props) {
         })}
       </div>
         <Pagination feed={feed} setPage={setPage} />
-        <FilterBox options={filterOptions} onSelect={handleFilterSelect} />
-        <FilterBox options={perPageOptions} onSelect={handlePerPage} />
+        <FilterBox options={filterOptions} onSelect={handleFilterSelect} label={'Filter: '}/>
+        <FilterBox options={perPageOptions} onSelect={handlePerPage} label={'PerPage: '}/>
       <div className='postContainer'>
         {feed.posts.map((feed) => {
           return (

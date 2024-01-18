@@ -141,7 +141,7 @@ function LukeFight(props) {
 
   const handlePlayerDmg = () => {
     dmg = Math.round(damageDealt(playerPoke, bankerPoke))
-    setMessage(`player did ${dmg} damage`)
+    setMessage(`${props.user.username} did ${dmg} damage`)
     handlePlayerAtt()
     bankerPoke.poke_hash.hp -= dmg
     setPlayerDmg(dmg)
@@ -149,7 +149,7 @@ function LukeFight(props) {
 
   const handleBankerDmg = () => {
     dmg = Math.round(damageDealt(bankerPoke, playerPoke))
-    setMessage(`banker did ${dmg} damage`)
+    setMessage(`${bankerName} did ${dmg} damage`)
     handleBankerAtt()
     playerPoke.poke_hash.hp -= dmg
     setBankerDmg(dmg)
@@ -247,14 +247,14 @@ function LukeFight(props) {
           <ul className='pokeList'>
             {props.team.map((player) => {
               return (
-                <li className='downSized'>
+                <li className=''>
                   <LukeCard poke={player} />
                 </li>
               )
             })}
             {playerTrash.map((trash) => {
               return (
-                <li className='deadPoke downSized'>
+                <li className='deadPoke'>
                   <LukeCard poke={trash} />
                 </li>
               )
@@ -266,14 +266,14 @@ function LukeFight(props) {
           <ul className='pokeList'>
             {banker.map((banker) => {
               return (
-                <li className='downSized'>
+                <li>
                   <LukeCard poke={banker} />
                 </li>
               )
             })}
             {bankerTrash.map((trash) => {
               return (
-                <li className='deadPoke downSized'>
+                <li className='deadPoke'>
                   <LukeCard poke={trash} />
                 </li>
               )
@@ -283,12 +283,11 @@ function LukeFight(props) {
         </div>
       </div>
       <div className='fightContainer'>
-
         {playerPoke ? (
           <div className='playerContainer'>
             <h2 className={bankerDmgAni ? 'bankerDmgAni' : 'dmgAni'} id='bDmgEff'>{Math.round(bankerDmg) !== 0 ? (Math.round(bankerDmg)) : 'miss'}</h2>
 
-            <img src={playerPoke.poke_hash.sprite_url} className={playerAtt ? 'playerAtt' : 'image'} id='playerPic' />
+            <img src={playerPoke.shiny === true ? playerPoke.poke_hash.shiny_url : playerPoke.poke_hash.sprite_url} className={playerAtt ? 'playerAtt' : 'image'} id='playerPic' />
             <h2 className='hpBar'>HP: {Math.round(playerPoke.poke_hash.hp)}</h2>
           </div>
         ) : (
@@ -298,16 +297,19 @@ function LukeFight(props) {
           <div className='bankerContainer'>
             <h2 className={playerDmgAni ? 'playerDmgAni' : 'dmgAni'} id='pDmgEff'>{Math.round(playerDmg) !== 0 ? (Math.round(playerDmg)) : 'miss'}</h2>
 
-            <img src={bankerPoke.poke_hash.sprite_url} className={bankerAtt ? 'bankerAtt' : 'image'} id='bankerPic' />
+            <img src={bankerPoke.shiny === true ? bankerPoke.poke_hash.shiny_url : bankerPoke.poke_hash.sprite_url} className={bankerAtt ? 'bankerAtt' : 'image'} id='bankerPic' />
             <h2 className='hpBar'>HP: {Math.round(bankerPoke.poke_hash.hp)}</h2>
           </div>
         ) : (
           <></>
         )}
       </div>
-      <p id='typeStatus'></p>
-      <p className="logMessage">{message}</p>
-      <button onClick={handleFight} id='fightBtn'>Press to Fight!</button>
+      <div className='fightSection'>
+        <p id='typeStatus'></p>
+        <p className="logMessage">{message}</p>
+
+        <button onClick={handleFight} id='fightBtn'>Press to Fight!</button>
+      </div>
 
     </div>
   )

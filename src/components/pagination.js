@@ -13,7 +13,7 @@ export function Pagination({ feed, setPage }) {
     }
 
     return (
-        <div>
+        <div className='pagination'>
             {paginationNumbers.map((pageNumber, index) => (
                 <button 
                 className={feed.current_page === index + 1 ? 'currentPage' : ''}

@@ -93,7 +93,7 @@ export default function Wheel(props) {
     const handleBetChange = (e) => {
         let inputValue = e.target.value
         let numericValue = inputValue.replace(/[^0-9]/g, '')
-        setBetNum(numericValue)
+        setBetNum(parseInt(numericValue, 10))
     }
 
     return (

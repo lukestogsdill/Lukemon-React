@@ -15,18 +15,27 @@ function Login(props) {
     const navigate = useNavigate()
     var credentials = btoa(`${loginForm.username}:${loginForm.password}`)
 
-    const logMeIn = async() => {
-      console.log(credentials)
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/token`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Basic ${credentials}`
-        },
-      })
-      const user_token = await response.json()
-      props.setToken(user_token.token)
-
-      navigate('/')
+    const logMeIn = async () => {
+      try {
+        const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/token`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Basic ${credentials}`
+          },
+        })
+    
+        if (!response.ok) {
+          // Throw an error for non-successful responses
+          throw new Error('Login failed. Please check your credentials.')
+        }
+    
+        const user_token = await response.json()
+        props.setToken(user_token.token)
+        navigate('/')
+      } catch (error) {
+        // Handle the error here (e.g., show an error toast)
+        toast.error(error.message)
+      }
     }
 
     function handleChange(event) { 

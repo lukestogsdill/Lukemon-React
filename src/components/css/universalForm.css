@@ -1,30 +1,12 @@
-/* form,
-.formContainer{
-    display:flex;
-    color:white;
-    flex-direction: column;
-    text-align: center;
-}
-form{
-    max-width: 70%;
-    min-width: 40%;
-    align-self: center;
-    gap: 1em;
-    width: 400px;
-    background-color: #ffe60094;
-    border: solid #ffe600 2px;
-    border-radius: 7px;
-    padding: 0.5em;
-    margin:0.5em;
-}
 
-form input{
+
+.formContainer input{
     padding: 1em .4em;
     width:94%;
     border-radius: 7px;
 }
 
-form button{
+.formContainer button{
     align-self: center;
     width:100%;
     padding: 1em .5em;
@@ -48,4 +30,29 @@ form button{
     display: flex;
     justify-content: center;
     gap: 2em;
-} */
+}
+
+.starterSelect {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    gap: 1em;
+    margin: 1em;
+}
+
+.formContainer{
+    display: flex;
+    flex-direction: column;
+    color:white;
+    text-align: center;
+    max-width: 70%;
+    min-width: 40%;
+    align-self: center;
+    gap: 1em;
+    width: 400px;
+    background-color: #ffe60094;
+    border: solid #ffe600 2px;
+    border-radius: 7px;
+    padding: 0.5em;
+    margin:0.5em;
+}

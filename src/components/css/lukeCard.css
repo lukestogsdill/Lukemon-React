@@ -41,24 +41,3 @@
     border: #b700ff solid 2px;
     background-color: #b700ff88;
 }
-
-@media screen and (max-width:570px) {
-    .pokeCard {
-        min-height: unset;
-        overflow: hidden;
-      }
-    .pokeCard img{
-        height: 1cm;
-        width: 1cm;
-    }
-    
-    .lukeStats{
-        display:none;
-    }
-    .pokeCard:hover .lukeStats {
-        display: block;
-      }
-      .deadPoke:hover .lukeStats {
-        display: block;
-      }
-}

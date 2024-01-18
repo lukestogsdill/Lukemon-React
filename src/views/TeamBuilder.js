@@ -6,6 +6,7 @@ import Modal from '@mui/material/Modal'
 import { toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { LukeCard } from '../components/lukeCard'
+import { FilterBox } from "../components/filterBox"
 
 function TeamBuilder(props){
 
@@ -17,6 +18,8 @@ function TeamBuilder(props){
   const [delOpen, setDelOpen] = useState(false)
   const [delPoke, setDelPoke] = useState(null)
   const [saveOpen, setSaveOpen] = useState(false)
+  const [filterOption, setFilterOption] = useState([])
+  const optionArr = ['HP', 'Att', 'Def', 'Speed', 'Damage', 'Crit', 'Accuracy']
   props.setSelected("team")
 
   function addTeam(index){
@@ -146,7 +149,7 @@ function TeamBuilder(props){
       
     }
     return(
-      <form onSubmit={handleSubmit} className='postForm'>
+      <form onSubmit={handleSubmit} className='formContainer'>
         <h4>Add a comment!</h4>
         <input type="textbox" value={text} onChange={handleChange}/>
         <button type="submit">Save & Post</button>
@@ -167,6 +170,51 @@ function TeamBuilder(props){
   }
   const handleSaveClose = () => {
     setSaveOpen(false)
+  }
+
+  const filterResults = (option) => {
+    let arrHash = [...props.invData]
+  console.log(option)
+  arrHash.sort((a, b) => {
+    const keyA = getNestedProperty(a, option)
+    const keyB = getNestedProperty(b, option)
+    console.log(keyA, keyB)
+    return keyB - keyA
+  })
+  console.log(arrHash)
+  props.setInvData(arrHash)
+}
+
+const getNestedProperty = (obj, property) => {
+  return property.split('.').reduce((acc, key) => acc[key], obj);
+  }
+
+  const handleFilter = (selectedOption) => {
+    let option = ''
+    switch (selectedOption) {
+      case 'HP':
+        option = 'poke_hash.hp'
+        break
+      case 'Att':
+        option = 'poke_hash.att'
+        break
+      case 'Def':
+        option = 'poke_hash.defe'
+        break
+      case 'Speed':
+        option = 'poke_hash.speed'
+        break
+      case 'Damage':
+        option = 'damage'
+        break
+      case 'Accuracy':
+        option = 'accuracy'
+        break
+      case 'Crit':
+        option = 'crit'
+        break
+    }
+    filterResults(option)
   }
 
   
@@ -214,6 +262,7 @@ function TeamBuilder(props){
         </ul>
         <button id='saveBtn' onClick={handleSaveOpen}>Save</button>
       </div>
+    <FilterBox onSelect={handleFilter} options={optionArr} />
     <div className='teamList'>
       {props.invData.map((poke, index) =>{
         return(

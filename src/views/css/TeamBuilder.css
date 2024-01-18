@@ -15,7 +15,6 @@
     width: 1000px; 
 }
 .teamContainer{
-    width: 100%;
     height: fit-content;
     justify-content: center;
 }
@@ -25,8 +24,9 @@
     justify-content: center;
     flex-wrap: wrap;
     border-radius: 10px;
-    width:100%;
+
     align-self: center;
+    margin: 1em;
 }
 
 .teamContainer{

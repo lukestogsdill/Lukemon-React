@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const FilterBox = ({ options , onSelect}) => {
+const FilterBox = ({ options , onSelect, label}) => {
   const [selectedOption, setSelectedOption] = useState(null)
 
   const handleSelect = (option) => {
@@ -9,7 +9,7 @@ const FilterBox = ({ options , onSelect}) => {
   }
   return (
     <div>
-      
+      {label && <label>{label}</label>}
       <select value={selectedOption} defaultValue='' onChange={(e) => handleSelect(e.target.value)}>
         <option value="" disabled>Select Filter</option>
         {options.map((option) => (
